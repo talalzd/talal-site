@@ -1,45 +1,47 @@
 import { useState, useEffect, useRef } from "react";
+import articleData from "./articles.js";
 
 const SECTIONS = ["home", "perspectives", "about", "connect"];
 
-const perspectives = [
+// Placeholder perspectives (articles without full content yet)
+const placeholders = [
   {
     id: 1,
     tag: "TECH SOVEREIGNTY",
-    title: "The Gulf's New Power Play Isn't Oil — It's Industrial Policy",
+    title: "The Gulf's New Power Play Isn't Oil. It's Industrial Policy.",
     excerpt:
       "Vision 2030 and Operation 300bn aren't aspirational slogans anymore. They're enforceable regulatory frameworks reshaping how global tech companies enter, operate, and invest in the region. If your government affairs team still treats them as brochures, you're already behind.",
     date: "2026",
     readTime: "4 min",
-  },
-  {
-    id: 2,
-    tag: "AI & REGULATION",
-    title: "National AI Strategies Are the New Trade Barriers — And Nobody's Ready",
-    excerpt:
-      "Saudi Arabia, UAE, and Egypt each have distinct AI governance philosophies. Companies building a single 'MENA strategy' are making a $100M mistake. The regulatory fragmentation is a feature, not a bug — and the winners will be those who treat each market as sovereign.",
-    date: "2026",
-    readTime: "5 min",
+    content: null,
   },
   {
     id: 3,
     tag: "GOVERNMENT AFFAIRS",
     title: "Policy People Who Can't Build Are About to Become Obsolete",
     excerpt:
-      "The next generation of government affairs leaders won't just read regulations — they'll build the monitoring systems, model the scenarios, and ship the tools that turn policy intelligence into commercial advantage. The gap between 'strategic advisor' and 'builder' is closing fast.",
+      "The next generation of government affairs leaders won't just read regulations. They'll build the monitoring systems, model the scenarios, and ship the tools that turn policy intelligence into commercial advantage.",
     date: "2026",
     readTime: "3 min",
+    content: null,
   },
   {
     id: 4,
     tag: "FDI COMPETITION",
-    title: "The Real GCC Competition Isn't for Capital — It's for Regulatory Trust",
+    title: "The Real GCC Competition Isn't for Capital. It's for Regulatory Trust.",
     excerpt:
-      "Every sovereign wealth fund has capital. What separates the winners in attracting global tech investment is regulatory predictability, transparent governance frameworks, and the institutional maturity to keep promises across election cycles — or in the Gulf's case, across Vision milestones.",
+      "Every sovereign wealth fund has capital. What separates the winners in attracting global tech investment is regulatory predictability, transparent governance frameworks, and the institutional maturity to keep promises across Vision milestones.",
     date: "2026",
     readTime: "4 min",
+    content: null,
   },
 ];
+
+// Merge published articles with placeholders, sorted by id
+const allPerspectives = [
+  ...articleData,
+  ...placeholders.filter((p) => !articleData.find((a) => a.id === p.id)),
+].sort((a, b) => a.id - b.id);
 
 const career = [
   {
@@ -80,6 +82,7 @@ export default function TalalSite() {
   const [scrollY, setScrollY] = useState(0);
   const [hoveredPerspective, setHoveredPerspective] = useState(null);
   const [loaded, setLoaded] = useState(false);
+  const [activeArticle, setActiveArticle] = useState(null);
   const sectionRefs = useRef({});
 
   useEffect(() => {
@@ -110,8 +113,11 @@ export default function TalalSite() {
 
   const scrollTo = (id) => {
     setMenuOpen(false);
-    const el = sectionRefs.current[id];
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    setActiveArticle(null);
+    setTimeout(() => {
+      const el = sectionRefs.current[id];
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }, 50);
   };
 
   return (
@@ -666,6 +672,105 @@ export default function TalalSite() {
           color: #C8A97E;
         }
 
+        .article-view {
+          min-height: 100vh;
+          padding: 120px 40px 80px;
+          max-width: 780px;
+          margin: 0 auto;
+        }
+
+        .article-back {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          color: #C8A97E;
+          cursor: pointer;
+          background: none;
+          border: none;
+          padding: 0;
+          margin-bottom: 48px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          transition: opacity 0.3s;
+        }
+        .article-back:hover { opacity: 0.7; }
+
+        .article-tag {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          text-transform: uppercase;
+          letter-spacing: 3px;
+          color: #C8A97E;
+          margin-bottom: 20px;
+        }
+
+        .article-date {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          color: #6B6560;
+          letter-spacing: 1px;
+          margin-bottom: 24px;
+        }
+
+        .article-title {
+          font-family: 'Instrument Serif', serif;
+          font-size: clamp(32px, 5vw, 48px);
+          line-height: 1.15;
+          color: #E8E4DF;
+          margin-bottom: 48px;
+        }
+
+        .article-body-intro {
+          font-family: 'Instrument Serif', serif;
+          font-size: 22px;
+          line-height: 1.6;
+          color: #B0AAA4;
+          margin-bottom: 36px;
+          padding-bottom: 36px;
+          border-bottom: 1px solid rgba(200,169,126,0.1);
+        }
+
+        .article-body-text {
+          font-size: 17px;
+          line-height: 1.8;
+          color: #ADA8A3;
+          margin-bottom: 24px;
+        }
+
+        .article-body-heading {
+          font-family: 'Instrument Serif', serif;
+          font-size: 26px;
+          color: #E8E4DF;
+          margin-top: 48px;
+          margin-bottom: 20px;
+        }
+
+        .article-author {
+          margin-top: 64px;
+          padding-top: 32px;
+          border-top: 1px solid rgba(200,169,126,0.1);
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+
+        .article-author-info {
+          font-size: 14px;
+          color: #6B6560;
+        }
+
+        .article-author-name {
+          color: #E8E4DF;
+          font-weight: 500;
+          margin-bottom: 2px;
+        }
+
+        @media (max-width: 768px) {
+          .article-view { padding: 100px 20px 60px; }
+        }
+
         .footer {
           padding: 40px;
           display: flex;
@@ -794,6 +899,57 @@ export default function TalalSite() {
         </div>
       )}
 
+      {/* ARTICLE VIEW */}
+      {activeArticle ? (
+        <>
+          <div className="article-view">
+            <button
+              className="article-back"
+              onClick={() => {
+                setActiveArticle(null);
+                setTimeout(() => scrollTo("perspectives"), 100);
+              }}
+            >
+              ← Back to Perspectives
+            </button>
+            <div className="article-tag">{activeArticle.tag}</div>
+            <div className="article-date">{activeArticle.date} · {activeArticle.readTime}</div>
+            <h1 className="article-title">{activeArticle.title}</h1>
+            {activeArticle.content.map((block, i) => {
+              if (block.type === "intro")
+                return <p key={i} className="article-body-intro">{block.text}</p>;
+              if (block.type === "heading")
+                return <h2 key={i} className="article-body-heading">{block.text}</h2>;
+              return <p key={i} className="article-body-text">{block.text}</p>;
+            })}
+            <div className="article-author">
+              <img
+                src="/talal.jpg"
+                alt="Talal Al Zayed"
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: 4,
+                  objectFit: "cover",
+                  objectPosition: "center 15%",
+                  filter: "grayscale(30%)",
+                }}
+              />
+              <div className="article-author-info">
+                <div className="article-author-name">Talal Al Zayed</div>
+                Director, Public Policy & Government Affairs
+              </div>
+            </div>
+          </div>
+          <footer className="footer">
+            <div className="footer-left">© 2026 Talal Al Zayed</div>
+            <div className="footer-quote">
+              على قدر أهل العزم تأتي العزائم
+            </div>
+          </footer>
+        </>
+      ) : (
+      <>
       {/* HERO */}
       <section
         ref={(el) => (sectionRefs.current.home = el)}
@@ -863,12 +1019,19 @@ export default function TalalSite() {
           <div className="section-line" />
         </div>
 
-        {perspectives.map((p) => (
+        {allPerspectives.map((p) => (
           <div
             key={p.id}
             className="perspective-card"
             onMouseEnter={() => setHoveredPerspective(p.id)}
             onMouseLeave={() => setHoveredPerspective(null)}
+            onClick={() => {
+              if (p.content) {
+                setActiveArticle(p);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
+            style={{ cursor: p.content ? "pointer" : "default" }}
           >
             <div className="perspective-meta">
               <span className="perspective-tag">{p.tag}</span>
@@ -879,9 +1042,15 @@ export default function TalalSite() {
             <div className="perspective-content">
               <h3>{p.title}</h3>
               <p>{p.excerpt}</p>
-              <div className="perspective-read">
-                Read more →
-              </div>
+              {p.content ? (
+                <div className="perspective-read">
+                  Read more →
+                </div>
+              ) : (
+                <div className="perspective-read" style={{ color: "#3A3530" }}>
+                  Coming soon
+                </div>
+              )}
             </div>
           </div>
         ))}
@@ -1095,6 +1264,8 @@ export default function TalalSite() {
           على قدر أهل العزم تأتي العزائم
         </div>
       </footer>
+      </>
+      )}
     </div>
   );
 }
