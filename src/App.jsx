@@ -261,13 +261,57 @@ export default function TalalSite() {
         .hero-sub {
           font-size: 18px;
           line-height: 1.7;
-          color: #8A8580;
+          color: #ADA8A3;
           max-width: 620px;
           margin-bottom: 48px;
           opacity: 0;
           transform: translateY(20px);
           animation: fadeUp 0.8s ease forwards;
           animation-delay: 0.7s;
+        }
+
+        .hero-cta {
+          display: flex;
+          gap: 16px;
+          flex-wrap: wrap;
+          margin-bottom: 48px;
+          opacity: 0;
+          transform: translateY(20px);
+          animation: fadeUp 0.8s ease forwards;
+          animation-delay: 0.85s;
+        }
+
+        .hero-cta-btn {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          padding: 16px 32px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          text-decoration: none;
+          display: inline-block;
+        }
+
+        .hero-cta-btn.primary {
+          background: #C8A97E;
+          color: #0A0A0A;
+          border: 1px solid #C8A97E;
+        }
+        .hero-cta-btn.primary:hover {
+          background: transparent;
+          color: #C8A97E;
+        }
+
+        .hero-cta-btn.secondary {
+          background: transparent;
+          color: #C8A97E;
+          border: 1px solid rgba(200,169,126,0.3);
+        }
+        .hero-cta-btn.secondary:hover {
+          background: #C8A97E;
+          color: #0A0A0A;
+          border-color: #C8A97E;
         }
 
         .hero-stats {
@@ -295,7 +339,7 @@ export default function TalalSite() {
           font-size: 10px;
           text-transform: uppercase;
           letter-spacing: 2px;
-          color: #6B6560;
+          color: #8A8580;
         }
 
         @keyframes fadeUp {
@@ -368,7 +412,7 @@ export default function TalalSite() {
         .perspective-date {
           font-family: 'JetBrains Mono', monospace;
           font-size: 10px;
-          color: #4A4540;
+          color: #6B6560;
           letter-spacing: 1px;
         }
 
@@ -388,13 +432,13 @@ export default function TalalSite() {
         .perspective-content p {
           font-size: 15px;
           line-height: 1.7;
-          color: #6B6560;
+          color: #8A8580;
           max-width: 680px;
           transition: color 0.3s;
         }
 
         .perspective-card:hover .perspective-content p {
-          color: #8A8580;
+          color: #ADA8A3;
         }
 
         .perspective-read {
@@ -402,7 +446,7 @@ export default function TalalSite() {
           font-size: 10px;
           text-transform: uppercase;
           letter-spacing: 2px;
-          color: #4A4540;
+          color: #6B6560;
           margin-top: 16px;
           display: flex;
           align-items: center;
@@ -553,7 +597,7 @@ export default function TalalSite() {
 
         .career-highlight {
           font-size: 13px;
-          color: #6B6560;
+          color: #8A8580;
           line-height: 1.6;
         }
 
@@ -773,6 +817,21 @@ export default function TalalSite() {
           turning regulatory complexity into market access.
         </p>
 
+        <div className="hero-cta">
+          <button
+            className="hero-cta-btn primary"
+            onClick={() => scrollTo("perspectives")}
+          >
+            Read My Perspectives
+          </button>
+          <button
+            className="hero-cta-btn secondary"
+            onClick={() => scrollTo("connect")}
+          >
+            Let's Connect
+          </button>
+        </div>
+
         <div className="hero-stats">
           <div className="stat-item">
             <span className="stat-number">10+</span>
@@ -914,7 +973,7 @@ export default function TalalSite() {
               >
                 Education
               </div>
-              <div style={{ fontSize: 14, color: "#6B6560", lineHeight: 1.8 }}>
+              <div style={{ fontSize: 14, color: "#8A8580", lineHeight: 1.8 }}>
                 <div>
                   <span style={{ color: "#B0AAA4" }}>MPP</span> — KAPSARC
                   School of Public Policy
@@ -946,13 +1005,48 @@ export default function TalalSite() {
               <div
                 style={{
                   fontSize: 13,
-                  color: "#4A4540",
+                  color: "#6B6560",
                   lineHeight: 1.8,
                 }}
               >
                 Harvard Kennedy School · LSE (×2) · PROSCI · PMP · Udacity
               </div>
             </div>
+
+            <a
+              href="/Talal_AlZayed_CV.pdf"
+              target="_blank"
+              rel="noopener"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                marginTop: 36,
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 11,
+                textTransform: "uppercase",
+                letterSpacing: 2,
+                padding: "14px 28px",
+                border: "1px solid rgba(200,169,126,0.3)",
+                background: "transparent",
+                color: "#C8A97E",
+                textDecoration: "none",
+                transition: "all 0.3s ease",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = "#C8A97E";
+                e.target.style.color = "#0A0A0A";
+                e.target.style.borderColor = "#C8A97E";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = "transparent";
+                e.target.style.color = "#C8A97E";
+                e.target.style.borderColor = "rgba(200,169,126,0.3)";
+              }}
+            >
+              ↓ Download Executive CV
+            </a>
           </div>
         </div>
       </section>
@@ -984,7 +1078,7 @@ export default function TalalSite() {
             Email Me
           </a>
           <a
-           href="https://www.linkedin.com/in/talal-alzayed/"
+            href="https://www.linkedin.com/in/talal-alzayed/"
             target="_blank"
             rel="noopener"
             className="connect-btn"
