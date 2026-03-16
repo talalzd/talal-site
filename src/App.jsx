@@ -984,7 +984,7 @@ export default function TalalSite() {
             Email Me
           </a>
           <a
-            href="https://linkedin.com/in/"
+           href="https://www.linkedin.com/in/talal-alzayed/"
             target="_blank"
             rel="noopener"
             className="connect-btn"
