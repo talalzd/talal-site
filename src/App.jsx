@@ -3,45 +3,8 @@ import articleData from "./articles.js";
 
 const SECTIONS = ["home", "perspectives", "about", "connect"];
 
-// Placeholder perspectives (articles without full content yet)
-const placeholders = [
-  {
-    id: 1,
-    tag: "TECH SOVEREIGNTY",
-    title: "The Gulf's New Power Play Isn't Oil. It's Industrial Policy.",
-    excerpt:
-      "Vision 2030 and Operation 300bn aren't aspirational slogans anymore. They're enforceable regulatory frameworks reshaping how global tech companies enter, operate, and invest in the region. If your government affairs team still treats them as brochures, you're already behind.",
-    date: "2026",
-    readTime: "4 min",
-    content: null,
-  },
-  {
-    id: 3,
-    tag: "GOVERNMENT AFFAIRS",
-    title: "Policy People Who Can't Build Are About to Become Obsolete",
-    excerpt:
-      "The next generation of government affairs leaders won't just read regulations. They'll build the monitoring systems, model the scenarios, and ship the tools that turn policy intelligence into commercial advantage.",
-    date: "2026",
-    readTime: "3 min",
-    content: null,
-  },
-  {
-    id: 4,
-    tag: "FDI COMPETITION",
-    title: "The Real GCC Competition Isn't for Capital. It's for Regulatory Trust.",
-    excerpt:
-      "Every sovereign wealth fund has capital. What separates the winners in attracting global tech investment is regulatory predictability, transparent governance frameworks, and the institutional maturity to keep promises across Vision milestones.",
-    date: "2026",
-    readTime: "4 min",
-    content: null,
-  },
-];
-
-// Merge published articles with placeholders, sorted by id
-const allPerspectives = [
-  ...articleData,
-  ...placeholders.filter((p) => !articleData.find((a) => a.id === p.id)),
-].sort((a, b) => a.id - b.id);
+// All perspectives come from articles.js
+const allPerspectives = articleData;
 
 const career = [
   {
