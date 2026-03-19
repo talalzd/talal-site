@@ -2,7 +2,7 @@
 // ARTICLES FILE - Edit this to add/update articles
 // =============================================
 
-const articles = [
+export const articles = [
   {
     id: 1,
     tag: "FDI & COMPETITION",
