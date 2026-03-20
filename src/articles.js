@@ -2,7 +2,7 @@
 // ARTICLES FILE - Edit this to add/update articles
 // =============================================
 
-export const articles = [
+const articles = [
   {
     id: 1,
     tag: "FDI & COMPETITION",
@@ -289,6 +289,135 @@ export const articles = [
       {
         type: "text",
         text: "None of these are optional. And none of them can be managed by a single compliance checklist applied across all three markets. The companies that get this right treat each country as a distinct regulatory jurisdiction with its own logic, its own pace, and its own priorities. The companies that don't will find out the hard way that 'MENA' is a geography, not a regulatory framework.",
+      },
+    ],
+  },
+  {
+    id: 5,
+    tag: "POLICY ANALYSIS",
+    title: "Saudi Arabia's Two-Coast Advantage: How Infrastructure Planning Became the Gulf's Lifeline",
+    excerpt:
+      "The Strait of Hormuz is closed. And the one country that saw this coming decades ago is proving why infrastructure investment is not a luxury. It is a survival strategy.",
+    date: "March 2026",
+    readTime: "6 min",
+    content: [
+      {
+        type: "intro",
+        text: "Saudi Arabia is doing two things simultaneously that no other Gulf state can do. It is rerouting millions of barrels of crude oil from its eastern fields to the Red Sea. And it is opening its western ports to receive imports for the entire GCC. Both of these capabilities exist because policymakers made long-cycle bets on infrastructure that, until three weeks ago, most analysts considered redundant.",
+      },
+      {
+        type: "image",
+        src: "/pipeline-map.jpg",
+        alt: "Saudi Arabia East-West Pipeline map showing the 1200km Petroline from Abqaiq to Yanbu on the Red Sea",
+        caption: "Saudi Arabia's East-West Pipeline (Petroline): the 1,200-km strategic bypass linking eastern oil fields to the Red Sea port of Yanbu, avoiding the blocked Strait of Hormuz entirely.",
+      },
+      {
+        type: "heading",
+        text: "The Oil Pivot",
+      },
+      {
+        type: "text",
+        text: "The numbers speak clearly. Before the war, Saudi Arabia exported roughly 6 million barrels per day through the Strait of Hormuz. When Iran shut it down on February 28, Aramco activated the East-West Pipeline, a 1,200-kilometer system linking the eastern oil fields at Abqaiq to the port of Yanbu on the Red Sea.",
+      },
+      {
+        type: "stats",
+        items: [
+          { value: "1.1M bpd", label: "Pre-war Yanbu exports" },
+          { value: "4.0M+ bpd", label: "Current Yanbu exports", highlight: "highlight-green" },
+          { value: "5.0M bpd", label: "Pipeline export capacity", highlight: "highlight-accent" },
+        ],
+      },
+      {
+        type: "text",
+        text: "In February, Yanbu was exporting about 1.1 million barrels per day. By mid-March, that figure had climbed past 4 million. That puts Yanbu at the absolute ceiling of its tested terminal capacity. Aramco says the pipeline can push up to 7 million barrels per day, with 5 million available for export and the rest feeding western coast refineries. At least 27 supertankers were anchored near Yanbu by mid-March, up from 11 just days earlier.",
+      },
+      {
+        type: "text",
+        text: "No other Gulf producer can do this at anything close to this scale. The UAE has the Abu Dhabi pipeline to Fujairah, but it maxes out at 1.5 million barrels per day. Iraq has already shut down some production because its storage is full. Kuwait faces the same wall within weeks. Qatar declared force majeure after Iranian strikes hit its LNG facilities. Saudi Arabia is the only country in the Gulf with the physical infrastructure to redirect the bulk of its energy exports away from Hormuz.",
+      },
+      {
+        type: "text",
+        text: "This did not happen by accident. Yanbu was first developed in the 1980s during the Iran-Iraq War as a strategic bypass. The Yanbu South Terminal was commissioned in 2018, doubling capacity. The pipeline expansion completed in 2019, after Houthi drone strikes on Abqaiq exposed the vulnerability of east-coast-only infrastructure, brought total throughput to 7 million barrels per day. These were deliberate, long-horizon infrastructure decisions made by Saudi policymakers who understood that the Strait of Hormuz was not just a shipping lane. It was a single point of failure for the entire Gulf economy.",
+      },
+      {
+        type: "heading",
+        text: "The Logistics Corridor",
+      },
+      {
+        type: "text",
+        text: "The energy story is getting the headlines. But the second move is arguably more significant for the region's long-term architecture.",
+      },
+      {
+        type: "text",
+        text: "On March 12, Transport Minister Saleh Al-Jasser launched the Western Coast Logistics Corridors Initiative at Jeddah Islamic Port. The program establishes dedicated operational pathways to receive containers and commercial cargo redirected from Saudi Arabia's eastern ports and from ports across all six GCC member states.",
+      },
+      {
+        type: "callout",
+        text: "Saudi Red Sea ports collectively have annual capacity exceeding 18.6 million TEUs. Much of this was historically underutilized. Jeddah Islamic Port alone handles roughly 7.5 million TEUs annually following an $800 million expansion completed in 2025.",
+      },
+      {
+        type: "text",
+        text: "The operational picture is already shifting. Maersk and Hapag-Lloyd have added new services at Jeddah. Carriers are building capacity on the Jeddah corridor to connect onward by feeder vessels and trucking to Dammam, Kuwait, Qatar, Bahrain, and the UAE. Qatar has moved beyond emergency mode and is formally institutionalizing overland supply routes through Saudi territory using the TIR system for fast-track customs clearance at the Saudi land border.",
+      },
+      {
+        type: "text",
+        text: "Saudi Arabia is not just keeping its own supply chain running. It is becoming the import gateway for the entire GCC.",
+      },
+      {
+        type: "text",
+        text: "For the smaller Gulf states, this matters enormously. Bahrain, Kuwait, and Qatar have no Red Sea access. They depend entirely on Hormuz for seaborne trade. Without Saudi Arabia's western ports and overland corridors, they face genuine shortages. Kuwait has already frozen prices on basic goods and subsidized meat imports after recording a 30 percent increase in food costs. The Saudi logistics corridor is not a convenience. For several GCC neighbors, it is the difference between functioning markets and empty shelves.",
+      },
+      {
+        type: "heading",
+        text: "What This Reveals",
+      },
+      {
+        type: "text",
+        text: "From a policy perspective, this crisis is validating a set of infrastructure decisions that were easy to question in peacetime. Why maintain a 7-million-barrel-per-day pipeline to the Red Sea when Hormuz was open? Why invest billions in expanding Yanbu's terminal capacity when the port was operating well below its potential? Why build out Jeddah Islamic Port to handle nearly 20,000-TEU vessels when existing throughput did not demand it?",
+      },
+      {
+        type: "text",
+        text: "Because infrastructure planning is not about today's traffic. It is about tomorrow's worst case.",
+      },
+      {
+        type: "text",
+        text: "Saudi Arabia's dual-coast geography is a natural advantage. But geography alone does not create operational capability. What turned a geographic feature into a functioning bypass was decades of investment in pipelines, terminals, storage, and port capacity. The policy lesson is straightforward. Strategic infrastructure must be built before the crisis that justifies it.",
+      },
+      {
+        type: "text",
+        text: "But this crisis also exposes where the work is not finished.",
+      },
+      {
+        type: "text",
+        text: "The Saudi Landbridge, a 950-kilometer freight railway that would connect Jeddah to Riyadh, remains unbuilt. Construction tenders are not expected until mid-2026. Completion is targeted for the early 2030s. Without it, all container movement between the Red Sea coast and the Gulf hinterland travels by road. That works for emergency logistics. It does not work as a permanent alternative to maritime access.",
+      },
+      {
+        type: "text",
+        text: "The Houthi threat is the other variable. Roughly 90 percent of crude tankers leaving Saudi Red Sea ports are bound for Asia. That means they pass through the Bab al-Mandab strait. The Houthis have not attacked shipping since the current conflict began, but the risk has not disappeared.",
+      },
+      {
+        type: "text",
+        text: "And the GCC rail network, long discussed as a regional connectivity project, has never looked more urgent. A connected rail system linking Red Sea ports to Riyadh, Dammam, and onward to Bahrain, Qatar, and the UAE would transform the logistics corridor from a wartime workaround into permanent infrastructure. The case for accelerating that investment is no longer theoretical. It is playing out in real time on every truck route between Jeddah and Doha.",
+      },
+      {
+        type: "heading",
+        text: "The Takeaway",
+      },
+      {
+        type: "text",
+        text: "Saudi Arabia is passing a stress test that most Gulf states are failing. Not because of luck or geography alone, but because of infrastructure decisions made over decades that are now paying off under pressure.",
+      },
+      {
+        type: "text",
+        text: "The two-coast advantage is real. The ability to switch oil exports from east to west at scale is unique in the Gulf. The ability to absorb GCC import volumes through Red Sea ports is a direct product of capacity investments that were made before anyone needed them.",
+      },
+      {
+        type: "text",
+        text: "For policymakers across the region, the lesson is clear. Redundancy is not waste. Spare capacity is not inefficiency. And the time to build bypass infrastructure is before the chokepoint closes.",
+      },
+      {
+        type: "text",
+        text: "The Strait of Hormuz will eventually reopen. But the vulnerability it represents will not disappear. What Saudi Arabia has demonstrated in the past three weeks is that the Gulf's most valuable infrastructure asset is not a port or a pipeline. It is the foresight to build both on the other side of the peninsula.",
       },
     ],
   },
