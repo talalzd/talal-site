@@ -3,8 +3,12 @@ import articleData from "./articles.js";
 
 const SECTIONS = ["home", "perspectives", "about", "connect"];
 
-// All perspectives come from articles.js
-const allPerspectives = articleData;
+// Sort perspectives by date, newest first
+const allPerspectives = [...articleData].sort((a, b) => {
+  const dateA = new Date(a.date);
+  const dateB = new Date(b.date);
+  return dateB - dateA;
+});
 
 const career = [
   {
