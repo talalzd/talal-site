@@ -132,7 +132,7 @@ const articles = [
         text: "The Strait of Hormuz will eventually reopen. But the vulnerability it represents will not disappear. What Saudi Arabia has demonstrated in the past three weeks is that the Gulf's most valuable infrastructure asset is not a port or a pipeline. It is the foresight to build both on the other side of the peninsula.",
       },
     ],
-  },,
+  },
   {
     id: 3,
     slug: "regulatory-cheat-sheet",
@@ -228,7 +228,7 @@ const articles = [
         text: "None of these are optional. And none of them can be managed by a single compliance checklist applied across all three markets. The companies that get this right treat each country as a distinct regulatory jurisdiction with its own logic, its own pace, and its own priorities. The companies that don't will find out the hard way that 'MENA' is a geography, not a regulatory framework.",
       },
     ],
-  },,
+  },
   {
     id: 2,
     slug: "ai-strategies-trade-barriers",
@@ -328,7 +328,7 @@ const articles = [
         text: "If your company treats AI regulation here as a compliance checkbox instead of a market access strategy, you're not just behind. You're building on ground that's about to move. The new trade barriers aren't tariffs. They're AI governance frameworks. And the only way through them is to take each market seriously enough to understand what it's actually asking of you.",
       },
     ],
-  },,
+  },
   {
     id: 1,
     slug: "gcc-fdi-race",
@@ -424,7 +424,7 @@ const articles = [
         text: "The GCC FDI race looks like a competition for capital. It's actually a competition for trust. Capital follows trust, not the other way around. The country that builds the most predictable, transparent, and enforceable regulatory environment will attract the deepest long-term investment. Incentive checks get companies in the door. Regulatory trust keeps them there.",
       },
     ],
-  },,
+  },
 ];
 
 export default articles;
