@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import articleData from "./articles.js";
+import ArticlePublisher from "./ArticlePublisher.jsx";
 
 const SECTIONS = ["home", "perspectives", "about", "connect"];
 
@@ -61,6 +62,7 @@ export default function TalalSite() {
   const activeArticle = articleSlug
     ? allPerspectives.find((a) => a.slug === articleSlug)
     : null;
+  const isPublisher = location.pathname === "/publish";
 
   // Update page title for SEO
   useEffect(() => {
@@ -989,8 +991,10 @@ export default function TalalSite() {
         </div>
       )}
 
-      {/* ARTICLE VIEW */}
-      {activeArticle ? (
+      {/* PUBLISHER TOOL */}
+      {isPublisher ? (
+        <ArticlePublisher />
+      ) : activeArticle ? (
         <>
           <div className="article-view">
             <button
