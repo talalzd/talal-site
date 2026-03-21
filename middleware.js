@@ -34,7 +34,10 @@ export default async function middleware(request) {
     var article = allMeta[slug];
     if (!article) return;
 
-    var ogImage = origin + "/og-" + slug + ".png";
+    var ogImage = origin + "/api/og"
+      + "?title=" + encodeURIComponent(article.title)
+      + "&tag=" + encodeURIComponent(article.tag)
+      + "&excerpt=" + encodeURIComponent(article.description);
 
     var html = "<!DOCTYPE html><html><head>"
       + "<meta charset=\"UTF-8\" />"
