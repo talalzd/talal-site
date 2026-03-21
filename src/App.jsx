@@ -343,6 +343,82 @@ export default function TalalSite() {
           color: #8A8580;
         }
 
+        .trust-strip {
+          padding: 60px 40px;
+          border-top: 1px solid rgba(200,169,126,0.08);
+          border-bottom: 1px solid rgba(200,169,126,0.08);
+        }
+
+        .trust-label {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          text-transform: uppercase;
+          letter-spacing: 3px;
+          color: #3A3530;
+          text-align: center;
+          margin-bottom: 32px;
+        }
+
+        .trust-logos {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 48px;
+          flex-wrap: wrap;
+        }
+
+        .trust-logo {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 14px;
+          font-weight: 500;
+          letter-spacing: 0.5px;
+          color: #4A4540;
+          transition: color 0.3s;
+          white-space: nowrap;
+          position: relative;
+        }
+
+        .trust-logo:hover {
+          color: #C8A97E;
+        }
+
+        .trust-logo-accent {
+          font-family: 'Instrument Serif', serif;
+          font-size: 16px;
+          font-weight: 400;
+          color: #4A4540;
+          transition: color 0.3s;
+          white-space: nowrap;
+        }
+
+        .trust-logo-accent:hover {
+          color: #C8A97E;
+        }
+
+        .trust-divider {
+          width: 1px;
+          height: 20px;
+          background: rgba(200,169,126,0.12);
+        }
+
+        @media (max-width: 768px) {
+          .trust-logos { gap: 24px; }
+          .trust-divider { display: none; }
+          .trust-strip { padding: 40px 20px; }
+        }
+
+        .perspective-featured {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 9px;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          color: #0A0A0A;
+          background: #C8A97E;
+          padding: 3px 10px;
+          display: inline-block;
+          margin-bottom: 8px;
+        }
+
         @keyframes fadeUp {
           to { opacity: 1; transform: translateY(0); }
         }
@@ -483,8 +559,8 @@ export default function TalalSite() {
         }
 
         .about-photo-wrapper {
-          width: 200px;
-          height: 200px;
+          width: 240px;
+          height: 300px;
           flex-shrink: 0;
           position: relative;
           border-radius: 4px;
@@ -495,7 +571,7 @@ export default function TalalSite() {
           content: '';
           position: absolute;
           inset: 0;
-          border: 1px solid rgba(200,169,126,0.2);
+          border: 1px solid rgba(200,169,126,0.3);
           border-radius: 4px;
           pointer-events: none;
         }
@@ -505,12 +581,12 @@ export default function TalalSite() {
           height: 100%;
           object-fit: cover;
           object-position: center 15%;
-          filter: grayscale(30%) contrast(1.05);
+          filter: grayscale(10%) contrast(1.02) brightness(1.02);
           transition: filter 0.5s ease;
         }
 
         .about-photo-wrapper:hover .about-photo {
-          filter: grayscale(0%) contrast(1);
+          filter: grayscale(0%) contrast(1) brightness(1.05);
         }
 
         .about-photo-intro {
@@ -608,6 +684,18 @@ export default function TalalSite() {
           text-align: center;
         }
 
+        .connect-section::before {
+          content: '';
+          position: absolute;
+          top: -50px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 500px;
+          height: 400px;
+          background: radial-gradient(circle, rgba(200,169,126,0.06) 0%, transparent 65%);
+          pointer-events: none;
+        }
+
         .connect-headline {
           font-family: 'Instrument Serif', serif;
           font-size: clamp(32px, 5vw, 56px);
@@ -625,8 +713,26 @@ export default function TalalSite() {
           font-size: 16px;
           color: #6B6560;
           max-width: 500px;
-          margin: 0 auto 48px;
+          margin: 0 auto 20px;
           line-height: 1.7;
+        }
+
+        .connect-email-display {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 13px;
+          color: #8A8580;
+          letter-spacing: 1px;
+          margin-bottom: 48px;
+        }
+
+        .connect-email-display a {
+          color: #C8A97E;
+          text-decoration: none;
+          transition: opacity 0.3s;
+        }
+
+        .connect-email-display a:hover {
+          opacity: 0.7;
         }
 
         .connect-links {
@@ -1133,6 +1239,22 @@ export default function TalalSite() {
         </div>
       </section>
 
+      {/* INSTITUTIONAL TRUST STRIP */}
+      <div className="trust-strip">
+        <div className="trust-label">Where I've Operated</div>
+        <div className="trust-logos">
+          <span className="trust-logo-accent">HP Inc.</span>
+          <span className="trust-divider" />
+          <span className="trust-logo">Royal Commission for AlUla</span>
+          <span className="trust-divider" />
+          <span className="trust-logo-accent">SAMA</span>
+          <span className="trust-divider" />
+          <span className="trust-logo">G20 Saudi Presidency</span>
+          <span className="trust-divider" />
+          <span className="trust-logo-accent">Monshaat</span>
+        </div>
+      </div>
+
       {/* PERSPECTIVES */}
       <section
         ref={(el) => (sectionRefs.current.perspectives = el)}
@@ -1144,7 +1266,7 @@ export default function TalalSite() {
           <div className="section-line" />
         </div>
 
-        {allPerspectives.map((p) => (
+        {allPerspectives.map((p, idx) => (
           <div
             key={p.id}
             className="perspective-card"
@@ -1159,6 +1281,7 @@ export default function TalalSite() {
             style={{ cursor: p.content ? "pointer" : "default" }}
           >
             <div className="perspective-meta">
+              {idx === 0 && <span className="perspective-featured">Latest</span>}
               <span className="perspective-tag">{p.tag}</span>
               <span className="perspective-date">
                 {p.date} · {p.readTime}
@@ -1366,6 +1489,10 @@ export default function TalalSite() {
           Available for advisory engagements, speaking invitations,
           and conversations about tech policy in the Gulf and beyond.
         </p>
+
+        <div className="connect-email-display">
+          <a href="mailto:talal.h.zd@gmail.com">talal.h.zd@gmail.com</a>
+        </div>
 
         <div className="connect-links">
           <a href="mailto:talal.h.zd@gmail.com" className="connect-btn primary">
