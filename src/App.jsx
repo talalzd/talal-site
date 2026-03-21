@@ -363,41 +363,29 @@ export default function TalalSite() {
           display: flex;
           justify-content: center;
           align-items: center;
-          gap: 48px;
+          gap: 40px;
           flex-wrap: wrap;
         }
 
-        .trust-logo {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 14px;
-          font-weight: 500;
-          letter-spacing: 0.5px;
-          color: #4A4540;
-          transition: color 0.3s;
-          white-space: nowrap;
-          position: relative;
+        .trust-logo-img {
+          height: 36px;
+          width: auto;
+          object-fit: contain;
+          filter: brightness(0) invert(1) opacity(0.3);
+          transition: all 0.4s ease;
         }
 
-        .trust-logo:hover {
-          color: #C8A97E;
+        .trust-logo-img:hover {
+          filter: brightness(0) invert(1) opacity(0.6);
         }
 
-        .trust-logo-accent {
-          font-family: 'Instrument Serif', serif;
-          font-size: 16px;
-          font-weight: 400;
-          color: #4A4540;
-          transition: color 0.3s;
-          white-space: nowrap;
-        }
-
-        .trust-logo-accent:hover {
-          color: #C8A97E;
+        .trust-logo-img.tall {
+          height: 44px;
         }
 
         .trust-divider {
           width: 1px;
-          height: 20px;
+          height: 28px;
           background: rgba(200,169,126,0.12);
         }
 
@@ -405,6 +393,8 @@ export default function TalalSite() {
           .trust-logos { gap: 24px; }
           .trust-divider { display: none; }
           .trust-strip { padding: 40px 20px; }
+          .trust-logo-img { height: 28px; }
+          .trust-logo-img.tall { height: 34px; }
         }
 
         .perspective-featured {
@@ -1243,15 +1233,15 @@ export default function TalalSite() {
       <div className="trust-strip">
         <div className="trust-label">Where I've Operated</div>
         <div className="trust-logos">
-          <span className="trust-logo-accent">HP Inc.</span>
+          <img src="/hp-logo.svg" alt="HP Inc." className="trust-logo-img" />
           <span className="trust-divider" />
-          <span className="trust-logo">Royal Commission for AlUla</span>
+          <img src="/rcu-logo.png" alt="Royal Commission for AlUla" className="trust-logo-img" />
           <span className="trust-divider" />
-          <span className="trust-logo-accent">SAMA</span>
+          <img src="/sama-logo.png" alt="Saudi Central Bank (SAMA)" className="trust-logo-img" />
           <span className="trust-divider" />
-          <span className="trust-logo">G20 Saudi Presidency</span>
+          <img src="/g20-logo.webp" alt="G20 Saudi Arabia 2020" className="trust-logo-img tall" />
           <span className="trust-divider" />
-          <span className="trust-logo-accent">Monshaat</span>
+          <img src="/monshaat-logo.webp" alt="Monshaat" className="trust-logo-img" />
         </div>
       </div>
 
