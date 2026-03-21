@@ -371,14 +371,12 @@ export default function TalalSite() {
           height: 36px;
           width: auto;
           object-fit: contain;
-          filter: grayscale(1) brightness(1.8);
-          mix-blend-mode: lighten;
-          opacity: 0.4;
-          transition: all 0.4s ease;
+          opacity: 0.75;
+          transition: opacity 0.4s ease;
         }
 
         .trust-logo-img:hover {
-          opacity: 0.7;
+          opacity: 1;
         }
 
         .trust-logo-img.tall {
@@ -1233,7 +1231,7 @@ export default function TalalSite() {
 
       {/* INSTITUTIONAL TRUST STRIP */}
       <div className="trust-strip">
-        <div className="trust-label">Institutional Track Record</div>
+        <div className="trust-label">I Served At</div>
         <div className="trust-logos">
           <img src="/hp-logo.svg" alt="HP Inc." className="trust-logo-img" />
           <span className="trust-divider" />
