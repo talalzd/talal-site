@@ -2,7 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://talalalzayed.com/</loc>
-    <lastmod>2026-03-18</lastmod>
+    <lastmod>2026-03-21</lastmod>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://talalalzayed.com/articles/two-coast-advantage</loc>
+    <lastmod>2026-03-20</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://talalalzayed.com/articles/regulatory-cheat-sheet</loc>
+    <lastmod>2026-03-14</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://talalalzayed.com/articles/ai-strategies-trade-barriers</loc>
+    <lastmod>2026-03-09</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://talalalzayed.com/articles/gcc-fdi-race</loc>
+    <lastmod>2026-03-03</lastmod>
+    <priority>0.8</priority>
   </url>
 </urlset>
