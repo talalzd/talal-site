@@ -1242,6 +1242,8 @@ export default function TalalSite() {
           <img src="/g20-logo.webp" alt="G20 Saudi Arabia 2020" className="trust-logo-img tall" />
           <span className="trust-divider" />
           <img src="/monshaat-logo.webp" alt="Monshaat" className="trust-logo-img" />
+          <span className="trust-divider" />
+          <img src="/royal-court-logo.png" alt="The Royal Court" className="trust-logo-img tall" />
         </div>
       </div>
 
