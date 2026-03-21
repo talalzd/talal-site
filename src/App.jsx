@@ -354,7 +354,7 @@ export default function TalalSite() {
           font-size: 10px;
           text-transform: uppercase;
           letter-spacing: 3px;
-          color: #3A3530;
+          color: #6B6560;
           text-align: center;
           margin-bottom: 32px;
         }
@@ -371,12 +371,14 @@ export default function TalalSite() {
           height: 36px;
           width: auto;
           object-fit: contain;
-          filter: brightness(0) invert(1) opacity(0.3);
+          filter: grayscale(1) brightness(1.8);
+          mix-blend-mode: lighten;
+          opacity: 0.4;
           transition: all 0.4s ease;
         }
 
         .trust-logo-img:hover {
-          filter: brightness(0) invert(1) opacity(0.6);
+          opacity: 0.7;
         }
 
         .trust-logo-img.tall {
@@ -1231,7 +1233,7 @@ export default function TalalSite() {
 
       {/* INSTITUTIONAL TRUST STRIP */}
       <div className="trust-strip">
-        <div className="trust-label">Where I've Operated</div>
+        <div className="trust-label">Institutional Track Record</div>
         <div className="trust-logos">
           <img src="/hp-logo.svg" alt="HP Inc." className="trust-logo-img" />
           <span className="trust-divider" />
