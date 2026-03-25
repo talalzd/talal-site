@@ -540,6 +540,105 @@ export default function TalalSite() {
           }
         }
 
+        .projects-section {
+          padding: 120px 40px;
+          position: relative;
+        }
+
+        .projects-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1px;
+          background: rgba(200,169,126,0.08);
+          border: 1px solid rgba(200,169,126,0.08);
+        }
+
+        .project-card {
+          background: #0A0A0A;
+          padding: 40px 32px;
+          transition: all 0.4s ease;
+          cursor: default;
+          position: relative;
+        }
+
+        .project-card:hover {
+          background: #111;
+        }
+
+        .project-card.clickable {
+          cursor: pointer;
+        }
+
+        .project-status {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 9px;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          padding: 3px 10px;
+          display: inline-block;
+          margin-bottom: 16px;
+        }
+
+        .project-status.live {
+          color: #0A0A0A;
+          background: #C8A97E;
+        }
+
+        .project-status.development {
+          color: #C8A97E;
+          border: 1px solid rgba(200,169,126,0.3);
+        }
+
+        .project-card-title {
+          font-family: 'Instrument Serif', serif;
+          font-size: 24px;
+          color: #E8E4DF;
+          margin-bottom: 12px;
+          transition: color 0.3s;
+          line-height: 1.2;
+        }
+
+        .project-card.clickable:hover .project-card-title {
+          color: #C8A97E;
+        }
+
+        .project-card-desc {
+          font-size: 14px;
+          color: #8A8580;
+          line-height: 1.7;
+          margin-bottom: 20px;
+        }
+
+        .project-card-stack {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          color: #4A4540;
+          letter-spacing: 1px;
+        }
+
+        .project-card-arrow {
+          position: absolute;
+          bottom: 32px;
+          right: 32px;
+          color: #C8A97E;
+          font-size: 18px;
+          opacity: 0;
+          transform: translateX(-6px);
+          transition: all 0.3s;
+        }
+
+        .project-card.clickable:hover .project-card-arrow {
+          opacity: 1;
+          transform: translateX(0);
+        }
+
+        @media (max-width: 768px) {
+          .projects-grid {
+            grid-template-columns: 1fr;
+          }
+          .projects-section { padding: 80px 20px; }
+        }
+
         .about-section {
           padding: 120px 40px;
           position: relative;
@@ -1043,7 +1142,7 @@ export default function TalalSite() {
 
         @media (max-width: 768px) {
           .hero-section { padding: 100px 20px 60px; }
-          .perspectives-section, .about-section, .connect-section { padding: 80px 20px; }
+          .perspectives-section, .about-section, .connect-section, .projects-section { padding: 80px 20px; }
           .hero-stats { gap: 32px; }
           .arabic-watermark { display: none; }
         }
@@ -1302,13 +1401,65 @@ export default function TalalSite() {
         ))}
       </section>
 
+      {/* PROJECTS */}
+      <section className="projects-section">
+        <div className="section-header">
+          <span className="section-number">02</span>
+          <span className="section-title">What I Build</span>
+          <div className="section-line" />
+        </div>
+
+        <div className="projects-grid">
+          <a
+            href="https://ironlog-theta.vercel.app"
+            target="_blank"
+            rel="noopener"
+            className="project-card clickable"
+            style={{ textDecoration: "none" }}
+          >
+            <span className="project-status live">Live</span>
+            <div className="project-card-title">IRON LOG</div>
+            <div className="project-card-desc">
+              Full-stack home gym tracker with cloud sync, progression analytics, and an AI coaching feature powered by Claude. Built for serious lifters who train at home.
+            </div>
+            <div className="project-card-stack">React · Supabase · Anthropic API · Vercel</div>
+            <span className="project-card-arrow">→</span>
+          </a>
+
+          <div className="project-card">
+            <span className="project-status live">Live</span>
+            <div className="project-card-title" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 22 }}>مواعيدنا</div>
+            <div className="project-card-desc">
+              Mobile-first Arabic booking app for a makeup artist business. WhatsApp-integrated appointment management built for the Saudi market.
+            </div>
+            <div className="project-card-stack">React · Netlify · Arabic-first UX</div>
+          </div>
+
+          <a
+            href="https://mena-new.onrender.com/"
+            target="_blank"
+            rel="noopener"
+            className="project-card clickable"
+            style={{ textDecoration: "none" }}
+          >
+            <span className="project-status live">Live</span>
+            <div className="project-card-title">MENA Policy Monitor</div>
+            <div className="project-card-desc">
+              Regulatory intelligence system tracking government consultations and policy changes across Saudi Arabia, UAE, and Egypt. The tool I wished existed when I started this job.
+            </div>
+            <div className="project-card-stack">Flask · SQLite · Replit</div>
+            <span className="project-card-arrow">→</span>
+          </a>
+        </div>
+      </section>
+
       {/* ABOUT */}
       <section
         ref={(el) => (sectionRefs.current.about = el)}
         className="about-section"
       >
         <div className="section-header">
-          <span className="section-number">02</span>
+          <span className="section-number">03</span>
           <span className="section-title">About</span>
           <div className="section-line" />
         </div>
@@ -1472,7 +1623,7 @@ export default function TalalSite() {
         className="connect-section"
       >
         <div className="section-header">
-          <span className="section-number">03</span>
+          <span className="section-number">04</span>
           <span className="section-title">Connect</span>
           <div className="section-line" />
         </div>
