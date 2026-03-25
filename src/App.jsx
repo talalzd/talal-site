@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import articleData from "./articles.js";
 import ArticlePublisher from "./ArticlePublisher.jsx";
+import Advisory from "./Advisory.jsx";
 
 const SECTIONS = ["home", "perspectives", "about", "connect"];
 
@@ -63,15 +64,18 @@ export default function TalalSite() {
     ? allPerspectives.find((a) => a.slug === articleSlug)
     : null;
   const isPublisher = location.pathname === "/publish";
+  const isAdvisory = location.pathname === "/advisory";
 
   // Update page title for SEO
   useEffect(() => {
     if (activeArticle) {
       document.title = `${activeArticle.title} | Talal Al Zayed`;
+    } else if (isAdvisory) {
+      document.title = "Advisory — Talal Al Zayed";
     } else {
       document.title = "Talal Al Zayed — Policy · Technology · Builder";
     }
-  }, [activeArticle]);
+  }, [activeArticle, isAdvisory]);
 
   useEffect(() => {
     setTimeout(() => setLoaded(true), 100);
@@ -1090,6 +1094,8 @@ export default function TalalSite() {
       {/* PUBLISHER TOOL */}
       {isPublisher ? (
         <ArticlePublisher />
+      ) : isAdvisory ? (
+        <Advisory />
       ) : activeArticle ? (
         <>
           <div className="article-view">
@@ -1498,6 +1504,26 @@ export default function TalalSite() {
           >
             LinkedIn
           </a>
+        </div>
+
+        <div
+          style={{
+            marginTop: 32,
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 11,
+            letterSpacing: 1,
+            color: "#4A4540",
+          }}
+        >
+          Looking for regulatory advisory in the Gulf?{" "}
+          <span
+            style={{ color: "#C8A97E", cursor: "pointer", transition: "opacity 0.3s" }}
+            onClick={() => { navigate("/advisory"); window.scrollTo(0, 0); }}
+            onMouseEnter={(e) => { e.target.style.opacity = "0.7"; }}
+            onMouseLeave={(e) => { e.target.style.opacity = "1"; }}
+          >
+            Learn more →
+          </span>
         </div>
       </section>
 
