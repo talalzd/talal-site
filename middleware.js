@@ -11,7 +11,7 @@ var BOT_AGENTS = [
 ];
 
 export var config = {
-  matcher: "/articles/:slug*"
+  matcher: ["/articles/:slug*", "/advisory"]
 };
 
 export default async function middleware(request) {
@@ -21,6 +21,28 @@ export default async function middleware(request) {
   if (!isBot) return;
 
   var url = new URL(request.url);
+  var origin = url.origin;
+
+  // Handle advisory page
+  if (url.pathname === "/advisory" || url.pathname === "/advisory/") {
+    var advHtml = "<!DOCTYPE html><html><head>"
+      + "<meta charset=\"UTF-8\" />"
+      + "<link rel=\"canonical\" href=\"" + origin + "/advisory\" />"
+      + "<title>Advisory — Talal Al Zayed</title>"
+      + "<meta name=\"description\" content=\"Regulatory advisory for technology companies entering Saudi Arabia, UAE, and Egypt. A decade of institutional experience on both sides of the table.\" />"
+      + "<meta property=\"og:title\" content=\"Advisory — Talal Al Zayed\" />"
+      + "<meta property=\"og:description\" content=\"Helping technology companies navigate government in the Gulf.\" />"
+      + "<meta property=\"og:image\" content=\"" + origin + "/og-image.png\" />"
+      + "<meta property=\"og:url\" content=\"" + origin + "/advisory\" />"
+      + "<meta property=\"og:type\" content=\"website\" />"
+      + "</head><body></body></html>";
+
+    return new Response(advHtml, {
+      headers: { "Content-Type": "text/html" }
+    });
+  }
+
+  // Handle article pages
   var parts = url.pathname.split("/articles/");
   var slug = parts[1];
   var origin = url.origin;

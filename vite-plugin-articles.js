@@ -53,6 +53,11 @@ export default function articlesPlugin() {
     <lastmod>${today}</lastmod>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://talalalzayed.com/advisory</loc>
+    <lastmod>${today}</lastmod>
+    <priority>0.7</priority>
+  </url>
 ${sitemapEntries}
 </urlset>
 `;
