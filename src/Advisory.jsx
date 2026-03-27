@@ -42,6 +42,7 @@ export default function Advisory() {
         <div className="nav-links">
           {[
             { id: "perspectives", label: "Perspectives" },
+            { id: "projects", label: "What I Build" },
             { id: "about", label: "About" },
             { id: "connect", label: "Connect" },
           ].map(function(item) {

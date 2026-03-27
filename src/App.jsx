@@ -4,7 +4,7 @@ import articleData from "./articles.js";
 import ArticlePublisher from "./ArticlePublisher.jsx";
 import Advisory from "./Advisory.jsx";
 
-const SECTIONS = ["home", "perspectives", "about", "connect"];
+const SECTIONS = ["home", "perspectives", "projects", "about", "connect"];
 
 // Sort perspectives by date, newest first
 const allPerspectives = [...articleData].sort((a, b) => {
@@ -1270,6 +1270,7 @@ export default function TalalSite() {
         <div className="nav-links">
           {[
             { id: "perspectives", label: "Perspectives" },
+            { id: "projects", label: "What I Build" },
             { id: "about", label: "About" },
             { id: "connect", label: "Connect" },
           ].map((item) => (
@@ -1547,7 +1548,10 @@ export default function TalalSite() {
       </div>
 
       {/* PROJECTS */}
-      <section className="projects-section">
+      <section
+        ref={(el) => (sectionRefs.current.projects = el)}
+        className="projects-section"
+      >
         <div className="section-header">
           <span className="section-number">02</span>
           <span className="section-title">What I Build</span>
