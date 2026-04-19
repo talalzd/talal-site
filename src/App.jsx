@@ -49,9 +49,6 @@ const career = [
 export default function TalalSite() {
   const [activeSection, setActiveSection] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const [hoveredPerspective, setHoveredPerspective] = useState(null);
-  const [loaded, setLoaded] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [emailSubmitted, setEmailSubmitted] = useState(false);
   const sectionRefs = useRef({});
@@ -65,6 +62,7 @@ export default function TalalSite() {
   const activeArticle = articleSlug
     ? allPerspectives.find((a) => a.slug === articleSlug)
     : null;
+  const isArticleNotFound = articleSlug && !activeArticle;
   const isPublisher = location.pathname === "/publish";
   const isAdvisory = location.pathname === "/advisory";
 
@@ -72,20 +70,17 @@ export default function TalalSite() {
   useEffect(() => {
     if (activeArticle) {
       document.title = `${activeArticle.title} | Talal Al Zayed`;
+    } else if (isArticleNotFound) {
+      document.title = "Not Found | Talal Al Zayed";
     } else if (isAdvisory) {
       document.title = "Advisory — Talal Al Zayed";
     } else {
       document.title = "Talal Al Zayed — Policy · Technology · Builder";
     }
-  }, [activeArticle, isAdvisory]);
-
-  useEffect(() => {
-    setTimeout(() => setLoaded(true), 100);
-  }, []);
+  }, [activeArticle, isArticleNotFound, isAdvisory]);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrollY(window.scrollY || document.documentElement.scrollTop);
       const offsets = SECTIONS.map((s) => {
         const el = sectionRefs.current[s];
         if (!el) return { id: s, top: 0 };
@@ -462,6 +457,7 @@ export default function TalalSite() {
         }
 
         .perspective-card {
+          position: relative;
           border-top: 1px solid rgba(200,169,126,0.1);
           padding: 40px 0;
           cursor: pointer;
@@ -472,8 +468,24 @@ export default function TalalSite() {
           align-items: start;
         }
 
+        .perspective-card::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 2px;
+          height: 0;
+          background: #C8A97E;
+          transition: height 0.4s ease;
+        }
+
         .perspective-card:hover {
           padding-left: 20px;
+        }
+
+        .perspective-card:hover::before {
+          height: 48px;
         }
 
         .perspective-card:last-child {
@@ -1176,6 +1188,23 @@ export default function TalalSite() {
           }
         }
 
+        .notfound-code {
+          font-family: 'Instrument Serif', serif;
+          font-size: 120px;
+          line-height: 1;
+          color: #C8A97E;
+          opacity: 0.25;
+          margin-bottom: 16px;
+          letter-spacing: -4px;
+        }
+
+        .notfound-actions {
+          display: flex;
+          gap: 16px;
+          flex-wrap: wrap;
+          margin-top: 40px;
+        }
+
         .footer {
           padding: 40px;
           display: flex;
@@ -1259,6 +1288,7 @@ export default function TalalSite() {
           .perspectives-section, .about-section, .connect-section, .projects-section { padding: 80px 20px; }
           .hero-stats { gap: 32px; }
           .arabic-watermark { display: none; }
+          .notfound-code { font-size: 88px; }
         }
       `}</style>
 
@@ -1376,13 +1406,59 @@ export default function TalalSite() {
             </div>
             <div className="article-discuss">
               Have a take on this?{" "}
-              <a
+              
                 href="https://www.linkedin.com/in/talal-alzayed/"
                 target="_blank"
                 rel="noopener"
               >
                 Find me on LinkedIn →
               </a>
+            </div>
+          </div>
+          <footer className="footer">
+            <div className="footer-left">© 2026 Talal Al Zayed</div>
+            <div className="footer-quote">
+              على قدر أهل العزم تأتي العزائم
+            </div>
+          </footer>
+        </>
+      ) : isArticleNotFound ? (
+        <>
+          <div className="article-view">
+            <button
+              className="article-back"
+              onClick={() => {
+                navigate("/");
+                setTimeout(() => scrollTo("perspectives"), 150);
+              }}
+            >
+              ← Back to Perspectives
+            </button>
+            <div className="notfound-code">404</div>
+            <div className="article-tag">Not Found</div>
+            <h1 className="article-title">This piece doesn't exist.</h1>
+            <p className="article-body-intro">
+              The URL might be wrong, or the article may have moved. Either way, the writing lives on.
+            </p>
+            <div className="notfound-actions">
+              <button
+                className="hero-cta-btn primary"
+                onClick={() => {
+                  navigate("/");
+                  setTimeout(() => scrollTo("perspectives"), 150);
+                }}
+              >
+                Read All Perspectives
+              </button>
+              <button
+                className="hero-cta-btn secondary"
+                onClick={() => {
+                  navigate("/");
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Back to Home
+              </button>
             </div>
           </div>
           <footer className="footer">
@@ -1482,8 +1558,6 @@ export default function TalalSite() {
           <div
             key={p.id}
             className="perspective-card"
-            onMouseEnter={() => setHoveredPerspective(p.id)}
-            onMouseLeave={() => setHoveredPerspective(null)}
             onClick={() => {
               if (p.content && p.slug) {
                 navigate("/articles/" + p.slug);
@@ -1559,7 +1633,7 @@ export default function TalalSite() {
         </div>
 
         <div className="projects-grid">
-          <a
+          
             href="https://mena-risk-score.vercel.app/"
             target="_blank"
             rel="noopener"
@@ -1575,7 +1649,7 @@ export default function TalalSite() {
             <span className="project-card-arrow">→</span>
           </a>
 
-          <a
+          
             href="https://market-entry-playbook.vercel.app/"
             target="_blank"
             rel="noopener"
@@ -1591,7 +1665,7 @@ export default function TalalSite() {
             <span className="project-card-arrow">→</span>
           </a>
 
-          <a
+          
             href="https://mena-new.onrender.com/"
             target="_blank"
             rel="noopener"
@@ -1738,7 +1812,7 @@ export default function TalalSite() {
               </div>
             </div>
 
-            <a
+            
               href="/Talal_AlZayed_CV.pdf"
               target="_blank"
               rel="noopener"
@@ -1806,7 +1880,7 @@ export default function TalalSite() {
           <a href="mailto:talal.h.zd@gmail.com" className="connect-btn primary">
             Email Me
           </a>
-          <a
+          
             href="https://www.linkedin.com/in/talal-alzayed/"
             target="_blank"
             rel="noopener"
