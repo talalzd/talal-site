@@ -1089,26 +1089,122 @@ export default function TalalSite() {
 
         .article-discuss {
           margin-top: 48px;
-          padding: 28px 32px;
-          border: 1px solid rgba(200,169,126,0.15);
-          font-family: 'Instrument Serif', serif;
-          font-size: 20px;
-          color: #8A8580;
+          padding: 40px 36px;
+          border-top: 1px solid rgba(200,169,126,0.15);
+          border-bottom: 1px solid rgba(200,169,126,0.15);
           text-align: center;
+          position: relative;
         }
 
-        .article-discuss a {
+        .article-discuss-eyebrow {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          text-transform: uppercase;
+          letter-spacing: 3px;
+          color: #C8A97E;
+          margin-bottom: 16px;
+        }
+
+        .article-discuss-headline {
+          font-family: 'Instrument Serif', serif;
+          font-size: 26px;
+          line-height: 1.4;
+          color: #E8E4DF;
+          margin-bottom: 8px;
+        }
+
+        .article-discuss-headline em {
+          color: #C8A97E;
+          font-style: italic;
+        }
+
+        .article-discuss-sub {
+          font-size: 14px;
+          color: #6B6560;
+          line-height: 1.6;
+          margin-bottom: 24px;
+          max-width: 420px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .article-discuss-form {
+          display: flex;
+          justify-content: center;
+          max-width: 440px;
+          margin: 0 auto 16px;
+        }
+
+        .article-discuss-input {
+          flex: 1;
+          padding: 13px 18px;
+          background: #111;
+          border: 1px solid rgba(200,169,126,0.15);
+          border-right: none;
+          color: #E8E4DF;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 14px;
+          outline: none;
+          transition: border-color 0.3s;
+        }
+
+        .article-discuss-input:focus {
+          border-color: rgba(200,169,126,0.4);
+        }
+
+        .article-discuss-input::placeholder {
+          color: #4A4540;
+        }
+
+        .article-discuss-btn {
+          padding: 13px 24px;
+          background: #C8A97E;
+          color: #0A0A0A;
+          border: 1px solid #C8A97E;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          cursor: pointer;
+          transition: all 0.3s;
+          white-space: nowrap;
+        }
+
+        .article-discuss-btn:hover {
+          background: transparent;
+          color: #C8A97E;
+        }
+
+        .article-discuss-linkedin {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          letter-spacing: 1px;
+          color: #6B6560;
+          margin-top: 20px;
+        }
+
+        .article-discuss-linkedin a {
           color: #C8A97E;
           text-decoration: none;
           transition: opacity 0.3s;
         }
 
-        .article-discuss a:hover {
+        .article-discuss-linkedin a:hover {
           opacity: 0.7;
+        }
+
+        .article-discuss-success {
+          font-family: 'Instrument Serif', serif;
+          font-size: 22px;
+          color: #C8A97E;
+          line-height: 1.4;
         }
 
         @media (max-width: 768px) {
           .article-view { padding: 100px 20px 60px; }
+          .article-discuss { padding: 32px 20px; }
+          .article-discuss-form { flex-direction: column; }
+          .article-discuss-input { border-right: 1px solid rgba(200,169,126,0.15); border-bottom: none; }
         }
 
         .article-image-block {
@@ -1405,14 +1501,44 @@ export default function TalalSite() {
               </div>
             </div>
             <div className="article-discuss">
-              Have a take on this?{" "}
-              <a
-                href="https://www.linkedin.com/in/talal-alzayed/"
-                target="_blank"
-                rel="noopener"
-              >
-                Find me on LinkedIn →
-              </a>
+              {emailSubmitted ? (
+                <div className="article-discuss-success">
+                  You're in. I'll send my next piece before it goes public.
+                </div>
+              ) : (
+                <>
+                  <div className="article-discuss-eyebrow">Keep Reading</div>
+                  <div className="article-discuss-headline">
+                    Get my next analysis <em>before</em> it hits LinkedIn.
+                  </div>
+                  <div className="article-discuss-sub">
+                    Policy writing on Saudi Arabia, UAE, and Egypt. No schedule. No filler. Just the pieces worth reading.
+                  </div>
+                  <div className="article-discuss-form">
+                    <input
+                      type="email"
+                      className="article-discuss-input"
+                      placeholder="Your email"
+                      value={emailInput}
+                      onChange={(e) => setEmailInput(e.target.value)}
+                      onKeyDown={(e) => { if (e.key === "Enter") handleEmailSubmit(); }}
+                    />
+                    <button className="article-discuss-btn" onClick={handleEmailSubmit}>
+                      Subscribe
+                    </button>
+                  </div>
+                  <div className="article-discuss-linkedin">
+                    Or find me on{" "}
+                    <a
+                      href="https://www.linkedin.com/in/talal-alzayed/"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      LinkedIn →
+                    </a>
+                  </div>
+                </>
+              )}
             </div>
           </div>
           <footer className="footer">
