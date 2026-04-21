@@ -66,8 +66,9 @@ export default function TalalSite() {
   const isPublisher = location.pathname === "/publish";
   const isAdvisory = location.pathname === "/advisory";
 
-  // Update page title for SEO
+  // Update page title and meta description for SEO
   useEffect(() => {
+    // Title
     if (activeArticle) {
       document.title = `${activeArticle.title} | Talal Al Zayed`;
     } else if (isArticleNotFound) {
@@ -75,7 +76,29 @@ export default function TalalSite() {
     } else if (isAdvisory) {
       document.title = "Advisory — Talal Al Zayed";
     } else {
-      document.title = "Talal Al Zayed — Policy · Technology · Builder";
+      document.title = "Talal Al Zayed | Public Policy & Government Affairs | Saudi Arabia";
+    }
+
+    // Meta description — create the tag if missing, then update
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+      metaDesc = document.createElement("meta");
+      metaDesc.setAttribute("name", "description");
+      document.head.appendChild(metaDesc);
+    }
+
+    const defaultDesc = "Director of Public Policy & Government Affairs navigating the intersection of tech sovereignty, industrial policy, and commercial strategy across Saudi Arabia, UAE, and Egypt.";
+    const advisoryDesc = "Advisory services for technology companies navigating regulation, FDI, and government relations across Saudi Arabia, UAE, and Egypt.";
+    const notFoundDesc = "The page you're looking for doesn't exist.";
+
+    if (activeArticle) {
+      metaDesc.setAttribute("content", activeArticle.excerpt);
+    } else if (isArticleNotFound) {
+      metaDesc.setAttribute("content", notFoundDesc);
+    } else if (isAdvisory) {
+      metaDesc.setAttribute("content", advisoryDesc);
+    } else {
+      metaDesc.setAttribute("content", defaultDesc);
     }
   }, [activeArticle, isArticleNotFound, isAdvisory]);
 
@@ -141,8 +164,6 @@ export default function TalalSite() {
       }}
     >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         ::selection {
