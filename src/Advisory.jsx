@@ -4,12 +4,12 @@ const AREAS = [
   {
     number: "01",
     title: "Market Entry & Regulatory Strategy",
-    text: "Navigating the regulatory landscape before you commit capital. Licensing frameworks, compliance requirements, and government incentive structures across Saudi Arabia, UAE, and Egypt."
+    text: "Navigating the regulatory landscape before you commit capital. Licensing frameworks, compliance requirements, and government incentive structures across Saudi Arabia."
   },
   {
     number: "02",
-    title: "AI Governance & Data Policy",
-    text: "Cloud sovereignty, data localization, and AI regulatory frameworks. Helping technology companies understand what governments actually want and how to position around it."
+    title: "Digital & AI Policy",
+    text: "Cloud sovereignty, data localization, and AI regulatory frameworks. Reading what the government wants from the digital transformation agenda and translating it into operational positioning."
   },
   {
     number: "03",
@@ -18,13 +18,18 @@ const AREAS = [
   },
   {
     number: "04",
+    title: "Strategic Partnerships",
+    text: "Structuring durable alliances with government entities, sovereign institutions, and key local stakeholders. Designing the partnerships that turn one-time engagements into strategic positions."
+  },
+  {
+    number: "05",
     title: "FDI & Investment Framework Navigation",
     text: "Making sense of incentive programs, Special Economic Zones, and regional HQ mandates. Structuring your investment narrative to align with national transformation agendas."
   },
   {
-    number: "05",
+    number: "06",
     title: "Policy Risk Assessment",
-    text: "Monitoring and interpreting regulatory change across three markets. Turning policy signals into commercial decisions before your competitors see them."
+    text: "Monitoring and interpreting regulatory change in real-time. Turning policy signals into commercial decisions before your competitors see them."
   }
 ];
 
@@ -89,13 +94,13 @@ export default function Advisory() {
 
         <div className="adv-eyebrow">Advisory</div>
         <h1 className="adv-title">
-          Helping technology companies navigate <em>government</em> in the Gulf.
+          Helping leaders navigate <em>government</em> in Saudi Arabia.
         </h1>
         <p className="adv-intro">
           I have spent over a decade inside the institutions that set the rules
-          across Saudi Arabia, UAE, and Egypt. I advise companies that need to
-          understand how those rules work, where they're going, and how to
-          position around them.
+          in Saudi Arabia. I advise companies, investors, and institutions that
+          need to understand how those rules work, where they're going, and how
+          to position around them.
         </p>
 
         <div className="adv-areas-label">Areas of Focus</div>
@@ -126,8 +131,8 @@ export default function Advisory() {
         <div className="adv-context">
           <strong>A note on availability:</strong> I take on a limited number of
           advisory engagements alongside my full-time role. Priority goes to
-          projects where my institutional knowledge of the Saudi, UAE, and
-          Egyptian regulatory landscape creates a direct advantage.
+          projects where my institutional knowledge of the Saudi regulatory
+          landscape creates a direct advantage.
         </div>
       </div>
 
