@@ -753,6 +753,120 @@ export default function TalalSite() {
           .projects-section { padding: 80px 20px; }
         }
 
+        .advisory-section {
+          padding: 120px 40px;
+          position: relative;
+        }
+
+        .advisory-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 80px;
+          align-items: start;
+        }
+
+        .advisory-headline {
+          font-family: 'Instrument Serif', serif;
+          font-size: clamp(32px, 4.5vw, 48px);
+          line-height: 1.15;
+          color: #E8E4DF;
+          margin-bottom: 32px;
+        }
+
+        .advisory-headline em {
+          color: #C8A97E;
+          font-style: italic;
+        }
+
+        .advisory-body {
+          font-size: 17px;
+          line-height: 1.75;
+          color: #ADA8A3;
+          margin-bottom: 36px;
+          max-width: 520px;
+        }
+
+        .advisory-cta {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          padding: 16px 32px;
+          background: transparent;
+          color: #C8A97E;
+          border: 1px solid rgba(200,169,126,0.3);
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .advisory-cta:hover {
+          background: #C8A97E;
+          color: #0A0A0A;
+          border-color: #C8A97E;
+        }
+
+        .advisory-areas-label {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          text-transform: uppercase;
+          letter-spacing: 3px;
+          color: #6B6560;
+          margin-bottom: 32px;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+
+        .advisory-areas-label::after {
+          content: '';
+          flex: 1;
+          height: 1px;
+          background: rgba(200,169,126,0.12);
+          max-width: 120px;
+        }
+
+        .advisory-area-item {
+          padding: 20px 0;
+          border-top: 1px solid rgba(200,169,126,0.08);
+          display: grid;
+          grid-template-columns: 40px 1fr;
+          gap: 16px;
+          align-items: center;
+          transition: padding-left 0.3s ease;
+        }
+
+        .advisory-area-item:last-child {
+          border-bottom: 1px solid rgba(200,169,126,0.08);
+        }
+
+        .advisory-area-item:hover {
+          padding-left: 8px;
+        }
+
+        .advisory-area-num {
+          font-family: 'Instrument Serif', serif;
+          font-size: 18px;
+          color: rgba(200,169,126,0.4);
+        }
+
+        .advisory-area-title {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 15px;
+          color: #B0AAA4;
+          transition: color 0.3s;
+        }
+
+        .advisory-area-item:hover .advisory-area-title {
+          color: #C8A97E;
+        }
+
+        @media (max-width: 900px) {
+          .advisory-grid {
+            grid-template-columns: 1fr;
+            gap: 48px;
+          }
+        }
+
         .about-section {
           padding: 120px 40px;
           position: relative;
@@ -1256,7 +1370,7 @@ export default function TalalSite() {
 
         @media (max-width: 768px) {
           .hero-section { padding: 100px 20px 60px; }
-          .perspectives-section, .about-section, .connect-section, .projects-section { padding: 80px 20px; }
+          .perspectives-section, .about-section, .connect-section, .projects-section, .advisory-section { padding: 80px 20px; }
           .hero-stats { gap: 32px; }
           .arabic-watermark { display: none; }
         }
@@ -1632,13 +1746,57 @@ export default function TalalSite() {
         </div>
       </section>
 
+      {/* ADVISORY */}
+      <section className="advisory-section">
+        <div className="section-header">
+          <span className="section-number">03</span>
+          <span className="section-title">Advisory</span>
+          <div className="section-line" />
+        </div>
+
+        <div className="advisory-grid">
+          <div>
+            <h2 className="advisory-headline">
+              Private counsel for leaders navigating <em>government</em> in Saudi Arabia.
+            </h2>
+            <p className="advisory-body">
+              I advise companies, investors, and institutions making consequential decisions in Saudi Arabia. Selective engagements across regulatory strategy, market entry, government relations, and policy risk.
+            </p>
+            <button
+              className="advisory-cta"
+              onClick={() => { navigate("/advisory"); window.scrollTo(0, 0); }}
+            >
+              Learn More →
+            </button>
+          </div>
+
+          <div>
+            <div className="advisory-areas-label">Areas of Focus</div>
+            <div>
+              {[
+                { num: "01", title: "Market Entry & Regulatory Strategy" },
+                { num: "02", title: "Digital & AI Policy" },
+                { num: "03", title: "Government Relations & Stakeholder Strategy" },
+                { num: "04", title: "FDI & Investment Framework Navigation" },
+                { num: "05", title: "Policy Risk Assessment" },
+              ].map((area) => (
+                <div className="advisory-area-item" key={area.num}>
+                  <span className="advisory-area-num">{area.num}</span>
+                  <span className="advisory-area-title">{area.title}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ABOUT */}
       <section
         ref={(el) => (sectionRefs.current.about = el)}
         className="about-section"
       >
         <div className="section-header">
-          <span className="section-number">03</span>
+          <span className="section-number">04</span>
           <span className="section-title">About</span>
           <div className="section-line" />
         </div>
@@ -1805,7 +1963,7 @@ export default function TalalSite() {
         className="connect-section"
       >
         <div className="section-header">
-          <span className="section-number">04</span>
+          <span className="section-number">05</span>
           <span className="section-title">Connect</span>
           <div className="section-line" />
         </div>
