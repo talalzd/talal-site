@@ -1777,8 +1777,9 @@ export default function TalalSite() {
                 { num: "01", title: "Market Entry & Regulatory Strategy" },
                 { num: "02", title: "Digital & AI Policy" },
                 { num: "03", title: "Government Relations & Stakeholder Strategy" },
-                { num: "04", title: "FDI & Investment Framework Navigation" },
-                { num: "05", title: "Policy Risk Assessment" },
+                { num: "04", title: "Strategic Partnerships" },
+                { num: "05", title: "FDI & Investment Framework Navigation" },
+                { num: "06", title: "Policy Risk Assessment" },
               ].map((area) => (
                 <div className="advisory-area-item" key={area.num}>
                   <span className="advisory-area-num">{area.num}</span>
