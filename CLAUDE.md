@@ -40,20 +40,28 @@ Design system:
 - Light and cold. Background #FFFFFF, sunk panels #F1F2F3, ink #0C0D0F, secondary text #4A4F55, tertiary #666C73, rules #D8DBDE and #EAECEE.
 - One accent, signal blue #123FBA. One flag red #A33417, used only for "Limited".
 - Type: Archivo for everything, Archivo Narrow for table headers and dates. No serif anywhere.
-- Dense. Real tables for track record, speaking topics and ways to work together. Small type (14 to 15px in tables, 15px base).
+- Dense. Real tables for track record and ways to work together (including the speaking topics). Small type (14 to 15px in tables, 15px base).
 - The one bold element is the "Current status" panel in the hero.
 
-Structure: header (Analysis, Track record, Speaking, Work with me, Contact), reference line, hero with claim and status panel, What I work on, Analysis (lead piece, index, email signup), Track record, Speaking, Work with me (four modes plus advisory scope), Contact with credentials panel, footer with "Views here are my own, not my employer's."
+Structure: header (Analysis, Track record, Work with me, Contact), reference line, hero with claim and status panel, What I work on, Analysis (lead piece, index, email signup), Track record, Work with me (four modes plus advisory scope), Contact with credentials panel, footer with "Views here are my own, not my employer's."
+
+Speaking is not its own section and is not in the header nav. Talal has no past appearances yet. Instead, the "Speaking and moderation" row under Work with me carries:
+- The four speaking topics from the mockups (Inside Vision 2030 policymaking, Entering the Saudi market, AI governance in the Gulf, Consensus across twenty countries), each with its one-line description.
+- An "Invite me to speak" button linking to Contact.
+- Exactly two credentials, worded exactly: "Conceived and ran the inaugural G20 Deputy Ministers' Symposium" and "Technology committee member, AmCham Saudi Arabia".
+- No "For organizers" panel, no formats list, no appearances.
+
+The Speaking section and Speaking nav link in `design/home-desktop.html` and `design/home-mobile.html` are superseded by this. Do not port them.
 
 Port plan. All stages happen on one branch called `redesign`. Each session does one stage, pushes, and gives Talal the preview link. Nothing merges to `main` until every stage is done and Talal approves, so the live site stays untouched until the switch.
 
 1. Foundation: Archivo fonts, color tokens, header, reference line, footer. Remove the old grain, glow and gold styles.
 2. Hero and the Current status panel.
 3. What I work on, and Analysis (lead piece is always the newest article, then the index, then email signup).
-4. Track record and Speaking. Use these confirmed dates for the two industry roles:
+4. Track record. Use these confirmed dates for the two industry roles:
    - Nokia: Head of Policy and Government Affairs, Saudi Arabia only, August 2026 to present. No achievements listed yet. Do not invent any.
    - HP Inc.: Director, Public Policy & Government Affairs, Saudi Arabia and UAE, May 2024 to July 2026.
-5. Work with me, including advisory scope. Restyle the /advisory page to match, since people may have it bookmarked.
+5. Work with me, including advisory scope and the speaking topics, button and two credentials described above. Restyle the /advisory page to match, since people may have it bookmarked.
 6. Article page, matching `design/article.html`.
 7. Phone check of every page, then SEO: JSON-LD `worksFor`, page titles and meta descriptions, and a new light OG image.
 8. Remove the What I Build section and tool links if any remain, delete unused old styles, final build, then merge to `main` only after Talal says go.
@@ -78,6 +86,5 @@ When Talal says "next stage", check which stages are already done on the `redesi
 
 ## Open items to confirm with Talal before they go live
 
-- Past speaking appearances for the Speaking section.
 - Whether Nokia's outside-activities policy allows advisory engagements and board seats.
 - New articles. The last one is from May 2026 (HUMAIN One). The design mockups show the March two-coast piece as the lead only because it was the example used; the lead should always be the newest article.

@@ -1548,7 +1548,7 @@ export default function TalalSite() {
         </h1>
 
         <p className="hero-sub">
-          I have spent over a decade on both sides of the table. Government side: contributing to Vision 2030 economic policy, authoring a G20 flagship document, building a policy department from zero for a $15B mega-program. Industry side: protecting $200M+ in revenue for a Fortune 500 tech company by navigating the regulators I used to sit beside. I cover Saudi Arabia, UAE, and Egypt.
+          I have spent over a decade on both sides of the table. Government side: contributing to Vision 2030 economic policy, authoring a G20 flagship document, building a policy department from zero for a $15B mega-program. Industry side: at HP, I protected $200M+ in revenue by navigating the regulators I used to sit beside. I cover Saudi Arabia, UAE, and Egypt.
         </p>
 
         <div className="hero-cta">
