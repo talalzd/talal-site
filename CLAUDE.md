@@ -30,7 +30,7 @@ Primary reader: someone investing in or operating in Saudi Arabia (fund partner,
 3. Push the branch. Vercel builds a preview URL. Give Talal that link and a short plain summary.
 4. Merge to `main` only after Talal says it looks right.
 5. Small, targeted edits. Do not rewrite a whole file when a few lines change.
-6. Editing `src/articles.js` directly is fine now, as long as the entry follows the existing schema (id, slug, tag, title, excerpt, date, readTime, content blocks of type intro, text, heading, image, stats, callout) and the build passes. The /publish tool still works for pasting drafts.
+6. New articles go through the `/publish-article` skill in `.claude/skills/publish-article/`. Talal pastes text, attaches a file, or gives notes; the skill does the rest and returns a preview link and a LinkedIn post. The old /publish page on the site is no longer needed.
 
 ## Planned redesign (approved direction, port in stages)
 
@@ -45,7 +45,18 @@ Design system:
 
 Structure: header (Analysis, Track record, Speaking, Work with me, Contact), reference line, hero with claim and status panel, What I work on, Analysis (lead piece, index, email signup), Track record, Speaking, Work with me (four modes plus advisory scope), Contact with credentials panel, footer with "Views here are my own, not my employer's."
 
-Port order: design tokens and fonts first, then one section per branch, so the live site keeps working the whole way through.
+Port plan. All stages happen on one branch called `redesign`. Each session does one stage, pushes, and gives Talal the preview link. Nothing merges to `main` until every stage is done and Talal approves, so the live site stays untouched until the switch.
+
+1. Foundation: Archivo fonts, color tokens, header, reference line, footer. Remove the old grain, glow and gold styles.
+2. Hero and the Current status panel.
+3. What I work on, and Analysis (lead piece is always the newest article, then the index, then email signup).
+4. Track record and Speaking.
+5. Work with me, including advisory scope. Restyle the /advisory page to match, since people may have it bookmarked.
+6. Article page, matching `design/article.html`.
+7. Phone check of every page, then SEO: JSON-LD `worksFor`, page titles and meta descriptions, and a new light OG image.
+8. Remove the What I Build section and tool links if any remain, delete unused old styles, final build, then merge to `main` only after Talal says go.
+
+When Talal says "next stage", check which stages are already done on the `redesign` branch and do the next one.
 
 ## Decisions already made. Do not reopen without asking.
 
