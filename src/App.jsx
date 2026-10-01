@@ -124,6 +124,21 @@ export default function TalalSite() {
     }
   };
 
+  const goAdvisory = () => {
+    setMenuOpen(false);
+    navigate("/advisory");
+    window.scrollTo(0, 0);
+  };
+
+  // Header nav. Track record and Work with me point at the current About
+  // section and /advisory until the redesign builds those sections.
+  const navItems = [
+    { label: "Analysis", go: () => scrollTo("perspectives"), isOn: () => !!activeArticle || (location.pathname === "/" && activeSection === "perspectives") },
+    { label: "Track record", go: () => scrollTo("about"), isOn: () => location.pathname === "/" && activeSection === "about" },
+    { label: "Work with me", go: goAdvisory, isOn: () => isAdvisory },
+    { label: "Contact", go: () => scrollTo("connect"), isOn: () => location.pathname === "/" && activeSection === "connect" },
+  ];
+
   const handleEmailSubmit = () => {
     if (!emailInput || !emailInput.includes("@")) return;
     // Buttondown form submission
@@ -140,86 +155,133 @@ export default function TalalSite() {
     <div
       id="talal-scroll-root"
       style={{
-        fontFamily: "'DM Sans', sans-serif",
-        background: "#0A0A0A",
-        color: "#E8E4DF",
+        fontFamily: "var(--font)",
+        background: "var(--bg)",
+        color: "var(--ink)",
         minHeight: "100vh",
-        overflowX: "hidden",
+        overflowX: "clip",
         position: "relative",
       }}
     >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
+        :root {
+          --bg: #FFFFFF;
+          --sunk: #F1F2F3;
+          --ink: #0C0D0F;
+          --ink-2: #4A4F55;
+          --ink-3: #666C73;
+          --rule: #D8DBDE;
+          --rule-soft: #EAECEE;
+          --sig: #123FBA;
+          --flag: #A33417;
+          --font: 'Archivo', system-ui, sans-serif;
+          --font-narrow: 'Archivo Narrow', 'Archivo', sans-serif;
+        }
+
+        body { background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         ::selection {
-          background: #C8A97E;
-          color: #0A0A0A;
+          background: var(--sig);
+          color: #FFFFFF;
         }
 
-        .nav-fixed {
-          position: fixed;
+
+
+
+
+
+        .site-hdr {
+          position: sticky;
           top: 0;
-          left: 0;
-          right: 0;
           z-index: 100;
-          padding: 20px 40px;
+          background: var(--bg);
+          border-bottom: 1px solid var(--ink);
+        }
+        .site-hdr-in {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 40px;
+          height: 60px;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          background: rgba(10,10,10,0.85);
-          backdrop-filter: blur(20px);
-          border-bottom: 1px solid rgba(200,169,126,0.08);
-          transition: all 0.4s ease;
+          gap: 24px;
         }
-
-        .nav-logo {
-          font-family: 'Instrument Serif', serif;
-          font-size: 22px;
-          color: #C8A97E;
-          cursor: pointer;
-          letter-spacing: -0.5px;
-          transition: opacity 0.3s;
-        }
-        .nav-logo:hover { opacity: 0.7; }
-
-        .nav-links {
+        .site-brand {
           display: flex;
-          gap: 32px;
-          align-items: center;
-        }
-
-        .nav-link {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 11px;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          color: #6B6560;
-          cursor: pointer;
-          transition: color 0.3s;
+          align-items: baseline;
+          gap: 12px;
           background: none;
-          border: none;
-          padding: 4px 0;
-          position: relative;
+          border: 0;
+          padding: 0;
+          cursor: pointer;
+          color: var(--ink);
+          font-family: var(--font);
+          text-align: left;
         }
-        .nav-link:hover, .nav-link.active {
-          color: #C8A97E;
+        .site-brand-name { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+        .site-brand-note { font-size: 13px; color: var(--ink-3); }
+        .site-nav { display: flex; gap: 26px; }
+        .site-nav button {
+          background: none;
+          border: 0;
+          padding: 0;
+          cursor: pointer;
+          font-family: var(--font);
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--ink-2);
         }
-        .nav-link.active::after {
-          content: '';
-          position: absolute;
-          bottom: -2px;
-          left: 0;
-          width: 100%;
-          height: 1px;
-          background: #C8A97E;
+        .site-nav button:hover { color: var(--sig); }
+        .site-nav button.on { color: var(--ink); box-shadow: inset 0 -2px 0 var(--sig); }
+        .site-menu-btn {
+          display: none;
+          align-items: center;
+          min-height: 44px;
+          padding: 0 14px;
+          border: 1px solid var(--ink);
+          background: var(--bg);
+          color: var(--ink);
+          font-family: var(--font);
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+        }
+        .site-menu-btn:hover { background: var(--ink); color: var(--bg); }
+
+        .ref-line { background: var(--sunk); border-bottom: 1px solid var(--rule); }
+        .ref-line-in {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 8px 40px;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px 34px;
+          font-size: 13px;
+          color: var(--ink-2);
+        }
+        .ref-line b { font-weight: 600; margin-right: 8px; }
+
+        .site-footer { border-top: 1px solid var(--ink); }
+        .site-footer-in {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 16px 40px 36px;
+          display: flex;
+          justify-content: space-between;
+          gap: 8px;
+          font-size: 13px;
+          color: var(--ink-3);
         }
 
         @media (max-width: 768px) {
-          .nav-fixed { padding: 16px 20px; }
-          .nav-links { display: none; }
-          .mobile-toggle { display: block !important; }
+          .site-hdr-in { height: 56px; padding: 0 20px; }
+          .site-nav, .site-brand-note { display: none; }
+          .site-menu-btn { display: inline-flex; }
+          .ref-line { display: none; }
+          .site-footer-in { flex-direction: column; padding: 16px 20px 36px; }
         }
 
         .hero-section {
@@ -232,29 +294,14 @@ export default function TalalSite() {
           overflow: hidden;
         }
 
-        .hero-grain {
-          position: absolute;
-          inset: 0;
-          opacity: 0.03;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-          pointer-events: none;
-        }
 
-        .hero-accent-line {
-          position: absolute;
-          top: 0;
-          left: 40px;
-          width: 1px;
-          height: 100%;
-          background: linear-gradient(to bottom, transparent, rgba(200,169,126,0.15) 30%, rgba(200,169,126,0.15) 70%, transparent);
-        }
 
         .hero-tag {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 11px;
           text-transform: uppercase;
           letter-spacing: 4px;
-          color: #C8A97E;
+          color: var(--sig);
           margin-bottom: 32px;
           opacity: 0;
           transform: translateY(20px);
@@ -263,10 +310,10 @@ export default function TalalSite() {
         }
 
         .hero-title {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: clamp(42px, 7vw, 90px);
           line-height: 1.05;
-          color: #E8E4DF;
+          color: var(--ink);
           max-width: 900px;
           margin-bottom: 36px;
           opacity: 0;
@@ -277,13 +324,13 @@ export default function TalalSite() {
 
         .hero-title em {
           font-style: italic;
-          color: #C8A97E;
+          color: var(--sig);
         }
 
         .hero-sub {
           font-size: 18px;
           line-height: 1.7;
-          color: #ADA8A3;
+          color: var(--ink);
           max-width: 620px;
           margin-bottom: 48px;
           opacity: 0;
@@ -304,7 +351,7 @@ export default function TalalSite() {
         }
 
         .hero-cta-btn {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 12px;
           text-transform: uppercase;
           letter-spacing: 2px;
@@ -316,24 +363,24 @@ export default function TalalSite() {
         }
 
         .hero-cta-btn.primary {
-          background: #C8A97E;
-          color: #0A0A0A;
-          border: 1px solid #C8A97E;
+          background: var(--sig);
+          color: #FFFFFF;
+          border: 1px solid var(--sig);
         }
         .hero-cta-btn.primary:hover {
           background: transparent;
-          color: #C8A97E;
+          color: var(--sig);
         }
 
         .hero-cta-btn.secondary {
           background: transparent;
-          color: #C8A97E;
-          border: 1px solid rgba(200,169,126,0.3);
+          color: var(--sig);
+          border: 1px solid var(--rule);
         }
         .hero-cta-btn.secondary:hover {
-          background: #C8A97E;
-          color: #0A0A0A;
-          border-color: #C8A97E;
+          background: var(--sig);
+          color: #FFFFFF;
+          border-color: var(--sig);
         }
 
         .hero-stats {
@@ -352,30 +399,30 @@ export default function TalalSite() {
           gap: 4px;
         }
         .stat-number {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: 36px;
-          color: #C8A97E;
+          color: var(--sig);
         }
         .stat-label {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 10px;
           text-transform: uppercase;
           letter-spacing: 2px;
-          color: #8A8580;
+          color: var(--ink-2);
         }
 
         .trust-strip {
           padding: 60px 40px;
-          border-top: 1px solid rgba(200,169,126,0.08);
-          border-bottom: 1px solid rgba(200,169,126,0.08);
+          border-top: 1px solid var(--rule-soft);
+          border-bottom: 1px solid var(--rule-soft);
         }
 
         .trust-label {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 10px;
           text-transform: uppercase;
           letter-spacing: 3px;
-          color: #6B6560;
+          color: var(--ink-3);
           text-align: center;
           margin-bottom: 32px;
         }
@@ -407,7 +454,7 @@ export default function TalalSite() {
         .trust-divider {
           width: 1px;
           height: 28px;
-          background: rgba(200,169,126,0.12);
+          background: var(--rule);
         }
 
         @media (max-width: 768px) {
@@ -419,12 +466,12 @@ export default function TalalSite() {
         }
 
         .perspective-featured {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 9px;
           text-transform: uppercase;
           letter-spacing: 2px;
-          color: #0A0A0A;
-          background: #C8A97E;
+          color: #FFFFFF;
+          background: var(--sig);
           padding: 3px 10px;
           display: inline-block;
           margin-bottom: 8px;
@@ -441,22 +488,22 @@ export default function TalalSite() {
           margin-bottom: 64px;
         }
         .section-number {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: 14px;
-          color: #C8A97E;
+          color: var(--sig);
           opacity: 0.5;
         }
         .section-line {
           flex: 1;
           height: 1px;
-          background: rgba(200,169,126,0.12);
+          background: var(--rule);
         }
         .section-title {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 11px;
           text-transform: uppercase;
           letter-spacing: 4px;
-          color: #6B6560;
+          color: var(--ink-3);
         }
 
         .perspectives-section {
@@ -465,7 +512,7 @@ export default function TalalSite() {
         }
 
         .perspective-card {
-          border-top: 1px solid rgba(200,169,126,0.1);
+          border-top: 1px solid var(--rule-soft);
           padding: 40px 0;
           cursor: pointer;
           transition: all 0.4s ease;
@@ -480,7 +527,7 @@ export default function TalalSite() {
         }
 
         .perspective-card:last-child {
-          border-bottom: 1px solid rgba(200,169,126,0.1);
+          border-bottom: 1px solid var(--rule-soft);
         }
 
         .perspective-meta {
@@ -490,51 +537,51 @@ export default function TalalSite() {
         }
 
         .perspective-tag {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 10px;
           text-transform: uppercase;
           letter-spacing: 2px;
-          color: #C8A97E;
+          color: var(--sig);
         }
 
         .perspective-date {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 10px;
-          color: #6B6560;
+          color: var(--ink-3);
           letter-spacing: 1px;
         }
 
         .perspective-content h3 {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: 28px;
           line-height: 1.2;
-          color: #E8E4DF;
+          color: var(--ink);
           margin-bottom: 12px;
           transition: color 0.3s;
         }
 
         .perspective-card:hover .perspective-content h3 {
-          color: #C8A97E;
+          color: var(--sig);
         }
 
         .perspective-content p {
           font-size: 15px;
           line-height: 1.7;
-          color: #8A8580;
+          color: var(--ink-2);
           max-width: 680px;
           transition: color 0.3s;
         }
 
         .perspective-card:hover .perspective-content p {
-          color: #ADA8A3;
+          color: var(--ink);
         }
 
         .perspective-read {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 10px;
           text-transform: uppercase;
           letter-spacing: 2px;
-          color: #6B6560;
+          color: var(--ink-3);
           margin-top: 16px;
           display: flex;
           align-items: center;
@@ -543,7 +590,7 @@ export default function TalalSite() {
         }
 
         .perspective-card:hover .perspective-read {
-          color: #C8A97E;
+          color: var(--sig);
         }
 
         @media (max-width: 768px) {
@@ -560,32 +607,21 @@ export default function TalalSite() {
         .email-capture {
           padding: 64px 40px;
           text-align: center;
-          border-top: 1px solid rgba(200,169,126,0.08);
-          border-bottom: 1px solid rgba(200,169,126,0.08);
+          border-top: 1px solid var(--rule-soft);
+          border-bottom: 1px solid var(--rule-soft);
           position: relative;
         }
 
-        .email-capture::before {
-          content: '';
-          position: absolute;
-          top: -30px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 400px;
-          height: 250px;
-          background: radial-gradient(circle, rgba(200,169,126,0.04) 0%, transparent 65%);
-          pointer-events: none;
-        }
 
         .email-capture-text {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: 22px;
-          color: #B0AAA4;
+          color: var(--ink);
           margin-bottom: 24px;
         }
 
         .email-capture-text em {
-          color: #C8A97E;
+          color: var(--sig);
           font-style: italic;
         }
 
@@ -600,30 +636,30 @@ export default function TalalSite() {
         .email-capture-input {
           flex: 1;
           padding: 14px 20px;
-          background: #111;
-          border: 1px solid rgba(200,169,126,0.15);
+          background: var(--sunk);
+          border: 1px solid var(--rule);
           border-right: none;
-          color: #E8E4DF;
-          font-family: 'DM Sans', sans-serif;
+          color: var(--ink);
+          font-family: 'Archivo', sans-serif;
           font-size: 14px;
           outline: none;
           transition: border-color 0.3s;
         }
 
         .email-capture-input:focus {
-          border-color: rgba(200,169,126,0.4);
+          border-color: var(--rule);
         }
 
         .email-capture-input::placeholder {
-          color: #4A4540;
+          color: var(--ink-3);
         }
 
         .email-capture-btn {
           padding: 14px 28px;
-          background: #C8A97E;
-          color: #0A0A0A;
-          border: 1px solid #C8A97E;
-          font-family: 'JetBrains Mono', monospace;
+          background: var(--sig);
+          color: #FFFFFF;
+          border: 1px solid var(--sig);
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 11px;
           text-transform: uppercase;
           letter-spacing: 2px;
@@ -634,27 +670,27 @@ export default function TalalSite() {
 
         .email-capture-btn:hover {
           background: transparent;
-          color: #C8A97E;
+          color: var(--sig);
         }
 
         .email-capture-note {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 10px;
-          color: #3A3530;
+          color: var(--ink-3);
           margin-top: 16px;
           letter-spacing: 1px;
         }
 
         .email-capture-success {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: 20px;
-          color: #C8A97E;
+          color: var(--sig);
         }
 
         @media (max-width: 768px) {
           .email-capture { padding: 48px 20px; }
           .email-capture-form { flex-direction: column; }
-          .email-capture-input { border-right: 1px solid rgba(200,169,126,0.15); border-bottom: none; }
+          .email-capture-input { border-right: 1px solid var(--rule); border-bottom: none; }
         }
 
         .projects-section {
@@ -666,12 +702,12 @@ export default function TalalSite() {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 1px;
-          background: rgba(200,169,126,0.08);
-          border: 1px solid rgba(200,169,126,0.08);
+          background: var(--rule-soft);
+          border: 1px solid var(--rule-soft);
         }
 
         .project-card {
-          background: #0A0A0A;
+          background: var(--bg);
           padding: 40px 32px;
           transition: all 0.4s ease;
           cursor: default;
@@ -679,7 +715,7 @@ export default function TalalSite() {
         }
 
         .project-card:hover {
-          background: #111;
+          background: var(--sunk);
         }
 
         .project-card.clickable {
@@ -687,7 +723,7 @@ export default function TalalSite() {
         }
 
         .project-status {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 9px;
           text-transform: uppercase;
           letter-spacing: 2px;
@@ -697,39 +733,39 @@ export default function TalalSite() {
         }
 
         .project-status.live {
-          color: #0A0A0A;
-          background: #C8A97E;
+          color: #FFFFFF;
+          background: var(--sig);
         }
 
         .project-status.development {
-          color: #C8A97E;
-          border: 1px solid rgba(200,169,126,0.3);
+          color: var(--sig);
+          border: 1px solid var(--rule);
         }
 
         .project-card-title {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: 24px;
-          color: #E8E4DF;
+          color: var(--ink);
           margin-bottom: 12px;
           transition: color 0.3s;
           line-height: 1.2;
         }
 
         .project-card.clickable:hover .project-card-title {
-          color: #C8A97E;
+          color: var(--sig);
         }
 
         .project-card-desc {
           font-size: 14px;
-          color: #8A8580;
+          color: var(--ink-2);
           line-height: 1.7;
           margin-bottom: 20px;
         }
 
         .project-card-stack {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 10px;
-          color: #4A4540;
+          color: var(--ink-3);
           letter-spacing: 1px;
         }
 
@@ -737,7 +773,7 @@ export default function TalalSite() {
           position: absolute;
           bottom: 32px;
           right: 32px;
-          color: #C8A97E;
+          color: var(--sig);
           font-size: 18px;
           opacity: 0;
           transform: translateX(-6px);
@@ -769,51 +805,51 @@ export default function TalalSite() {
         }
 
         .advisory-headline {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: clamp(32px, 4.5vw, 48px);
           line-height: 1.15;
-          color: #E8E4DF;
+          color: var(--ink);
           margin-bottom: 32px;
         }
 
         .advisory-headline em {
-          color: #C8A97E;
+          color: var(--sig);
           font-style: italic;
         }
 
         .advisory-body {
           font-size: 17px;
           line-height: 1.75;
-          color: #ADA8A3;
+          color: var(--ink);
           margin-bottom: 36px;
           max-width: 520px;
         }
 
         .advisory-cta {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 12px;
           text-transform: uppercase;
           letter-spacing: 2px;
           padding: 16px 32px;
           background: transparent;
-          color: #C8A97E;
-          border: 1px solid rgba(200,169,126,0.3);
+          color: var(--sig);
+          border: 1px solid var(--rule);
           cursor: pointer;
           transition: all 0.3s ease;
         }
 
         .advisory-cta:hover {
-          background: #C8A97E;
-          color: #0A0A0A;
-          border-color: #C8A97E;
+          background: var(--sig);
+          color: #FFFFFF;
+          border-color: var(--sig);
         }
 
         .advisory-areas-label {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 10px;
           text-transform: uppercase;
           letter-spacing: 3px;
-          color: #6B6560;
+          color: var(--ink-3);
           margin-bottom: 32px;
           display: flex;
           align-items: center;
@@ -824,13 +860,13 @@ export default function TalalSite() {
           content: '';
           flex: 1;
           height: 1px;
-          background: rgba(200,169,126,0.12);
+          background: var(--rule);
           max-width: 120px;
         }
 
         .advisory-area-item {
           padding: 20px 0;
-          border-top: 1px solid rgba(200,169,126,0.08);
+          border-top: 1px solid var(--rule-soft);
           display: grid;
           grid-template-columns: 40px 1fr;
           gap: 16px;
@@ -839,7 +875,7 @@ export default function TalalSite() {
         }
 
         .advisory-area-item:last-child {
-          border-bottom: 1px solid rgba(200,169,126,0.08);
+          border-bottom: 1px solid var(--rule-soft);
         }
 
         .advisory-area-item:hover {
@@ -847,20 +883,20 @@ export default function TalalSite() {
         }
 
         .advisory-area-num {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: 18px;
-          color: rgba(200,169,126,0.4);
+          color: var(--ink-3);
         }
 
         .advisory-area-title {
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'Archivo', sans-serif;
           font-size: 15px;
-          color: #B0AAA4;
+          color: var(--ink);
           transition: color 0.3s;
         }
 
         .advisory-area-item:hover .advisory-area-title {
-          color: #C8A97E;
+          color: var(--sig);
         }
 
         @media (max-width: 900px) {
@@ -895,7 +931,7 @@ export default function TalalSite() {
           content: '';
           position: absolute;
           inset: 0;
-          border: 1px solid rgba(200,169,126,0.3);
+          border: 1px solid var(--rule);
           border-radius: 4px;
           pointer-events: none;
         }
@@ -914,19 +950,19 @@ export default function TalalSite() {
         }
 
         .about-photo-intro {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: 32px;
           line-height: 1.4;
-          color: #B0AAA4;
+          color: var(--ink);
         }
 
         .about-photo-intro strong {
-          color: #E8E4DF;
+          color: var(--ink);
           font-weight: 400;
         }
 
         .about-photo-intro em {
-          color: #C8A97E;
+          color: var(--sig);
           font-style: italic;
         }
 
@@ -954,43 +990,43 @@ export default function TalalSite() {
         }
 
         .about-narrative {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: 26px;
           line-height: 1.5;
-          color: #B0AAA4;
+          color: var(--ink);
         }
 
         .about-narrative strong {
-          color: #E8E4DF;
+          color: var(--ink);
           font-weight: 400;
         }
 
         .about-narrative em {
-          color: #C8A97E;
+          color: var(--sig);
           font-style: italic;
         }
 
         .career-item {
           padding: 24px 0;
-          border-top: 1px solid rgba(200,169,126,0.08);
+          border-top: 1px solid var(--rule-soft);
         }
 
         .career-item:last-child {
-          border-bottom: 1px solid rgba(200,169,126,0.08);
+          border-bottom: 1px solid var(--rule-soft);
         }
 
         .career-role {
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'Archivo', sans-serif;
           font-size: 15px;
           font-weight: 700;
-          color: #E8E4DF;
+          color: var(--ink);
           margin-bottom: 2px;
         }
 
         .career-org {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 11px;
-          color: #C8A97E;
+          color: var(--sig);
           letter-spacing: 1px;
           text-transform: uppercase;
           margin-bottom: 8px;
@@ -998,7 +1034,7 @@ export default function TalalSite() {
 
         .career-highlight {
           font-size: 13px;
-          color: #8A8580;
+          color: var(--ink-2);
           line-height: 1.6;
         }
 
@@ -1008,49 +1044,38 @@ export default function TalalSite() {
           text-align: center;
         }
 
-        .connect-section::before {
-          content: '';
-          position: absolute;
-          top: -50px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 500px;
-          height: 400px;
-          background: radial-gradient(circle, rgba(200,169,126,0.06) 0%, transparent 65%);
-          pointer-events: none;
-        }
 
         .connect-headline {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: clamp(32px, 5vw, 56px);
-          color: #E8E4DF;
+          color: var(--ink);
           margin-bottom: 24px;
           line-height: 1.15;
         }
 
         .connect-headline em {
-          color: #C8A97E;
+          color: var(--sig);
           font-style: italic;
         }
 
         .connect-sub {
           font-size: 16px;
-          color: #6B6560;
+          color: var(--ink-3);
           max-width: 500px;
           margin: 0 auto 20px;
           line-height: 1.7;
         }
 
         .connect-email-display {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 13px;
-          color: #8A8580;
+          color: var(--ink-2);
           letter-spacing: 1px;
           margin-bottom: 48px;
         }
 
         .connect-email-display a {
-          color: #C8A97E;
+          color: var(--sig);
           text-decoration: none;
           transition: opacity 0.3s;
         }
@@ -1067,14 +1092,14 @@ export default function TalalSite() {
         }
 
         .connect-btn {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 12px;
           text-transform: uppercase;
           letter-spacing: 2px;
           padding: 16px 32px;
-          border: 1px solid rgba(200,169,126,0.3);
+          border: 1px solid var(--rule);
           background: transparent;
-          color: #C8A97E;
+          color: var(--sig);
           cursor: pointer;
           transition: all 0.3s ease;
           text-decoration: none;
@@ -1082,19 +1107,19 @@ export default function TalalSite() {
         }
 
         .connect-btn:hover {
-          background: #C8A97E;
-          color: #0A0A0A;
-          border-color: #C8A97E;
+          background: var(--sig);
+          color: #FFFFFF;
+          border-color: var(--sig);
         }
 
         .connect-btn.primary {
-          background: #C8A97E;
-          color: #0A0A0A;
-          border-color: #C8A97E;
+          background: var(--sig);
+          color: #FFFFFF;
+          border-color: var(--sig);
         }
         .connect-btn.primary:hover {
           background: transparent;
-          color: #C8A97E;
+          color: var(--sig);
         }
 
         .article-view {
@@ -1105,11 +1130,11 @@ export default function TalalSite() {
         }
 
         .article-back {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 11px;
           text-transform: uppercase;
           letter-spacing: 2px;
-          color: #C8A97E;
+          color: var(--sig);
           cursor: pointer;
           background: none;
           border: none;
@@ -1123,51 +1148,51 @@ export default function TalalSite() {
         .article-back:hover { opacity: 0.7; }
 
         .article-tag {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 10px;
           text-transform: uppercase;
           letter-spacing: 3px;
-          color: #C8A97E;
+          color: var(--sig);
           margin-bottom: 20px;
         }
 
         .article-date {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 10px;
-          color: #6B6560;
+          color: var(--ink-3);
           letter-spacing: 1px;
           margin-bottom: 24px;
         }
 
         .article-title {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: clamp(32px, 5vw, 48px);
           line-height: 1.15;
-          color: #E8E4DF;
+          color: var(--ink);
           margin-bottom: 48px;
         }
 
         .article-body-intro {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: 22px;
           line-height: 1.6;
-          color: #B0AAA4;
+          color: var(--ink);
           margin-bottom: 36px;
           padding-bottom: 36px;
-          border-bottom: 1px solid rgba(200,169,126,0.1);
+          border-bottom: 1px solid var(--rule-soft);
         }
 
         .article-body-text {
           font-size: 17px;
           line-height: 1.8;
-          color: #ADA8A3;
+          color: var(--ink);
           margin-bottom: 24px;
         }
 
         .article-body-heading {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: 26px;
-          color: #E8E4DF;
+          color: var(--ink);
           margin-top: 48px;
           margin-bottom: 20px;
         }
@@ -1175,7 +1200,7 @@ export default function TalalSite() {
         .article-author {
           margin-top: 64px;
           padding-top: 32px;
-          border-top: 1px solid rgba(200,169,126,0.1);
+          border-top: 1px solid var(--rule-soft);
           display: flex;
           align-items: center;
           gap: 16px;
@@ -1183,11 +1208,11 @@ export default function TalalSite() {
 
         .article-author-info {
           font-size: 14px;
-          color: #6B6560;
+          color: var(--ink-3);
         }
 
         .article-author-name {
-          color: #E8E4DF;
+          color: var(--ink);
           font-weight: 500;
           margin-bottom: 2px;
         }
@@ -1195,15 +1220,15 @@ export default function TalalSite() {
         .article-discuss {
           margin-top: 48px;
           padding: 28px 32px;
-          border: 1px solid rgba(200,169,126,0.15);
-          font-family: 'Instrument Serif', serif;
+          border: 1px solid var(--rule);
+          font-family: 'Archivo', sans-serif;
           font-size: 20px;
-          color: #8A8580;
+          color: var(--ink-2);
           text-align: center;
         }
 
         .article-discuss a {
-          color: #C8A97E;
+          color: var(--sig);
           text-decoration: none;
           transition: opacity 0.3s;
         }
@@ -1223,13 +1248,13 @@ export default function TalalSite() {
         .article-image-block img {
           width: 100%;
           border-radius: 4px;
-          border: 1px solid rgba(200,169,126,0.1);
+          border: 1px solid var(--rule-soft);
         }
 
         .article-image-caption {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 11px;
-          color: #6B6560;
+          color: var(--ink-3);
           margin-top: 12px;
           line-height: 1.6;
         }
@@ -1242,47 +1267,47 @@ export default function TalalSite() {
         }
 
         .article-stat-card {
-          background: #111110;
+          background: var(--sunk);
           border-radius: 6px;
           padding: 20px;
           text-align: center;
         }
 
         .article-stat-number {
-          font-family: 'Instrument Serif', serif;
+          font-family: 'Archivo', sans-serif;
           font-size: 28px;
-          color: #C8A97E;
+          color: var(--sig);
           margin-bottom: 6px;
         }
 
         .article-stat-number.highlight-green {
-          color: #5DCAA5;
+          color: var(--sig);
         }
 
         .article-stat-number.highlight-accent {
-          color: #C8A97E;
+          color: var(--sig);
         }
 
         .article-stat-label {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
           font-size: 10px;
           text-transform: uppercase;
           letter-spacing: 1px;
-          color: #6B6560;
+          color: var(--ink-3);
         }
 
         .article-callout {
-          border-left: 3px solid #C8A97E;
+          border-left: 3px solid var(--sig);
           padding: 20px 24px;
           margin: 36px 0;
-          background: rgba(200,169,126,0.04);
+          background: var(--sunk);
           border-radius: 0 4px 4px 0;
         }
 
         .article-callout p {
           font-size: 15px;
           line-height: 1.7;
-          color: #ADA8A3;
+          color: var(--ink);
           margin: 0;
         }
 
@@ -1293,155 +1318,104 @@ export default function TalalSite() {
           }
         }
 
-        .footer {
-          padding: 40px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          border-top: 1px solid rgba(200,169,126,0.06);
-          flex-wrap: wrap;
-          gap: 16px;
-        }
 
-        .footer-left {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 10px;
-          color: #3A3530;
-          letter-spacing: 1px;
-          text-transform: uppercase;
-        }
 
-        .footer-quote {
-          font-family: 'Instrument Serif', serif;
-          font-size: 14px;
-          color: #3A3530;
-          font-style: italic;
-        }
 
-        .mobile-toggle {
-          display: none;
-          background: none;
-          border: none;
-          color: #C8A97E;
-          font-size: 24px;
-          cursor: pointer;
-        }
 
         .mobile-menu {
           position: fixed;
           inset: 0;
           z-index: 200;
-          background: rgba(10,10,10,0.98);
+          background: var(--bg);
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          gap: 32px;
+          gap: 28px;
         }
 
         .mobile-menu button {
-          font-family: 'Instrument Serif', serif;
-          font-size: 36px;
-          color: #E8E4DF;
+          font-family: var(--font);
+          font-size: 24px;
+          font-weight: 600;
+          color: var(--ink);
           background: none;
           border: none;
           cursor: pointer;
           transition: color 0.3s;
         }
-        .mobile-menu button:hover { color: #C8A97E; }
+        .mobile-menu button:hover { color: var(--sig); }
 
         .mobile-close {
           position: absolute;
-          top: 20px;
+          top: 6px;
           right: 20px;
-          font-size: 28px !important;
-          color: #6B6560 !important;
+          min-height: 44px;
+          padding: 0 14px !important;
+          border: 1px solid var(--ink) !important;
+          font-size: 14px !important;
         }
 
-        .arabic-watermark {
-          position: absolute;
-          right: 40px;
-          top: 50%;
-          transform: translateY(-50%);
-          font-family: 'Instrument Serif', serif;
-          font-size: 180px;
-          color: rgba(200,169,126,0.03);
-          writing-mode: vertical-rl;
-          pointer-events: none;
-          user-select: none;
-        }
 
         @media (max-width: 768px) {
           .hero-section { padding: 100px 20px 60px; }
           .perspectives-section, .about-section, .connect-section, .projects-section, .advisory-section { padding: 80px 20px; }
           .hero-stats { gap: 32px; }
-          .arabic-watermark { display: none; }
         }
       `}</style>
 
-      {/* NAV */}
-      <nav className="nav-fixed">
-        <div className="nav-logo" onClick={() => scrollTo("home")}>
-          TAZ
-        </div>
-        <div className="nav-links">
-          {[
-            { id: "perspectives", label: "Perspectives" },
-            { id: "projects", label: "What I Build" },
-            { id: "about", label: "About" },
-          ].map((item) => (
-            <button
-              key={item.id}
-              className={`nav-link ${activeSection === item.id ? "active" : ""}`}
-              onClick={() => scrollTo(item.id)}
-            >
-              {item.label}
-            </button>
-          ))}
-          <button
-            className={`nav-link ${location.pathname === "/advisory" ? "active" : ""}`}
-            onClick={() => { navigate("/advisory"); window.scrollTo(0, 0); }}
-          >
-            Advisory
+      {/* HEADER */}
+      <header className="site-hdr">
+        <div className="site-hdr-in">
+          <button className="site-brand" onClick={() => { navigate("/"); window.scrollTo(0, 0); }}>
+            <span className="site-brand-name">Talal Al Zayed</span>
+            <span className="site-brand-note">Public policy, Saudi Arabia</span>
           </button>
+          <nav className="site-nav" aria-label="Main">
+            {navItems.map((item) => (
+              <button
+                key={item.label}
+                className={item.isOn() ? "on" : ""}
+                onClick={item.go}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
           <button
-            className={`nav-link ${activeSection === "connect" ? "active" : ""}`}
-            onClick={() => scrollTo("connect")}
+            className="site-menu-btn"
+            type="button"
+            aria-label="Open menu"
+            onClick={() => setMenuOpen(true)}
           >
-            Connect
+            Menu
           </button>
         </div>
-        <button
-          className="mobile-toggle"
-          onClick={() => setMenuOpen(true)}
-        >
-          ☰
-        </button>
-      </nav>
+      </header>
+
+      {/* REFERENCE LINE (homepage, desktop only) */}
+      {!isAdvisory && !activeArticle && (
+        <div className="ref-line">
+          <div className="ref-line-in">
+            <span><b>Based</b>Riyadh</span>
+            <span><b>Now</b>Head of Policy and Government Affairs, Nokia</span>
+            <span><b>Before</b>HP, and nearly nine years in Saudi government</span>
+            <span><b>Studying</b>Master of public policy, KAPSARC</span>
+          </div>
+        </div>
+      )}
 
       {/* MOBILE MENU */}
       {menuOpen && (
         <div className="mobile-menu">
           <button className="mobile-close" onClick={() => setMenuOpen(false)}>
-            ✕
+            Close
           </button>
-          {["home", "perspectives", "projects", "about"].map((s) => (
-            <button key={s} onClick={() => scrollTo(s)}>
-              {s.charAt(0).toUpperCase() + s.slice(1)}
+          {navItems.map((item) => (
+            <button key={item.label} onClick={item.go}>
+              {item.label}
             </button>
           ))}
-          <button
-            onClick={() => {
-              setMenuOpen(false);
-              navigate("/advisory");
-              window.scrollTo(0, 0);
-            }}
-          >
-            Advisory
-          </button>
-          <button onClick={() => scrollTo("connect")}>
-            Connect
-          </button>
         </div>
       )}
 
@@ -1522,12 +1496,6 @@ export default function TalalSite() {
               </a>
             </div>
           </div>
-          <footer className="footer">
-            <div className="footer-left">© 2026 Talal Al Zayed</div>
-            <div className="footer-quote">
-              على قدر أهل العزم تأتي العزائم
-            </div>
-          </footer>
         </>
       ) : (
       <>
@@ -1536,9 +1504,6 @@ export default function TalalSite() {
         ref={(el) => (sectionRefs.current.home = el)}
         className="hero-section"
       >
-        <div className="hero-grain" />
-        <div className="hero-accent-line" />
-        <div className="arabic-watermark">طلال</div>
 
         <div className="hero-tag">Policy × Technology × Builder</div>
 
@@ -1644,7 +1609,7 @@ export default function TalalSite() {
                   Read more →
                 </div>
               ) : (
-                <div className="perspective-read" style={{ color: "#3A3530" }}>
+                <div className="perspective-read" style={{ color: "var(--ink-3)" }}>
                   Coming soon
                 </div>
               )}
@@ -1851,11 +1816,11 @@ export default function TalalSite() {
             <div style={{ marginBottom: 32 }}>
               <div
                 style={{
-                  fontFamily: "'JetBrains Mono', monospace",
+                  fontFamily: "'Archivo Narrow', 'Archivo', sans-serif",
                   fontSize: 10,
                   textTransform: "uppercase",
                   letterSpacing: 2,
-                  color: "#6B6560",
+                  color: "var(--ink-3)",
                   marginBottom: 20,
                 }}
               >
@@ -1873,27 +1838,27 @@ export default function TalalSite() {
             <div style={{ marginTop: 40 }}>
               <div
                 style={{
-                  fontFamily: "'JetBrains Mono', monospace",
+                  fontFamily: "'Archivo Narrow', 'Archivo', sans-serif",
                   fontSize: 10,
                   textTransform: "uppercase",
                   letterSpacing: 2,
-                  color: "#6B6560",
+                  color: "var(--ink-3)",
                   marginBottom: 16,
                 }}
               >
                 Education
               </div>
-              <div style={{ fontSize: 14, color: "#8A8580", lineHeight: 1.8 }}>
+              <div style={{ fontSize: 14, color: "var(--ink-2)", lineHeight: 1.8 }}>
                 <div>
-                  <span style={{ color: "#B0AAA4" }}>MPP</span> — KAPSARC
+                  <span style={{ color: "var(--ink)" }}>MPP</span> — KAPSARC
                   School of Public Policy
                 </div>
                 <div>
-                  <span style={{ color: "#B0AAA4" }}>MBA, Entrepreneurship</span>{" "}
+                  <span style={{ color: "var(--ink)" }}>MBA, Entrepreneurship</span>{" "}
                   — MBS College
                 </div>
                 <div>
-                  <span style={{ color: "#B0AAA4" }}>B.Econ</span> — Trent
+                  <span style={{ color: "var(--ink)" }}>B.Econ</span> — Trent
                   University
                 </div>
               </div>
@@ -1902,11 +1867,11 @@ export default function TalalSite() {
             <div style={{ marginTop: 32 }}>
               <div
                 style={{
-                  fontFamily: "'JetBrains Mono', monospace",
+                  fontFamily: "'Archivo Narrow', 'Archivo', sans-serif",
                   fontSize: 10,
                   textTransform: "uppercase",
                   letterSpacing: 2,
-                  color: "#6B6560",
+                  color: "var(--ink-3)",
                   marginBottom: 16,
                 }}
               >
@@ -1915,7 +1880,7 @@ export default function TalalSite() {
               <div
                 style={{
                   fontSize: 13,
-                  color: "#6B6560",
+                  color: "var(--ink-3)",
                   lineHeight: 1.8,
                 }}
               >
@@ -1932,27 +1897,27 @@ export default function TalalSite() {
                 alignItems: "center",
                 gap: 10,
                 marginTop: 36,
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: "'Archivo Narrow', 'Archivo', sans-serif",
                 fontSize: 11,
                 textTransform: "uppercase",
                 letterSpacing: 2,
                 padding: "14px 28px",
-                border: "1px solid rgba(200,169,126,0.3)",
+                border: "1px solid var(--rule)",
                 background: "transparent",
-                color: "#C8A97E",
+                color: "var(--sig)",
                 textDecoration: "none",
                 transition: "all 0.3s ease",
                 cursor: "pointer",
               }}
               onMouseEnter={(e) => {
-                e.target.style.background = "#C8A97E";
-                e.target.style.color = "#0A0A0A";
-                e.target.style.borderColor = "#C8A97E";
+                e.target.style.background = "var(--sig)";
+                e.target.style.color = "#FFFFFF";
+                e.target.style.borderColor = "var(--sig)";
               }}
               onMouseLeave={(e) => {
                 e.target.style.background = "transparent";
-                e.target.style.color = "#C8A97E";
-                e.target.style.borderColor = "rgba(200,169,126,0.3)";
+                e.target.style.color = "var(--sig)";
+                e.target.style.borderColor = "var(--rule)";
               }}
             >
               ↓ Download Executive CV
@@ -2004,15 +1969,15 @@ export default function TalalSite() {
         <div
           style={{
             marginTop: 32,
-            fontFamily: "'JetBrains Mono', monospace",
+            fontFamily: "'Archivo Narrow', 'Archivo', sans-serif",
             fontSize: 11,
             letterSpacing: 1,
-            color: "#4A4540",
+            color: "var(--ink-3)",
           }}
         >
           Looking for regulatory advisory in the Gulf?{" "}
           <span
-            style={{ color: "#C8A97E", cursor: "pointer", transition: "opacity 0.3s" }}
+            style={{ color: "var(--sig)", cursor: "pointer", transition: "opacity 0.3s" }}
             onClick={() => { navigate("/advisory"); window.scrollTo(0, 0); }}
             onMouseEnter={(e) => { e.target.style.opacity = "0.7"; }}
             onMouseLeave={(e) => { e.target.style.opacity = "1"; }}
@@ -2022,15 +1987,15 @@ export default function TalalSite() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="footer">
-        <div className="footer-left">© 2026 Talal Al Zayed</div>
-        <div className="footer-quote">
-          على قدر أهل العزم تأتي العزائم
-        </div>
-      </footer>
       </>
       )}
+
+      <footer className="site-footer">
+        <div className="site-footer-in">
+          <span>© 2026 Talal Al Zayed. Riyadh.</span>
+          <span>Views here are my own, not my employer's.</span>
+        </div>
+      </footer>
     </div>
   );
 }
