@@ -12,6 +12,26 @@ const allPerspectives = [...articleData].sort((a, b) => {
   return dateB - dateA;
 });
 
+const formatDate = (d) =>
+  new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+
+// Article tags are stored in capitals. Show them in sentence case, keeping acronyms.
+const ACRONYMS = ["AI", "FDI", "GCC", "UAE", "SME", "G20"];
+const formatTag = (t) => {
+  const words = (t || "").toLowerCase().split(" ").map((w) =>
+    ACRONYMS.includes(w.toUpperCase()) ? w.toUpperCase() : w
+  );
+  const out = words.join(" ");
+  return out.charAt(0).toUpperCase() + out.slice(1);
+};
+
+const focusAreas = [
+  { q: "Market access and licensing", a: "Which activities can be licensed, what the ownership rules allow, and who actually signs. The approving authority is often not the ministry you have been talking to." },
+  { q: "Local content and procurement", a: "Getting onto the mandatory procurement list, and what the government expects in return: hiring, local content, technology transfer and headquarters commitments." },
+  { q: "Digital and AI governance", a: "Data residency, cloud sovereignty and the direction of AI regulation across the Gulf, where the frameworks are diverging rather than converging." },
+  { q: "Policy risk and timing", a: "Saudi rules move quarterly. Most of the value is in seeing a change early, not reacting on the day it lands." },
+];
+
 const statusRows = [
   { k: "Speaking and moderation", v: "Open", tone: "sig" },
   { k: "Introductions", v: "Always", tone: "sig" },
@@ -63,7 +83,6 @@ export default function TalalSite() {
   const [activeSection, setActiveSection] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
-  const [hoveredPerspective, setHoveredPerspective] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [emailSubmitted, setEmailSubmitted] = useState(false);
@@ -398,6 +417,91 @@ export default function TalalSite() {
           .hero-ctas .btn { justify-content: center; }
         }
 
+        .sec { padding: 52px 0; border-bottom: 1px solid var(--rule); }
+        .shead {
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          gap: 20px;
+          margin-bottom: 22px;
+        }
+        .h2 { font-size: 21px; font-weight: 700; letter-spacing: -0.015em; }
+        .note { font-size: 13px; color: var(--ink-3); }
+        .yr { font-family: var(--font-narrow); color: var(--ink-3); font-size: 13.5px; white-space: nowrap; }
+
+        .cells { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+        .cell { padding: 16px 20px 18px 0; border-right: 1px solid var(--rule-soft); }
+        .cell + .cell { padding-left: 20px; }
+        .cell:last-child { border-right: 0; }
+        .cq { font-size: 15.5px; font-weight: 600; line-height: 1.3; margin: 0 0 7px; }
+        .ca { font-size: 14px; color: var(--ink-2); line-height: 1.55; }
+
+        .a-lead, .idx {
+          display: grid;
+          grid-template-columns: 110px minmax(0, 1fr) 170px;
+          gap: 20px;
+          align-items: baseline;
+          text-decoration: none;
+          color: var(--ink);
+        }
+        .a-lead { padding: 4px 0 22px; border-bottom: 1px solid var(--ink); }
+        .a-lead-title { display: block; font-size: 26px; font-weight: 600; line-height: 1.22; letter-spacing: -0.016em; max-width: 30ch; }
+        .a-lead-sum { display: block; margin-top: 10px; font-size: 16px; line-height: 1.55; color: var(--ink-2); max-width: 68ch; }
+        .idx { padding: 14px 0; border-bottom: 1px solid var(--rule-soft); }
+        .it { display: block; font-size: 16.5px; font-weight: 600; line-height: 1.35; }
+        .is { display: block; font-size: 14px; color: var(--ink-2); margin-top: 4px; line-height: 1.5; }
+        .a-lead:hover .a-lead-title, .idx:hover .it { color: var(--sig); }
+        .a-tag { text-align: right; white-space: normal; }
+        .a-mmeta { display: none; }
+
+        .sub-form {
+          margin-top: 26px;
+          padding: 18px 20px;
+          background: var(--sunk);
+          border: 1px solid var(--rule);
+          display: flex;
+          align-items: flex-end;
+          gap: 12px;
+        }
+        .sub-field { flex-grow: 1; }
+        .lbl { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+        .inp {
+          width: 100%;
+          min-height: 44px;
+          border: 1px solid var(--ink);
+          padding: 0 12px;
+          font-family: var(--font);
+          font-size: 14px;
+          background: var(--bg);
+          color: var(--ink);
+          border-radius: 0;
+        }
+        .inp:focus { outline: 2px solid var(--sig); outline-offset: -1px; }
+        .sub-note { width: 190px; padding-bottom: 4px; }
+        .sub-done { margin-top: 26px; padding: 18px 20px; background: var(--sunk); border: 1px solid var(--rule); font-size: 15px; font-weight: 500; }
+
+        @media (max-width: 900px) {
+          .cells { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+          .cell, .cell + .cell { padding: 16px 20px 18px 0; border-right: 0; border-bottom: 1px solid var(--rule-soft); }
+        }
+        @media (max-width: 768px) {
+          .sec { padding: 36px 0; }
+          .shead { display: block; margin-bottom: 16px; }
+          .shead .note { display: block; margin-top: 4px; }
+          .cells { grid-template-columns: 1fr; }
+          .cell, .cell + .cell { padding: 14px 0; }
+          .a-lead, .idx { display: block; }
+          .a-lead { padding: 14px 0 18px; border-top: 1px solid var(--ink); }
+          .a-lead-title { margin-top: 6px; font-size: 21px; line-height: 1.25; letter-spacing: -0.012em; }
+          .a-lead-sum { margin-top: 8px; font-size: 15px; }
+          .a-date, .a-tag, .idx .is { display: none; }
+          .a-mmeta { display: block; }
+          .idx .it { margin-top: 4px; }
+          .sub-form { display: block; padding: 16px; margin-top: 22px; }
+          .sub-form .btn { width: 100%; justify-content: center; margin-top: 10px; }
+          .sub-note { width: auto; margin-top: 10px; padding: 0; }
+        }
+
         .trust-strip {
           padding: 60px 40px;
           border-top: 1px solid var(--rule-soft);
@@ -452,19 +556,6 @@ export default function TalalSite() {
           .trust-logo-img.tall { height: 34px; }
         }
 
-        .perspective-featured {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 9px;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          color: #FFFFFF;
-          background: var(--sig);
-          padding: 3px 10px;
-          display: inline-block;
-          margin-bottom: 8px;
-        }
-
-
         .section-header {
           display: flex;
           align-items: center;
@@ -490,192 +581,6 @@ export default function TalalSite() {
           color: var(--ink-3);
         }
 
-        .perspectives-section {
-          padding: 120px 40px;
-          position: relative;
-        }
-
-        .perspective-card {
-          border-top: 1px solid var(--rule-soft);
-          padding: 40px 0;
-          cursor: pointer;
-          transition: all 0.4s ease;
-          display: grid;
-          grid-template-columns: 140px 1fr;
-          gap: 40px;
-          align-items: start;
-        }
-
-        .perspective-card:hover {
-          padding-left: 20px;
-        }
-
-        .perspective-card:last-child {
-          border-bottom: 1px solid var(--rule-soft);
-        }
-
-        .perspective-meta {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-
-        .perspective-tag {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 10px;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          color: var(--sig);
-        }
-
-        .perspective-date {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 10px;
-          color: var(--ink-3);
-          letter-spacing: 1px;
-        }
-
-        .perspective-content h3 {
-          font-family: 'Archivo', sans-serif;
-          font-size: 28px;
-          line-height: 1.2;
-          color: var(--ink);
-          margin-bottom: 12px;
-          transition: color 0.3s;
-        }
-
-        .perspective-card:hover .perspective-content h3 {
-          color: var(--sig);
-        }
-
-        .perspective-content p {
-          font-size: 15px;
-          line-height: 1.7;
-          color: var(--ink-2);
-          max-width: 680px;
-          transition: color 0.3s;
-        }
-
-        .perspective-card:hover .perspective-content p {
-          color: var(--ink);
-        }
-
-        .perspective-read {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 10px;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          color: var(--ink-3);
-          margin-top: 16px;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          transition: color 0.3s;
-        }
-
-        .perspective-card:hover .perspective-read {
-          color: var(--sig);
-        }
-
-        @media (max-width: 768px) {
-          .perspective-card {
-            grid-template-columns: 1fr;
-            gap: 12px;
-          }
-          .perspective-meta {
-            flex-direction: row;
-            align-items: center;
-          }
-        }
-
-        .email-capture {
-          padding: 64px 40px;
-          text-align: center;
-          border-top: 1px solid var(--rule-soft);
-          border-bottom: 1px solid var(--rule-soft);
-          position: relative;
-        }
-
-
-        .email-capture-text {
-          font-family: 'Archivo', sans-serif;
-          font-size: 22px;
-          color: var(--ink);
-          margin-bottom: 24px;
-        }
-
-        .email-capture-text em {
-          color: var(--sig);
-          font-style: italic;
-        }
-
-        .email-capture-form {
-          display: flex;
-          justify-content: center;
-          gap: 0;
-          max-width: 480px;
-          margin: 0 auto;
-        }
-
-        .email-capture-input {
-          flex: 1;
-          padding: 14px 20px;
-          background: var(--sunk);
-          border: 1px solid var(--rule);
-          border-right: none;
-          color: var(--ink);
-          font-family: 'Archivo', sans-serif;
-          font-size: 14px;
-          outline: none;
-          transition: border-color 0.3s;
-        }
-
-        .email-capture-input:focus {
-          border-color: var(--rule);
-        }
-
-        .email-capture-input::placeholder {
-          color: var(--ink-3);
-        }
-
-        .email-capture-btn {
-          padding: 14px 28px;
-          background: var(--sig);
-          color: #FFFFFF;
-          border: 1px solid var(--sig);
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 11px;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          cursor: pointer;
-          transition: all 0.3s;
-          white-space: nowrap;
-        }
-
-        .email-capture-btn:hover {
-          background: transparent;
-          color: var(--sig);
-        }
-
-        .email-capture-note {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 10px;
-          color: var(--ink-3);
-          margin-top: 16px;
-          letter-spacing: 1px;
-        }
-
-        .email-capture-success {
-          font-family: 'Archivo', sans-serif;
-          font-size: 20px;
-          color: var(--sig);
-        }
-
-        @media (max-width: 768px) {
-          .email-capture { padding: 48px 20px; }
-          .email-capture-form { flex-direction: column; }
-          .email-capture-input { border-right: 1px solid var(--rule); border-bottom: none; }
-        }
 
         .projects-section {
           padding: 120px 40px;
@@ -1342,7 +1247,7 @@ export default function TalalSite() {
 
 
         @media (max-width: 768px) {
-          .perspectives-section, .about-section, .connect-section, .projects-section, .advisory-section { padding: 80px 20px; }
+          .about-section, .connect-section, .projects-section, .advisory-section { padding: 80px 20px; }
         }
       `}</style>
 
@@ -1527,6 +1432,87 @@ export default function TalalSite() {
         </div>
       </section>
 
+      {/* WHAT I WORK ON */}
+      <section className="sec" id="focus">
+        <div className="wrap">
+          <div className="shead">
+            <h2 className="h2">What I work on</h2>
+            <span className="note">Where most of my work falls</span>
+          </div>
+          <div className="cells">
+            {focusAreas.map((f) => (
+              <div className="cell" key={f.q}>
+                <h3 className="cq">{f.q}</h3>
+                <p className="ca">{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ANALYSIS */}
+      <section
+        ref={(el) => (sectionRefs.current.perspectives = el)}
+        className="sec"
+        id="analysis"
+      >
+        <div className="wrap">
+          <div className="shead">
+            <h2 className="h2">Analysis</h2>
+            <span className="note">Commentary on Saudi and regional regulation</span>
+          </div>
+
+          {allPerspectives.map((p, idx) => {
+            const isLead = idx === 0;
+            const open = (e) => {
+              e.preventDefault();
+              navigate("/articles/" + p.slug);
+              window.scrollTo(0, 0);
+            };
+            return (
+              <a
+                key={p.id}
+                href={"/articles/" + p.slug}
+                onClick={open}
+                className={isLead ? "a-lead" : "idx"}
+              >
+                <span className="yr a-date">{formatDate(p.date)}</span>
+                <span>
+                  <span className="yr a-mmeta">{formatDate(p.date)}, {formatTag(p.tag)}</span>
+                  <span className={isLead ? "a-lead-title" : "it"}>{p.title}</span>
+                  <span className={isLead ? "a-lead-sum" : "is"}>{p.excerpt}</span>
+                </span>
+                <span className="yr a-tag">{formatTag(p.tag)}, {p.readTime}</span>
+              </a>
+            );
+          })}
+
+          {emailSubmitted ? (
+            <div className="sub-done">Thanks. New pieces will come to your inbox.</div>
+          ) : (
+            <form
+              className="sub-form"
+              onSubmit={(e) => { e.preventDefault(); handleEmailSubmit(); }}
+            >
+              <div className="sub-field">
+                <label className="lbl" htmlFor="sub">Get new analysis by email</label>
+                <input
+                  className="inp"
+                  id="sub"
+                  type="email"
+                  required
+                  placeholder="you@company.com"
+                  value={emailInput}
+                  onChange={(e) => setEmailInput(e.target.value)}
+                />
+              </div>
+              <button className="btn fill" type="submit">Subscribe</button>
+              <span className="note sub-note">Only new pieces. Nothing else.</span>
+            </form>
+          )}
+        </div>
+      </section>
+
       {/* INSTITUTIONAL TRUST STRIP */}
       <div className="trust-strip">
         <div className="trust-label">I Served At</div>
@@ -1543,86 +1529,6 @@ export default function TalalSite() {
           <span className="trust-divider" />
           <img src="/royal-court-logo.png" alt="The Royal Court" className="trust-logo-img tall" />
         </div>
-      </div>
-
-      {/* PERSPECTIVES */}
-      <section
-        ref={(el) => (sectionRefs.current.perspectives = el)}
-        className="perspectives-section"
-      >
-        <div className="section-header">
-          <span className="section-number">01</span>
-          <span className="section-title">Perspectives</span>
-          <div className="section-line" />
-        </div>
-
-        {allPerspectives.map((p, idx) => (
-          <div
-            key={p.id}
-            className="perspective-card"
-            onMouseEnter={() => setHoveredPerspective(p.id)}
-            onMouseLeave={() => setHoveredPerspective(null)}
-            onClick={() => {
-              if (p.content && p.slug) {
-                navigate("/articles/" + p.slug);
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }
-            }}
-            style={{ cursor: p.content ? "pointer" : "default" }}
-          >
-            <div className="perspective-meta">
-              {idx === 0 && <span className="perspective-featured">Latest</span>}
-              <span className="perspective-tag">{p.tag}</span>
-              <span className="perspective-date">
-                {p.date} · {p.readTime}
-              </span>
-            </div>
-            <div className="perspective-content">
-              <h3>{p.title}</h3>
-              <p>{p.excerpt}</p>
-              {p.content ? (
-                <div className="perspective-read">
-                  Read more →
-                </div>
-              ) : (
-                <div className="perspective-read" style={{ color: "var(--ink-3)" }}>
-                  Coming soon
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-      </section>
-
-      {/* EMAIL CAPTURE */}
-      <div className="email-capture">
-        {emailSubmitted ? (
-          <div className="email-capture-success">
-            You're in. I'll send my next piece before it goes public.
-          </div>
-        ) : (
-          <>
-            <div className="email-capture-text">
-              Get my next analysis <em>before</em> it hits LinkedIn.
-            </div>
-            <div className="email-capture-form">
-              <input
-                type="email"
-                className="email-capture-input"
-                placeholder="Your email"
-                value={emailInput}
-                onChange={(e) => setEmailInput(e.target.value)}
-                onKeyDown={(e) => { if (e.key === "Enter") handleEmailSubmit(); }}
-              />
-              <button className="email-capture-btn" onClick={handleEmailSubmit}>
-                Subscribe
-              </button>
-            </div>
-            <div className="email-capture-note">
-              No spam. No schedule. Just policy analysis worth reading.
-            </div>
-          </>
-        )}
       </div>
 
       {/* PROJECTS */}
