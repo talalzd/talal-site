@@ -60,7 +60,8 @@ Port plan. All stages happen on one branch called `redesign`. Each session does 
 3. What I work on, and Analysis (lead piece is always the newest article, then the index, then email signup).
 4. Track record. Use these confirmed dates for the two industry roles:
    - Nokia: Head of Policy and Government Affairs, Saudi Arabia only, August 2026 to present. No achievements listed yet. Do not invent any.
-   - HP Inc.: Director, Public Policy & Government Affairs, Saudi Arabia and UAE, May 2024 to July 2026.
+   - HP Inc.: Director, Public Policy & Government Affairs, Saudi Arabia, UAE and Egypt (per the CV), May 2024 to July 2026.
+   - Earlier roles and outcomes come from `public/Talal_AlZayed_CV.pdf`.
 5. Work with me, including advisory scope and the speaking topics, button and two credentials described above. Restyle the /advisory page to match, since people may have it bookmarked.
 6. Article page, matching `design/article.html`.
 7. Phone check of every page, then SEO: JSON-LD `worksFor`, page titles and meta descriptions, and a new light OG image.

@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import articleData from "./articles.js";
 import Advisory from "./Advisory.jsx";
 
-const SECTIONS = ["home", "perspectives", "projects", "about", "connect"];
+const SECTIONS = ["home", "perspectives", "record", "projects", "about", "connect"];
 
 // Sort perspectives by date, newest first
 const allPerspectives = [...articleData].sort((a, b) => {
@@ -41,41 +41,43 @@ const statusRows = [
   { k: "Working languages", v: "Arabic, English" },
 ];
 
-const career = [
+// Track record. Dates and outcomes match the CV. Nokia has no outcomes yet: add them only when Talal confirms them.
+const trackRecord = [
   {
-    role: "Head of Policy and Government Affairs",
-    org: "Nokia, Saudi Arabia, August 2026 to present",
-    scope: "Saudi Arabia",
+    dates: "Aug 2026 to now",
+    role: "Head of policy and government affairs",
+    org: "Nokia, Saudi Arabia",
+    outcome: null,
   },
   {
-    role: "Director, Public Policy & Government Affairs",
-    org: "HP Inc., May 2024 to July 2026",
-    scope: "Saudi Arabia & UAE",
-    highlight: "Reversed a restrictive import rule protecting $200M+ in annual revenue. Established the nation's first AI Center of Excellence.",
+    dates: "May 2024 to Jul 2026",
+    role: "Director, public policy and government affairs",
+    org: "HP, Saudi Arabia, UAE and Egypt",
+    outcome: <>Reversed a restrictive SASO import standard that threatened <b>$200M+</b> in annual revenue. Negotiated the partnerships behind Saudi Arabia's first AI Center of Excellence at KFUPM. Launched a digital equity program reaching <b>700,000+</b> Saudi students.</>,
   },
   {
-    role: "Public Policy Advisor",
-    org: "Royal Commission for Al-Ula",
-    scope: "Institutional Design",
-    highlight: "Built the entire Public Policy Department from zero. Accelerated the policy-making lifecycle by 50%.",
+    dates: "Jun 2021 to Apr 2024",
+    role: "Public policy advisor, founding department head",
+    org: "Royal Commission for AlUla",
+    outcome: <>Built the public policy department from zero for a <b>$15B+</b> sovereign program. Cut the policy-making cycle by half. Drafted the Kingdom's proposed Art Law.</>,
   },
   {
-    role: "G20 Economic Policy Advisor",
-    org: "Saudi Arabian Monetary Authority",
-    scope: "Multilateral Diplomacy",
-    highlight: "Authored key G20 Finance Track policy documents adopted across member nations.",
+    dates: "Feb 2019 to Jun 2021",
+    role: "G20 economic policy advisor",
+    org: "Saudi Central Bank, G20 Finance Track",
+    outcome: <>Authored the Finance Track's flagship document under the Saudi presidency, adopted across member nations. Built consensus across <b>20</b> members and <b>12</b> international organizations.</>,
   },
   {
-    role: "Economic Specialist",
-    org: "Monshaat (SME Authority)",
-    scope: "National Strategy",
-    highlight: "Established Saudi Arabia's first national SME Data Center. Led the National SME Strategy.",
+    dates: "Feb 2017 to Feb 2019",
+    role: "Economic specialist",
+    org: "Monshaat, SME authority",
+    outcome: <>Wrote the proposal that made the case for the Kingdom's first SME bank. Established the first national SME data center and led the national SME strategy.</>,
   },
   {
-    role: "Economic Analyst",
-    org: "The Royal Court",
-    scope: "Vision 2030 Foundation",
-    highlight: "Co-authored strategic research that informed key components of Vision 2030.",
+    dates: "Sep 2015 to Feb 2017",
+    role: "Economic analyst",
+    org: "The Royal Court, Vision 2030 foundation team",
+    outcome: <>Co-authored the research that informed the economic diversification components of Vision 2030. Coordinated energy price reform work across six agencies.</>,
   },
 ];
 
@@ -158,11 +160,10 @@ export default function TalalSite() {
     window.scrollTo(0, 0);
   };
 
-  // Header nav. Track record and Work with me point at the current About
-  // section and /advisory until the redesign builds those sections.
+  // Header nav. Work with me points at /advisory until the redesign builds that section.
   const navItems = [
     { label: "Analysis", go: () => scrollTo("perspectives"), isOn: () => !!activeArticle || (location.pathname === "/" && activeSection === "perspectives") },
-    { label: "Track record", go: () => scrollTo("about"), isOn: () => location.pathname === "/" && activeSection === "about" },
+    { label: "Track record", go: () => scrollTo("record"), isOn: () => location.pathname === "/" && activeSection === "record" },
     { label: "Work with me", go: goAdvisory, isOn: () => isAdvisory },
     { label: "Contact", go: () => scrollTo("connect"), isOn: () => location.pathname === "/" && activeSection === "connect" },
   ];
@@ -500,6 +501,34 @@ export default function TalalSite() {
           .sub-form { display: block; padding: 16px; margin-top: 22px; }
           .sub-form .btn { width: 100%; justify-content: center; margin-top: 10px; }
           .sub-note { width: auto; margin-top: 10px; padding: 0; }
+        }
+
+        table.rec { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.5; }
+        .rec th {
+          text-align: left;
+          font-family: var(--font-narrow);
+          font-weight: 600;
+          font-size: 13px;
+          color: var(--ink-2);
+          padding: 0 16px 8px 0;
+          border-bottom: 1px solid var(--ink);
+        }
+        .rec td { padding: 13px 16px 13px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+        .rec th:last-child, .rec td:last-child { padding-right: 0; }
+        .rec .lead { font-weight: 600; }
+        .rec .org { display: block; font-size: 14px; color: var(--ink-2); }
+        .rec .soft { color: var(--ink-2); }
+        .rec b { font-weight: 600; color: var(--ink); }
+
+        @media (max-width: 768px) {
+          .rec thead { display: none; }
+          .rec, .rec tbody, .rec tr, .rec td { display: block; }
+          .rec tbody { border-top: 1px solid var(--ink); }
+          .rec tr { padding: 14px 0; border-bottom: 1px solid var(--rule-soft); }
+          .rec td { padding: 0; border: 0; }
+          .rec td.lead-cell { margin-top: 4px; font-size: 15px; }
+          .rec td.soft { margin-top: 8px; font-size: 14px; line-height: 1.55; }
+          .rec td.soft:empty { display: none; }
         }
 
         .trust-strip {
@@ -895,37 +924,10 @@ export default function TalalSite() {
           font-style: italic;
         }
 
-        .career-item {
-          padding: 24px 0;
-          border-top: 1px solid var(--rule-soft);
-        }
 
-        .career-item:last-child {
-          border-bottom: 1px solid var(--rule-soft);
-        }
 
-        .career-role {
-          font-family: 'Archivo', sans-serif;
-          font-size: 15px;
-          font-weight: 700;
-          color: var(--ink);
-          margin-bottom: 2px;
-        }
 
-        .career-org {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 11px;
-          color: var(--sig);
-          letter-spacing: 1px;
-          text-transform: uppercase;
-          margin-bottom: 8px;
-        }
 
-        .career-highlight {
-          font-size: 13px;
-          color: var(--ink-2);
-          line-height: 1.6;
-        }
 
         .connect-section {
           padding: 120px 40px;
@@ -1513,6 +1515,41 @@ export default function TalalSite() {
         </div>
       </section>
 
+      {/* TRACK RECORD */}
+      <section
+        ref={(el) => (sectionRefs.current.record = el)}
+        className="sec"
+        id="record"
+      >
+        <div className="wrap">
+          <div className="shead">
+            <h2 className="h2">Track record</h2>
+            <span className="note">Nearly nine years in government, then industry</span>
+          </div>
+          <table className="rec">
+            <thead>
+              <tr>
+                <th style={{ width: "16%" }}>Dates</th>
+                <th style={{ width: "30%" }}>Position</th>
+                <th>Outcome</th>
+              </tr>
+            </thead>
+            <tbody>
+              {trackRecord.map((r) => (
+                <tr key={r.dates}>
+                  <td className="yr">{r.dates}</td>
+                  <td className="lead-cell">
+                    <span className="lead">{r.role}</span>
+                    <span className="org">{r.org}</span>
+                  </td>
+                  <td className="soft">{r.outcome}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       {/* INSTITUTIONAL TRUST STRIP */}
       <div className="trust-strip">
         <div className="trust-label">I Served At</div>
@@ -1695,27 +1732,6 @@ export default function TalalSite() {
           </div>
 
           <div>
-            <div style={{ marginBottom: 32 }}>
-              <div
-                style={{
-                  fontFamily: "'Archivo Narrow', 'Archivo', sans-serif",
-                  fontSize: 10,
-                  textTransform: "uppercase",
-                  letterSpacing: 2,
-                  color: "var(--ink-3)",
-                  marginBottom: 20,
-                }}
-              >
-                Career Arc
-              </div>
-              {career.map((c, i) => (
-                <div key={i} className="career-item">
-                  <div className="career-role">{c.role}</div>
-                  <div className="career-org">{c.org}</div>
-                  {c.highlight && <div className="career-highlight">{c.highlight}</div>}
-                </div>
-              ))}
-            </div>
 
             <div style={{ marginTop: 40 }}>
               <div
