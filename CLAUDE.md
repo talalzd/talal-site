@@ -75,6 +75,8 @@ When Talal says "next stage", check which stages are already done on the `redesi
 - No Arabic for now. It may come back later.
 - Advisory is Saudi-only, audience is not limited to tech companies. Six scope areas: market entry and regulatory strategy, government relations, strategic partnerships, investment frameworks, digital and AI policy, policy risk monitoring.
 - No WhatsApp button and nothing that signals always-on availability.
+- LinkedIn is https://www.linkedin.com/in/talal-alzayed/ (with the hyphen). The mockups in `design/` and the old CV show `talalalzayed`; that spelling is wrong. Never copy it from them.
+- Leave the domain setup as it is: the site is served at www.talalalzayed.com and the canonical tags say talalalzayed.com. Talal decided not to change this.
 - Status panel values: Speaking and moderation Open, Introductions Always, Advisory engagements Limited, Board and advisory seats Selective. The last two are hidden for now (see open items).
 
 ## Writing rules
