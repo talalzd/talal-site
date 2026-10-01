@@ -75,7 +75,7 @@ When Talal says "next stage", check which stages are already done on the `redesi
 - No Arabic for now. It may come back later.
 - Advisory is Saudi-only, audience is not limited to tech companies. Six scope areas: market entry and regulatory strategy, government relations, strategic partnerships, investment frameworks, digital and AI policy, policy risk monitoring.
 - No WhatsApp button and nothing that signals always-on availability.
-- Status panel values: Speaking and moderation Open, Introductions Always, Advisory engagements Limited, Board and advisory seats Selective.
+- Status panel values: Speaking and moderation Open, Introductions Always, Advisory engagements Limited, Board and advisory seats Selective. The last two are hidden for now (see open items).
 
 ## Writing rules
 
@@ -87,7 +87,7 @@ When Talal says "next stage", check which stages are already done on the `redesi
 
 ## Open items to confirm with Talal before they go live
 
-- Whether Nokia's outside-activities policy allows advisory engagements and board seats.
-- The "I Served At" logo strip (now including Nokia) is not in the mockups. Keep it, or let Track record carry the institutions? Undecided. Do not remove it until Talal decides.
-- The downloadable CV (`public/Talal_AlZayed_CV.pdf`) still lists HP as current. Talal has not updated it yet. Swap in the new PDF when he sends it.
+- Advisory and board seats are hidden until Talal confirms Nokia's outside-activities policy allows them. Switch: `SHOW_ADVISORY` in `src/siteFlags.js`. While false it hides the Advisory engagements and Board and advisory seats rows in the status panel, the matching two rows in Work with me, the advisory scope list, and the /advisory page, and sends /advisory to the homepage (in the app, in `middleware.js`, and by leaving it out of the sitemap). The code stays in place. Set it to true to switch everything back on.
+- The Download CV button is hidden until Talal sends an updated CV (the current `public/Talal_AlZayed_CV.pdf` still lists HP as current). Switch: `SHOW_CV` in `src/siteFlags.js`. Replace the PDF first, then set it to true.
+- The "I Served At" logo strip was removed before launch, at Talal's request. The reference line's "Before" item now names the institutions instead: The Royal Court, SAMA, Monshaat, Royal Commission for AlUla, HP. The logo files are still in `public/` if he wants it back.
 - New articles. The last one is from May 2026 (HUMAIN One). The design mockups show the March two-coast piece as the lead only because it was the example used; the lead should always be the newest article.

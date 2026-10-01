@@ -1,3 +1,5 @@
+import { SHOW_ADVISORY } from "./src/siteFlags.js";
+
 var BOT_AGENTS = [
   "linkedinbot",
   "facebookexternalhit",
@@ -15,6 +17,12 @@ export var config = {
 };
 
 export default async function middleware(request) {
+  // While advisory is switched off, /advisory goes to the homepage for everyone.
+  var path = new URL(request.url).pathname.replace(/\/$/, "");
+  if (!SHOW_ADVISORY && path === "/advisory") {
+    return Response.redirect(new URL("/", request.url), 307);
+  }
+
   var ua = (request.headers.get("user-agent") || "").toLowerCase();
   var isBot = BOT_AGENTS.some(function(bot) { return ua.includes(bot); });
 

@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import articleData from "./articles.js";
 import Advisory from "./Advisory.jsx";
 import advisoryScope from "./advisoryScope.js";
+import { SHOW_ADVISORY, SHOW_CV } from "./siteFlags.js";
 
 const SECTIONS = ["home", "perspectives", "record", "work", "connect"];
 
@@ -57,8 +58,8 @@ const speakingCredentials = [
 const workModes = [
   { mode: "Speaking and moderation", what: "Conferences, panels, closed-door briefings and executive sessions on Saudi regulation, AI governance and Vision 2030 policymaking.", status: "Open", tone: "sig", speaking: true },
   { mode: "Conversations", what: "Introductions, comparing notes, or talking through something you are weighing. No agenda needed and no invoice attached.", status: "Always", tone: "sig" },
-  { mode: "Advisory engagements", what: "Fixed-scope work for investors, operators and institutions entering or expanding in the Kingdom. Scope below.", status: "Limited", tone: "flag" },
-  { mode: "Boards and advisory seats", what: "Ongoing roles where a regulatory and government affairs view belongs in the room rather than in a report.", status: "Selective" },
+  { mode: "Advisory engagements", what: "Fixed-scope work for investors, operators and institutions entering or expanding in the Kingdom. Scope below.", status: "Limited", tone: "flag", advisory: true },
+  { mode: "Boards and advisory seats", what: "Ongoing roles where a regulatory and government affairs view belongs in the room rather than in a report.", status: "Selective", advisory: true },
 ];
 
 // From the CV.
@@ -74,8 +75,8 @@ const credentials = [
 const statusRows = [
   { k: "Speaking and moderation", v: "Open", tone: "sig" },
   { k: "Introductions", v: "Always", tone: "sig" },
-  { k: "Advisory engagements", v: "Limited", tone: "flag" },
-  { k: "Board and advisory seats", v: "Selective" },
+  { k: "Advisory engagements", v: "Limited", tone: "flag", advisory: true },
+  { k: "Board and advisory seats", v: "Selective", advisory: true },
   { k: "Based", v: "Riyadh" },
   { k: "Working languages", v: "Arabic, English" },
 ];
@@ -136,7 +137,12 @@ export default function TalalSite() {
   const activeArticle = articleSlug
     ? allPerspectives.find((a) => a.slug === articleSlug)
     : null;
-  const isAdvisory = location.pathname === "/advisory";
+  const isAdvisory = SHOW_ADVISORY && location.pathname.replace(/\/$/, "") === "/advisory";
+
+  // While advisory is switched off, /advisory goes to the homepage.
+  useEffect(() => {
+    if (!SHOW_ADVISORY && location.pathname.replace(/\/$/, "") === "/advisory") navigate("/", { replace: true });
+  }, [location.pathname]);
 
   // Update page title for SEO
   useEffect(() => {
@@ -687,61 +693,6 @@ export default function TalalSite() {
           .contact-btns .btn { justify-content: center; }
         }
 
-        .trust-strip {
-          padding: 60px 40px;
-          border-top: 1px solid var(--rule-soft);
-          border-bottom: 1px solid var(--rule-soft);
-        }
-
-        .trust-label {
-          font-size: 13px;
-          color: var(--ink-3);
-          text-align: center;
-          margin-bottom: 32px;
-        }
-
-        .trust-logos {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          gap: 28px;
-          flex-wrap: wrap;
-        }
-
-        .trust-logo-img {
-          height: 36px;
-          width: auto;
-          object-fit: contain;
-          opacity: 0.75;
-          transition: opacity 0.4s ease;
-        }
-
-        .trust-logo-img:hover {
-          opacity: 1;
-        }
-
-        .trust-logo-img.tall {
-          height: 44px;
-        }
-
-        .trust-logo-img.wide {
-          height: 20px;
-        }
-
-        .trust-divider {
-          width: 1px;
-          height: 28px;
-          background: var(--rule);
-        }
-
-        @media (max-width: 768px) {
-          .trust-logos { gap: 24px; }
-          .trust-divider { display: none; }
-          .trust-strip { padding: 40px 20px; }
-          .trust-logo-img { height: 28px; }
-          .trust-logo-img.tall { height: 34px; }
-          .trust-logo-img.wide { height: 16px; }
-        }
 
         .mobile-menu {
           position: fixed;
@@ -813,7 +764,7 @@ export default function TalalSite() {
           <div className="ref-line-in">
             <span><b>Based</b>Riyadh</span>
             <span><b>Now</b>Head of Policy and Government Affairs, Nokia</span>
-            <span><b>Before</b>HP, and nearly nine years in Saudi government</span>
+            <span><b>Before</b>The Royal Court, SAMA, Monshaat, Royal Commission for AlUla, HP</span>
             <span><b>Studying</b>Master of public policy, KAPSARC</span>
           </div>
         </div>
@@ -1002,7 +953,7 @@ export default function TalalSite() {
               <span className="ptop-title">Current status</span>
               <span className="ptop-note">Updated Oct 2026</span>
             </div>
-            {statusRows.map((row) => (
+            {statusRows.filter((row) => SHOW_ADVISORY || !row.advisory).map((row) => (
               <div className="prow" key={row.k}>
                 <span className="pk">{row.k}</span>
                 <span className={`pv ${row.tone || ""}`}>{row.v}</span>
@@ -1128,26 +1079,6 @@ export default function TalalSite() {
         </div>
       </section>
 
-      {/* INSTITUTIONAL TRUST STRIP */}
-      <div className="trust-strip">
-        <div className="trust-label">I served at</div>
-        <div className="trust-logos">
-          <img src="/nokia-logo.png" alt="Nokia" className="trust-logo-img wide" />
-          <span className="trust-divider" />
-          <img src="/hp-logo.svg" alt="HP Inc." className="trust-logo-img" />
-          <span className="trust-divider" />
-          <img src="/rcu-logo.png" alt="Royal Commission for AlUla" className="trust-logo-img" />
-          <span className="trust-divider" />
-          <img src="/sama-logo.png" alt="Saudi Central Bank (SAMA)" className="trust-logo-img" />
-          <span className="trust-divider" />
-          <img src="/g20-logo.webp" alt="G20 Saudi Arabia 2020" className="trust-logo-img tall" />
-          <span className="trust-divider" />
-          <img src="/monshaat-logo.webp" alt="Monshaat" className="trust-logo-img" />
-          <span className="trust-divider" />
-          <img src="/royal-court-logo.png" alt="The Royal Court" className="trust-logo-img tall" />
-        </div>
-      </div>
-
       {/* WORK WITH ME */}
       <section
         ref={(el) => (sectionRefs.current.work = el)}
@@ -1157,7 +1088,7 @@ export default function TalalSite() {
         <div className="wrap">
           <div className="shead">
             <h2 className="h2">Work with me</h2>
-            <span className="note">Four ways in, different commitments</span>
+            <span className="note">{SHOW_ADVISORY ? "Four ways in, different commitments" : "Two ways in, different commitments"}</span>
           </div>
           <table className="rec wk">
             <thead>
@@ -1168,7 +1099,7 @@ export default function TalalSite() {
               </tr>
             </thead>
             <tbody>
-              {workModes.map((m) => (
+              {workModes.filter((m) => SHOW_ADVISORY || !m.advisory).map((m) => (
                 <tr key={m.mode}>
                   <td className="lead-cell"><span className="lead">{m.mode}</span></td>
                   <td className="soft">
@@ -1200,6 +1131,7 @@ export default function TalalSite() {
             </tbody>
           </table>
 
+          {SHOW_ADVISORY && (
           <div className="scope">
             <div>
               <h3 className="scope-h">Advisory scope</h3>
@@ -1224,6 +1156,7 @@ export default function TalalSite() {
               ))}
             </div>
           </div>
+          )}
         </div>
       </section>
 
@@ -1248,7 +1181,9 @@ export default function TalalSite() {
             <div className="contact-btns">
               <a className="btn fill" href="mailto:talal.h.zd@gmail.com">Email me</a>
               <a className="btn" href="https://www.linkedin.com/in/talal-alzayed/" target="_blank" rel="noopener">LinkedIn</a>
-              <a className="btn" href="/Talal_AlZayed_CV.pdf" target="_blank" rel="noopener">Download CV</a>
+              {SHOW_CV && (
+                <a className="btn" href="/Talal_AlZayed_CV.pdf" target="_blank" rel="noopener">Download CV</a>
+              )}
             </div>
           </div>
 

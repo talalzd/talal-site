@@ -4,6 +4,7 @@
 
 import fs from "fs";
 import path from "path";
+import { SHOW_ADVISORY } from "./src/siteFlags.js";
 
 export default function articlesPlugin() {
   return {
@@ -53,12 +54,12 @@ export default function articlesPlugin() {
     <lastmod>${today}</lastmod>
     <priority>1.0</priority>
   </url>
-  <url>
+${SHOW_ADVISORY ? `  <url>
     <loc>https://talalalzayed.com/advisory</loc>
     <lastmod>${today}</lastmod>
     <priority>0.7</priority>
   </url>
-${sitemapEntries}
+` : ""}${sitemapEntries}
 </urlset>
 `;
 
