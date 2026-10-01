@@ -4,7 +4,7 @@ import articleData from "./articles.js";
 import Advisory from "./Advisory.jsx";
 import advisoryScope from "./advisoryScope.js";
 
-const SECTIONS = ["home", "perspectives", "record", "work", "projects", "about", "connect"];
+const SECTIONS = ["home", "perspectives", "record", "work", "connect"];
 
 // Sort perspectives by date, newest first
 const allPerspectives = [...articleData].sort((a, b) => {
@@ -61,6 +61,16 @@ const workModes = [
   { mode: "Boards and advisory seats", what: "Ongoing roles where a regulatory and government affairs view belongs in the room rather than in a report.", status: "Selective" },
 ];
 
+// From the CV.
+const credentials = [
+  { k: "Master of public policy", v: "KAPSARC, expected 2027" },
+  { k: "MBA, entrepreneurship", v: "MBS College" },
+  { k: "Bachelor of economics", v: "Trent University" },
+  { k: "Implementing public policy", v: "Harvard Kennedy School" },
+  { k: "Policy analysis, regulation", v: "London School of Economics" },
+  { k: "Certified", v: "PMP, PROSCI" },
+];
+
 const statusRows = [
   { k: "Speaking and moderation", v: "Open", tone: "sig" },
   { k: "Introductions", v: "Always", tone: "sig" },
@@ -113,8 +123,6 @@ const trackRecord = [
 export default function TalalSite() {
   const [activeSection, setActiveSection] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const [loaded, setLoaded] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [emailSubmitted, setEmailSubmitted] = useState(false);
   const sectionRefs = useRef({});
@@ -141,13 +149,9 @@ export default function TalalSite() {
     }
   }, [activeArticle, isAdvisory]);
 
-  useEffect(() => {
-    setTimeout(() => setLoaded(true), 100);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrollY(window.scrollY || document.documentElement.scrollTop);
       const offsets = SECTIONS.map((s) => {
         const el = sectionRefs.current[s];
         if (!el) return { id: s, top: 0 };
@@ -245,11 +249,6 @@ export default function TalalSite() {
           color: #FFFFFF;
         }
 
-
-
-
-
-
         .site-hdr {
           position: sticky;
           top: 0;
@@ -342,19 +341,6 @@ export default function TalalSite() {
           .site-footer-in { flex-direction: column; padding: 16px 20px 36px; }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         .wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
 
         .btn {
@@ -394,6 +380,7 @@ export default function TalalSite() {
           padding: 10px 14px;
           border-bottom: 1px solid var(--rule);
           font-size: 13.5px;
+          line-height: 1.4;
         }
         .prow:last-child { border-bottom: 0; }
         .pk { color: var(--ink-2); }
@@ -681,6 +668,25 @@ export default function TalalSite() {
           .art-side-link { margin-top: 0; }
         }
 
+        .contact { padding: 56px 0 64px; }
+        .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) 356px; gap: 64px; align-items: start; }
+        .contact-h { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+        .contact-p { margin-top: 16px; font-size: 16px; line-height: 1.6; color: var(--ink-2); max-width: 54ch; }
+        .contact-mail { margin-top: 22px; font-size: 18px; font-weight: 600; }
+        .contact-mail a { color: var(--sig); }
+        .contact-mail a:hover { color: var(--ink); }
+        .contact-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+        @media (max-width: 900px) {
+          .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+        }
+        @media (max-width: 768px) {
+          .contact { padding: 36px 0 44px; }
+          .contact-h { font-size: 23px; }
+          .contact-mail a { display: inline-block; padding: 10px 0; }
+          .contact-btns { flex-direction: column; }
+          .contact-btns .btn { justify-content: center; }
+        }
+
         .trust-strip {
           padding: 60px 40px;
           border-top: 1px solid var(--rule-soft);
@@ -688,10 +694,7 @@ export default function TalalSite() {
         }
 
         .trust-label {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 10px;
-          text-transform: uppercase;
-          letter-spacing: 3px;
+          font-size: 13px;
           color: var(--ink-3);
           text-align: center;
           margin-bottom: 32px;
@@ -740,326 +743,6 @@ export default function TalalSite() {
           .trust-logo-img.wide { height: 16px; }
         }
 
-        .section-header {
-          display: flex;
-          align-items: center;
-          gap: 20px;
-          margin-bottom: 64px;
-        }
-        .section-number {
-          font-family: 'Archivo', sans-serif;
-          font-size: 14px;
-          color: var(--sig);
-          opacity: 0.5;
-        }
-        .section-line {
-          flex: 1;
-          height: 1px;
-          background: var(--rule);
-        }
-        .section-title {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 11px;
-          text-transform: uppercase;
-          letter-spacing: 4px;
-          color: var(--ink-3);
-        }
-
-
-        .projects-section {
-          padding: 120px 40px;
-          position: relative;
-        }
-
-        .projects-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 1px;
-          background: var(--rule-soft);
-          border: 1px solid var(--rule-soft);
-        }
-
-        .project-card {
-          background: var(--bg);
-          padding: 40px 32px;
-          transition: all 0.4s ease;
-          cursor: default;
-          position: relative;
-        }
-
-        .project-card:hover {
-          background: var(--sunk);
-        }
-
-        .project-card.clickable {
-          cursor: pointer;
-        }
-
-        .project-status {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 9px;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          padding: 3px 10px;
-          display: inline-block;
-          margin-bottom: 16px;
-        }
-
-        .project-status.live {
-          color: #FFFFFF;
-          background: var(--sig);
-        }
-
-        .project-status.development {
-          color: var(--sig);
-          border: 1px solid var(--rule);
-        }
-
-        .project-card-title {
-          font-family: 'Archivo', sans-serif;
-          font-size: 24px;
-          color: var(--ink);
-          margin-bottom: 12px;
-          transition: color 0.3s;
-          line-height: 1.2;
-        }
-
-        .project-card.clickable:hover .project-card-title {
-          color: var(--sig);
-        }
-
-        .project-card-desc {
-          font-size: 14px;
-          color: var(--ink-2);
-          line-height: 1.7;
-          margin-bottom: 20px;
-        }
-
-        .project-card-stack {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 10px;
-          color: var(--ink-3);
-          letter-spacing: 1px;
-        }
-
-        .project-card-arrow {
-          position: absolute;
-          bottom: 32px;
-          right: 32px;
-          color: var(--sig);
-          font-size: 18px;
-          opacity: 0;
-          transform: translateX(-6px);
-          transition: all 0.3s;
-        }
-
-        .project-card.clickable:hover .project-card-arrow {
-          opacity: 1;
-          transform: translateX(0);
-        }
-
-        @media (max-width: 768px) {
-          .projects-grid {
-            grid-template-columns: 1fr;
-          }
-          .projects-section { padding: 80px 20px; }
-        }
-
-
-        .about-section {
-          padding: 120px 40px;
-          position: relative;
-        }
-
-        .about-photo-row {
-          display: flex;
-          align-items: center;
-          gap: 48px;
-          margin-bottom: 64px;
-        }
-
-        .about-photo-wrapper {
-          width: 240px;
-          height: 300px;
-          flex-shrink: 0;
-          position: relative;
-          border-radius: 4px;
-          overflow: hidden;
-        }
-
-        .about-photo-wrapper::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          border: 1px solid var(--rule);
-          border-radius: 4px;
-          pointer-events: none;
-        }
-
-        .about-photo {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: center 15%;
-          filter: grayscale(10%) contrast(1.02) brightness(1.02);
-          transition: filter 0.5s ease;
-        }
-
-        .about-photo-wrapper:hover .about-photo {
-          filter: grayscale(0%) contrast(1) brightness(1.05);
-        }
-
-        .about-photo-intro {
-          font-family: 'Archivo', sans-serif;
-          font-size: 32px;
-          line-height: 1.4;
-          color: var(--ink);
-        }
-
-        .about-photo-intro strong {
-          color: var(--ink);
-          font-weight: 400;
-        }
-
-        .about-photo-intro em {
-          color: var(--sig);
-          font-style: italic;
-        }
-
-        @media (max-width: 768px) {
-          .about-photo-row {
-            flex-direction: column;
-            text-align: center;
-            gap: 32px;
-          }
-          .about-photo-wrapper {
-            width: 160px;
-            height: 160px;
-          }
-        }
-
-        .about-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 80px;
-          align-items: start;
-        }
-
-        @media (max-width: 900px) {
-          .about-grid { grid-template-columns: 1fr; gap: 48px; }
-        }
-
-        .about-narrative {
-          font-family: 'Archivo', sans-serif;
-          font-size: 26px;
-          line-height: 1.5;
-          color: var(--ink);
-        }
-
-        .about-narrative strong {
-          color: var(--ink);
-          font-weight: 400;
-        }
-
-        .about-narrative em {
-          color: var(--sig);
-          font-style: italic;
-        }
-
-
-
-
-
-
-        .connect-section {
-          padding: 120px 40px;
-          position: relative;
-          text-align: center;
-        }
-
-
-        .connect-headline {
-          font-family: 'Archivo', sans-serif;
-          font-size: clamp(32px, 5vw, 56px);
-          color: var(--ink);
-          margin-bottom: 24px;
-          line-height: 1.15;
-        }
-
-        .connect-headline em {
-          color: var(--sig);
-          font-style: italic;
-        }
-
-        .connect-sub {
-          font-size: 16px;
-          color: var(--ink-3);
-          max-width: 500px;
-          margin: 0 auto 20px;
-          line-height: 1.7;
-        }
-
-        .connect-email-display {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 13px;
-          color: var(--ink-2);
-          letter-spacing: 1px;
-          margin-bottom: 48px;
-        }
-
-        .connect-email-display a {
-          color: var(--sig);
-          text-decoration: none;
-          transition: opacity 0.3s;
-        }
-
-        .connect-email-display a:hover {
-          opacity: 0.7;
-        }
-
-        .connect-links {
-          display: flex;
-          justify-content: center;
-          gap: 24px;
-          flex-wrap: wrap;
-        }
-
-        .connect-btn {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 12px;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          padding: 16px 32px;
-          border: 1px solid var(--rule);
-          background: transparent;
-          color: var(--sig);
-          cursor: pointer;
-          transition: all 0.3s ease;
-          text-decoration: none;
-          display: inline-block;
-        }
-
-        .connect-btn:hover {
-          background: var(--sig);
-          color: #FFFFFF;
-          border-color: var(--sig);
-        }
-
-        .connect-btn.primary {
-          background: var(--sig);
-          color: #FFFFFF;
-          border-color: var(--sig);
-        }
-        .connect-btn.primary:hover {
-          background: transparent;
-          color: var(--sig);
-        }
-
-
-
-
-
-
         .mobile-menu {
           position: fixed;
           inset: 0;
@@ -1092,11 +775,6 @@ export default function TalalSite() {
           padding: 0 14px !important;
           border: 1px solid var(--ink) !important;
           font-size: 14px !important;
-        }
-
-
-        @media (max-width: 768px) {
-          .about-section, .connect-section, .projects-section { padding: 80px 20px; }
         }
       `}</style>
 
@@ -1452,7 +1130,7 @@ export default function TalalSite() {
 
       {/* INSTITUTIONAL TRUST STRIP */}
       <div className="trust-strip">
-        <div className="trust-label">I Served At</div>
+        <div className="trust-label">I served at</div>
         <div className="trust-logos">
           <img src="/nokia-logo.png" alt="Nokia" className="trust-logo-img wide" />
           <span className="trust-divider" />
@@ -1549,278 +1227,42 @@ export default function TalalSite() {
         </div>
       </section>
 
-      {/* PROJECTS */}
-      <section
-        ref={(el) => (sectionRefs.current.projects = el)}
-        className="projects-section"
-      >
-        <div className="section-header">
-          <span className="section-number">02</span>
-          <span className="section-title">What I Build</span>
-          <div className="section-line" />
-        </div>
-
-        <div className="projects-grid">
-          <a
-            href="https://mena-risk-score.vercel.app/"
-            target="_blank"
-            rel="noopener"
-            className="project-card clickable"
-            style={{ textDecoration: "none" }}
-          >
-            <span className="project-status live">Live</span>
-            <div className="project-card-title">MENA Regulatory Risk Score</div>
-            <div className="project-card-desc">
-              Answer a few questions about your company's sector, data model, and market plans. Get a regulatory risk score across Saudi Arabia, UAE, and Egypt with specific recommendations on what to fix first.
-            </div>
-            <div className="project-card-stack">Interactive Assessment · AI-Powered Analysis</div>
-            <span className="project-card-arrow">→</span>
-          </a>
-
-          <a
-            href="https://market-entry-playbook.vercel.app/"
-            target="_blank"
-            rel="noopener"
-            className="project-card clickable"
-            style={{ textDecoration: "none" }}
-          >
-            <span className="project-status live">Live</span>
-            <div className="project-card-title">Market Entry Playbook</div>
-            <div className="project-card-desc">
-              Select your sector, data hosting model, and government contract plans. Get a tailored market entry plan covering licensing costs, employee requirements, and a step-by-step timeline.
-            </div>
-            <div className="project-card-stack">RAG-Powered · Saudi Arabia Focus</div>
-            <span className="project-card-arrow">→</span>
-          </a>
-
-          <a
-            href="https://mena-new.onrender.com/"
-            target="_blank"
-            rel="noopener"
-            className="project-card clickable"
-            style={{ textDecoration: "none" }}
-          >
-            <span className="project-status live">Live</span>
-            <div className="project-card-title">MENA Policy Monitor</div>
-            <div className="project-card-desc">
-              Regulatory intelligence system tracking government consultations and policy changes across Saudi Arabia, UAE, and Egypt. The tool I wished existed when I started this job.
-            </div>
-            <div className="project-card-stack">Real-Time Tracking · 3 Markets</div>
-            <span className="project-card-arrow">→</span>
-          </a>
-        </div>
-      </section>
-
-      {/* ABOUT */}
-      <section
-        ref={(el) => (sectionRefs.current.about = el)}
-        className="about-section"
-      >
-        <div className="section-header">
-          <span className="section-number">04</span>
-          <span className="section-title">About</span>
-          <div className="section-line" />
-        </div>
-
-        <div className="about-photo-row">
-          <div className="about-photo-wrapper">
-            <img
-              src="/talal.jpg"
-              alt="Talal Al Zayed, Head of Policy and Government Affairs at Nokia, Riyadh Saudi Arabia"
-              className="about-photo"
-            />
-          </div>
-          <div className="about-photo-intro">
-            <strong>Talal Al Zayed</strong> — a policy executive who <em>builds</em>. Based in Riyadh, operating across Saudi Arabia, UAE, and Egypt.
-          </div>
-        </div>
-
-        <div className="about-grid">
-          <div className="about-narrative">
-            <p style={{ marginBottom: 24 }}>
-              I started at <strong>the Royal Court</strong>, where I helped
-              shape the economic research that fed into <em>Vision 2030</em>.
-              From there, I built Saudi Arabia's first SME Data Center, advised
-              on <strong>G20 Finance Track</strong> policy that was adopted
-              across member nations, and architected an entire policy department
-              for the <strong>Royal Commission for Al-Ula</strong> from scratch.
-            </p>
-            <p style={{ marginBottom: 24 }}>
-              Since August 2026 I have been Head of Policy and Government
-              Affairs at <strong>Nokia</strong>, covering Saudi Arabia. Before
-              that, at <strong>HP Inc.</strong> from May 2024 to July 2026, I
-              turned regulatory complexity into commercial
-              advantage: negotiating with standards bodies, securing investment
-              incentives, and building anti-counterfeit strategies across Saudi
-              Arabia and the UAE.
-            </p>
-            <p>
-              But here's what makes me different:{" "}
-              <em>I don't just analyze policy. I build the tools that make it operational.</em>{" "}
-              I constructed a regulatory monitoring system that tracks 40+
-              government sources across three markets in near real-time. I built
-              risk scoring frameworks that quantify regulatory exposure before it
-              becomes a board-level problem. I believe the future of government
-              affairs belongs to people who can{" "}
-              <strong>read the regulatory landscape</strong> and{" "}
-              <strong>build the systems that turn it into advantage</strong>.
-            </p>
-          </div>
-
-          <div>
-
-            <div style={{ marginTop: 40 }}>
-              <div
-                style={{
-                  fontFamily: "'Archivo Narrow', 'Archivo', sans-serif",
-                  fontSize: 10,
-                  textTransform: "uppercase",
-                  letterSpacing: 2,
-                  color: "var(--ink-3)",
-                  marginBottom: 16,
-                }}
-              >
-                Education
-              </div>
-              <div style={{ fontSize: 14, color: "var(--ink-2)", lineHeight: 1.8 }}>
-                <div>
-                  <span style={{ color: "var(--ink)" }}>MPP</span> — KAPSARC
-                  School of Public Policy
-                </div>
-                <div>
-                  <span style={{ color: "var(--ink)" }}>MBA, Entrepreneurship</span>{" "}
-                  — MBS College
-                </div>
-                <div>
-                  <span style={{ color: "var(--ink)" }}>B.Econ</span> — Trent
-                  University
-                </div>
-              </div>
-            </div>
-
-            <div style={{ marginTop: 32 }}>
-              <div
-                style={{
-                  fontFamily: "'Archivo Narrow', 'Archivo', sans-serif",
-                  fontSize: 10,
-                  textTransform: "uppercase",
-                  letterSpacing: 2,
-                  color: "var(--ink-3)",
-                  marginBottom: 16,
-                }}
-              >
-                Credentials
-              </div>
-              <div
-                style={{
-                  fontSize: 13,
-                  color: "var(--ink-3)",
-                  lineHeight: 1.8,
-                }}
-              >
-                Harvard Kennedy School · LSE (×2) · PROSCI · PMP · Udacity
-              </div>
-            </div>
-
-            <a
-              href="/Talal_AlZayed_CV.pdf"
-              target="_blank"
-              rel="noopener"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 10,
-                marginTop: 36,
-                fontFamily: "'Archivo Narrow', 'Archivo', sans-serif",
-                fontSize: 11,
-                textTransform: "uppercase",
-                letterSpacing: 2,
-                padding: "14px 28px",
-                border: "1px solid var(--rule)",
-                background: "transparent",
-                color: "var(--sig)",
-                textDecoration: "none",
-                transition: "all 0.3s ease",
-                cursor: "pointer",
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.background = "var(--sig)";
-                e.target.style.color = "#FFFFFF";
-                e.target.style.borderColor = "var(--sig)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.background = "transparent";
-                e.target.style.color = "var(--sig)";
-                e.target.style.borderColor = "var(--rule)";
-              }}
-            >
-              ↓ Download Executive CV
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* CONNECT */}
+      {/* CONTACT */}
       <section
         ref={(el) => (sectionRefs.current.connect = el)}
-        className="connect-section"
+        className="contact"
+        id="contact"
       >
-        <div className="section-header">
-          <span className="section-number">05</span>
-          <span className="section-title">Connect</span>
-          <div className="section-line" />
-        </div>
+        <div className="wrap contact-grid">
+          <div>
+            <h2 className="contact-h">Whatever brought you here, write to me.</h2>
+            <p className="contact-p">
+              A speaking invitation, an advisory question, a board conversation,
+              or something you are weighing in the Kingdom. I read everything and
+              I reply. If I am not the right person, I will say so and point you
+              to someone who is.
+            </p>
+            <p className="contact-mail">
+              <a href="mailto:talal.h.zd@gmail.com">talal.h.zd@gmail.com</a>
+            </p>
+            <div className="contact-btns">
+              <a className="btn fill" href="mailto:talal.h.zd@gmail.com">Email me</a>
+              <a className="btn" href="https://www.linkedin.com/in/talal-alzayed/" target="_blank" rel="noopener">LinkedIn</a>
+              <a className="btn" href="/Talal_AlZayed_CV.pdf" target="_blank" rel="noopener">Download CV</a>
+            </div>
+          </div>
 
-        <h2 className="connect-headline">
-          Let's talk <em>policy, technology,</em>
-          <br />
-          and what's <em>next.</em>
-        </h2>
-
-        <p className="connect-sub">
-          Available for advisory engagements, speaking invitations,
-          and conversations about policy, regulation, and investment in the Gulf and beyond.
-        </p>
-
-        <div className="connect-email-display">
-          <a href="mailto:talal.h.zd@gmail.com">talal.h.zd@gmail.com</a>
-        </div>
-
-        <div className="connect-links">
-          <a href="mailto:talal.h.zd@gmail.com" className="connect-btn primary">
-            Email Me
-          </a>
-          <a
-            href="https://www.linkedin.com/in/talal-alzayed/"
-            target="_blank"
-            rel="noopener"
-            className="connect-btn"
-          >
-            LinkedIn
-          </a>
-        </div>
-
-        <div
-          style={{
-            marginTop: 32,
-            fontFamily: "'Archivo Narrow', 'Archivo', sans-serif",
-            fontSize: 11,
-            letterSpacing: 1,
-            color: "var(--ink-3)",
-          }}
-        >
-          Looking for regulatory advisory in the Gulf?{" "}
-          <span
-            style={{ color: "var(--sig)", cursor: "pointer", transition: "opacity 0.3s" }}
-            onClick={() => { navigate("/advisory"); window.scrollTo(0, 0); }}
-            onMouseEnter={(e) => { e.target.style.opacity = "0.7"; }}
-            onMouseLeave={(e) => { e.target.style.opacity = "1"; }}
-          >
-            Learn more →
-          </span>
+          <aside className="panel" aria-label="Education and credentials">
+            <div className="ptop"><span className="ptop-title">Education and credentials</span></div>
+            {credentials.map((c) => (
+              <div className="prow" key={c.k}>
+                <span className="pk">{c.k}</span>
+                <span className="pv">{c.v}</span>
+              </div>
+            ))}
+          </aside>
         </div>
       </section>
-
       </>
       )}
 

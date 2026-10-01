@@ -65,7 +65,7 @@ Port plan. All stages happen on one branch called `redesign`. Each session does 
 5. Work with me, including advisory scope and the speaking topics, button and two credentials described above. Restyle the /advisory page to match, since people may have it bookmarked.
 6. Article page, matching `design/article.html`.
 7. Phone check of every page, then SEO: JSON-LD `worksFor`, page titles and meta descriptions, and a new light OG image.
-8. Remove the What I Build section and tool links if any remain, delete unused old styles, final build, then merge to `main` only after Talal says go.
+8. Remove the What I Build section and tool links if any remain. Replace the old About and Connect sections with the mockup's Contact section and its Education and credentials panel. Delete unused old styles, final build, then merge to `main` only after Talal says go.
 
 When Talal says "next stage", check which stages are already done on the `redesign` branch and do the next one.
 
