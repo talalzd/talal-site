@@ -26,6 +26,7 @@ export default function Advisory() {
           .adv-ctas .btn { justify-content: center; }
           .adv-contact { padding: 36px 0 44px; }
           .adv-contact-h { font-size: 23px; }
+          .adv-contact-mail a { display: inline-block; padding: 10px 0; }
         }
       `}</style>
 

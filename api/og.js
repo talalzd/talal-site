@@ -4,126 +4,60 @@ export var config = {
   runtime: "edge"
 };
 
+// Tags are stored in capitals. Show them in sentence case, keeping acronyms.
+var ACRONYMS = ["AI", "FDI", "GCC", "UAE", "SME", "G20"];
+function formatTag(t) {
+  var out = (t || "").toLowerCase().split(" ").map(function(w) {
+    return ACRONYMS.indexOf(w.toUpperCase()) >= 0 ? w.toUpperCase() : w;
+  }).join(" ");
+  return out.charAt(0).toUpperCase() + out.slice(1);
+}
+
 export default function handler(req) {
   var url = new URL(req.url);
   var title = url.searchParams.get("title") || "Talal Al Zayed";
-  var tag = url.searchParams.get("tag") || "POLICY × TECHNOLOGY × BUILDER";
+  var tag = url.searchParams.get("tag");
   var excerpt = url.searchParams.get("excerpt") || "";
 
-  var titleSize = 54;
-  if (title.length > 80) titleSize = 40;
-  else if (title.length > 60) titleSize = 46;
+  var titleSize = 58;
+  if (title.length > 80) titleSize = 44;
+  else if (title.length > 60) titleSize = 50;
 
-  var children = [
-    // Accent line
+  if (excerpt.length > 180) excerpt = excerpt.slice(0, 177).replace(/\s+\S*$/, "") + "...";
+
+  var body = [
     {
       type: "div",
       props: {
-        style: {
-          position: "absolute",
-          top: 0,
-          left: 80,
-          width: 1,
-          height: "100%",
-          background: "linear-gradient(to bottom, transparent, rgba(200,169,126,0.2) 30%, rgba(200,169,126,0.2) 70%, transparent)"
-        }
+        style: { fontSize: 22, color: "#666C73", marginBottom: 22 },
+        children: tag ? "Analysis, " + formatTag(tag) : "Analysis"
       }
     },
-    // Bottom bar
-    {
-      type: "div",
-      props: {
-        style: {
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 4,
-          background: "linear-gradient(to right, #C8A97E, rgba(200,169,126,0.3))"
-        }
-      }
-    },
-    // Tag
-    {
-      type: "div",
-      props: {
-        style: {
-          fontSize: 12,
-          letterSpacing: 5,
-          color: "#C8A97E",
-          marginBottom: 28,
-          fontFamily: "monospace"
-        },
-        children: tag.toUpperCase()
-      }
-    },
-    // Title
     {
       type: "div",
       props: {
         style: {
           fontSize: titleSize,
-          lineHeight: 1.12,
-          color: "#E8E4DF",
-          maxWidth: 950,
-          marginBottom: 32,
-          fontFamily: "serif"
+          lineHeight: 1.14,
+          fontWeight: 600,
+          letterSpacing: "-0.02em",
+          color: "#0C0D0F",
+          maxWidth: 1000
         },
         children: title
       }
     }
   ];
 
-  // Excerpt
   if (excerpt) {
-    children.push({
+    body.push({
       type: "div",
       props: {
-        style: {
-          fontSize: 17,
-          color: "#8A8580",
-          maxWidth: 750,
-          lineHeight: 1.6
-        },
+        style: { fontSize: 24, lineHeight: 1.5, color: "#4A4F55", maxWidth: 940, marginTop: 24 },
         children: excerpt
       }
     });
   }
-
-  // Footer row
-  children.push({
-    type: "div",
-    props: {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 24,
-        marginTop: "auto"
-      },
-      children: [
-        {
-          type: "div",
-          props: {
-            style: { fontSize: 20, color: "#E8E4DF", fontFamily: "serif" },
-            children: "Talal Al Zayed"
-          }
-        },
-        {
-          type: "div",
-          props: {
-            style: { width: 1, height: 20, background: "rgba(200,169,126,0.3)" }
-          }
-        },
-        {
-          type: "div",
-          props: {
-            style: { fontSize: 13, letterSpacing: 1, color: "#6B6560", fontFamily: "monospace" },
-            children: "talalalzayed.com"
-          }
-        }
-      ]
-    }
-  });
 
   return new ImageResponse(
     {
@@ -134,12 +68,52 @@ export default function handler(req) {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          padding: "80px 90px",
-          backgroundColor: "#0A0A0A",
-          position: "relative"
+          backgroundColor: "#FFFFFF",
+          borderTop: "12px solid #123FBA"
         },
-        children: children
+        children: [
+          {
+            type: "div",
+            props: {
+              style: {
+                display: "flex",
+                flexDirection: "column",
+                flexGrow: 1,
+                justifyContent: "center",
+                padding: "0 80px"
+              },
+              children: body
+            }
+          },
+          {
+            type: "div",
+            props: {
+              style: {
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                margin: "0 80px",
+                padding: "22px 0 40px",
+                borderTop: "2px solid #0C0D0F",
+                fontSize: 22,
+                color: "#4A4F55"
+              },
+              children: [
+                {
+                  type: "div",
+                  props: {
+                    style: { fontWeight: 700, color: "#0C0D0F" },
+                    children: "Talal Al Zayed"
+                  }
+                },
+                {
+                  type: "div",
+                  props: { children: "talalalzayed.com" }
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {

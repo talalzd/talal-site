@@ -135,9 +135,9 @@ export default function TalalSite() {
     if (activeArticle) {
       document.title = `${activeArticle.title} | Talal Al Zayed`;
     } else if (isAdvisory) {
-      document.title = "Advisory — Talal Al Zayed";
+      document.title = "Advisory | Talal Al Zayed";
     } else {
-      document.title = "Talal Al Zayed — Policy · Technology · Builder";
+      document.title = "Talal Al Zayed | Public policy and government affairs, Saudi Arabia";
     }
   }, [activeArticle, isAdvisory]);
 
@@ -676,6 +676,9 @@ export default function TalalSite() {
           .art-body p.art-intro { font-size: 18px; }
           .art-end { grid-template-columns: 1fr; }
           .art-end .sub-form .btn { width: 100%; justify-content: center; }
+          .site-brand { min-height: 44px; align-items: center; }
+          .scope-link, .art-kicker, .art-mail, .art-side-link { display: inline-block; padding: 12px 0; }
+          .art-side-link { margin-top: 0; }
         }
 
         .trust-strip {
