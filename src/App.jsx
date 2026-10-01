@@ -2,8 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import articleData from "./articles.js";
 import Advisory from "./Advisory.jsx";
+import advisoryScope from "./advisoryScope.js";
 
-const SECTIONS = ["home", "perspectives", "record", "projects", "about", "connect"];
+const SECTIONS = ["home", "perspectives", "record", "work", "projects", "about", "connect"];
 
 // Sort perspectives by date, newest first
 const allPerspectives = [...articleData].sort((a, b) => {
@@ -30,6 +31,26 @@ const focusAreas = [
   { q: "Local content and procurement", a: "Getting onto the mandatory procurement list, and what the government expects in return: hiring, local content, technology transfer and headquarters commitments." },
   { q: "Digital and AI governance", a: "Data residency, cloud sovereignty and the direction of AI regulation across the Gulf, where the frameworks are diverging rather than converging." },
   { q: "Policy risk and timing", a: "Saudi rules move quarterly. Most of the value is in seeing a change early, not reacting on the day it lands." },
+];
+
+const speakingTopics = [
+  { q: "Inside Vision 2030 policymaking", a: "How Saudi policy actually gets made, who decides, and why the published strategy and the operating reality are different documents." },
+  { q: "Entering the Saudi market", a: "Licensing, local content, incentives and headquarters rules, from someone who has negotiated them from both sides." },
+  { q: "AI governance in the Gulf", a: "Why Saudi Arabia, the UAE and Egypt are diverging, and what that means for anyone deploying AI in the region." },
+  { q: "Consensus across twenty countries", a: "What the G20 Finance Track under the Saudi presidency teaches about moving multilateral policy." },
+];
+
+// Worded exactly as Talal approved. Do not add others without asking.
+const speakingCredentials = [
+  "Conceived and ran the inaugural G20 Deputy Ministers' Symposium",
+  "Technology committee member, AmCham Saudi Arabia",
+];
+
+const workModes = [
+  { mode: "Speaking and moderation", what: "Conferences, panels, closed-door briefings and executive sessions on Saudi regulation, AI governance and Vision 2030 policymaking.", status: "Open", tone: "sig", speaking: true },
+  { mode: "Conversations", what: "Introductions, comparing notes, or talking through something you are weighing. No agenda needed and no invoice attached.", status: "Always", tone: "sig" },
+  { mode: "Advisory engagements", what: "Fixed-scope work for investors, operators and institutions entering or expanding in the Kingdom. Scope below.", status: "Limited", tone: "flag" },
+  { mode: "Boards and advisory seats", what: "Ongoing roles where a regulatory and government affairs view belongs in the room rather than in a report.", status: "Selective" },
 ];
 
 const statusRows = [
@@ -160,11 +181,11 @@ export default function TalalSite() {
     window.scrollTo(0, 0);
   };
 
-  // Header nav. Work with me points at /advisory until the redesign builds that section.
+  // Header nav.
   const navItems = [
     { label: "Analysis", go: () => scrollTo("perspectives"), isOn: () => !!activeArticle || (location.pathname === "/" && activeSection === "perspectives") },
     { label: "Track record", go: () => scrollTo("record"), isOn: () => location.pathname === "/" && activeSection === "record" },
-    { label: "Work with me", go: goAdvisory, isOn: () => isAdvisory },
+    { label: "Work with me", go: () => scrollTo("work"), isOn: () => isAdvisory || (location.pathname === "/" && activeSection === "work") },
     { label: "Contact", go: () => scrollTo("connect"), isOn: () => location.pathname === "/" && activeSection === "connect" },
   ];
 
@@ -531,6 +552,42 @@ export default function TalalSite() {
           .rec td.soft:empty { display: none; }
         }
 
+        .wk .status { font-weight: 600; white-space: nowrap; }
+        .spk { margin-top: 16px; }
+        .spk-topics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; border-top: 1px solid var(--rule); }
+        .spk-topic { padding: 12px 0; border-bottom: 1px solid var(--rule-soft); }
+        .spk-topic .cq { font-size: 14.5px; color: var(--ink); margin-bottom: 4px; }
+        .spk-topic .ca { font-size: 13.5px; }
+        .spk-foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-top: 16px; }
+        .spk-creds { list-style: none; font-size: 13.5px; color: var(--ink-2); }
+        .spk-creds .lbl { margin-bottom: 4px; color: var(--ink); }
+        .spk-creds li + li { margin-top: 2px; }
+
+        .scope { margin-top: 38px; display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 40px; align-items: start; }
+        .scope-h { font-size: 16px; font-weight: 700; }
+        .scope-intro { margin-top: 8px; font-size: 14px; line-height: 1.55; color: var(--ink-2); }
+        .scope-link { display: inline-block; margin-top: 12px; font-size: 14px; font-weight: 600; color: var(--sig); }
+        .scope-link:hover { color: var(--ink); }
+        .scope-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 20px; border-top: 1px solid var(--ink); }
+        .scope-item { padding: 14px 18px 14px 0; border-bottom: 1px solid var(--rule-soft); }
+        .scope-item-t { font-size: 15px; font-weight: 600; line-height: 1.35; }
+        .scope-item-d { font-size: 14px; line-height: 1.45; margin-top: 4px; color: var(--ink-2); }
+
+        @media (max-width: 900px) {
+          .scope { grid-template-columns: 1fr; gap: 16px; }
+          .scope-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (max-width: 768px) {
+          .wk tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; }
+          .wk td.lead-cell { grid-column: 1; grid-row: 1; margin-top: 0; }
+          .wk td.status { grid-column: 2; grid-row: 1; font-size: 14px; }
+          .wk td.soft { grid-column: 1 / -1; margin-top: 6px; }
+          .spk-topics { grid-template-columns: 1fr; }
+          .spk-foot { display: block; }
+          .spk-foot .btn { width: 100%; justify-content: center; margin-top: 16px; }
+          .scope-grid { grid-template-columns: 1fr; }
+        }
+
         .trust-strip {
           padding: 60px 40px;
           border-top: 1px solid var(--rule-soft);
@@ -715,119 +772,6 @@ export default function TalalSite() {
           .projects-section { padding: 80px 20px; }
         }
 
-        .advisory-section {
-          padding: 120px 40px;
-          position: relative;
-        }
-
-        .advisory-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 80px;
-          align-items: start;
-        }
-
-        .advisory-headline {
-          font-family: 'Archivo', sans-serif;
-          font-size: clamp(32px, 4.5vw, 48px);
-          line-height: 1.15;
-          color: var(--ink);
-          margin-bottom: 32px;
-        }
-
-        .advisory-headline em {
-          color: var(--sig);
-          font-style: italic;
-        }
-
-        .advisory-body {
-          font-size: 17px;
-          line-height: 1.75;
-          color: var(--ink);
-          margin-bottom: 36px;
-          max-width: 520px;
-        }
-
-        .advisory-cta {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 12px;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          padding: 16px 32px;
-          background: transparent;
-          color: var(--sig);
-          border: 1px solid var(--rule);
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-
-        .advisory-cta:hover {
-          background: var(--sig);
-          color: #FFFFFF;
-          border-color: var(--sig);
-        }
-
-        .advisory-areas-label {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 10px;
-          text-transform: uppercase;
-          letter-spacing: 3px;
-          color: var(--ink-3);
-          margin-bottom: 32px;
-          display: flex;
-          align-items: center;
-          gap: 16px;
-        }
-
-        .advisory-areas-label::after {
-          content: '';
-          flex: 1;
-          height: 1px;
-          background: var(--rule);
-          max-width: 120px;
-        }
-
-        .advisory-area-item {
-          padding: 20px 0;
-          border-top: 1px solid var(--rule-soft);
-          display: grid;
-          grid-template-columns: 40px 1fr;
-          gap: 16px;
-          align-items: center;
-          transition: padding-left 0.3s ease;
-        }
-
-        .advisory-area-item:last-child {
-          border-bottom: 1px solid var(--rule-soft);
-        }
-
-        .advisory-area-item:hover {
-          padding-left: 8px;
-        }
-
-        .advisory-area-num {
-          font-family: 'Archivo', sans-serif;
-          font-size: 18px;
-          color: var(--ink-3);
-        }
-
-        .advisory-area-title {
-          font-family: 'Archivo', sans-serif;
-          font-size: 15px;
-          color: var(--ink);
-          transition: color 0.3s;
-        }
-
-        .advisory-area-item:hover .advisory-area-title {
-          color: var(--sig);
-        }
-
-        @media (max-width: 900px) {
-          .advisory-grid {
-            grid-template-columns: 1fr;
-            gap: 48px;
-          }
-        }
 
         .about-section {
           padding: 120px 40px;
@@ -1254,7 +1198,7 @@ export default function TalalSite() {
 
 
         @media (max-width: 768px) {
-          .about-section, .connect-section, .projects-section, .advisory-section { padding: 80px 20px; }
+          .about-section, .connect-section, .projects-section { padding: 80px 20px; }
         }
       `}</style>
 
@@ -1418,7 +1362,7 @@ export default function TalalSite() {
               <button className="btn fill" onClick={() => scrollTo("perspectives")}>
                 Read the analysis
               </button>
-              <button className="btn" onClick={goAdvisory}>
+              <button className="btn" onClick={() => scrollTo("work")}>
                 Ways to work together
               </button>
             </div>
@@ -1575,6 +1519,85 @@ export default function TalalSite() {
         </div>
       </div>
 
+      {/* WORK WITH ME */}
+      <section
+        ref={(el) => (sectionRefs.current.work = el)}
+        className="sec"
+        id="work"
+      >
+        <div className="wrap">
+          <div className="shead">
+            <h2 className="h2">Work with me</h2>
+            <span className="note">Four ways in, different commitments</span>
+          </div>
+          <table className="rec wk">
+            <thead>
+              <tr>
+                <th style={{ width: "24%" }}>Mode</th>
+                <th>What it looks like</th>
+                <th style={{ width: "12%" }}>Availability</th>
+              </tr>
+            </thead>
+            <tbody>
+              {workModes.map((m) => (
+                <tr key={m.mode}>
+                  <td className="lead-cell"><span className="lead">{m.mode}</span></td>
+                  <td className="soft">
+                    {m.what}
+                    {m.speaking && (
+                      <div className="spk">
+                        <div className="spk-topics">
+                          {speakingTopics.map((t) => (
+                            <div className="spk-topic" key={t.q}>
+                              <h3 className="cq">{t.q}</h3>
+                              <p className="ca">{t.a}</p>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="spk-foot">
+                          <ul className="spk-creds">
+                            {speakingCredentials.map((c) => <li key={c}>{c}</li>)}
+                          </ul>
+                          <button className="btn fill" onClick={() => scrollTo("connect")}>
+                            Invite me to speak
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </td>
+                  <td className={`status ${m.tone || ""}`}>{m.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <div className="scope">
+            <div>
+              <h3 className="scope-h">Advisory scope</h3>
+              <p className="scope-intro">
+                Saudi Arabia only. Fixed scope and a defined deliverable.
+                Conflicts are screened before anything is scoped.
+              </p>
+              <a
+                className="scope-link"
+                href="/advisory"
+                onClick={(e) => { e.preventDefault(); goAdvisory(); }}
+              >
+                More on advisory
+              </a>
+            </div>
+            <div className="scope-grid">
+              {advisoryScope.map((a) => (
+                <div className="scope-item" key={a.title}>
+                  <div className="scope-item-t">{a.title}</div>
+                  <div className="scope-item-d">{a.deliverable}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* PROJECTS */}
       <section
         ref={(el) => (sectionRefs.current.projects = el)}
@@ -1634,51 +1657,6 @@ export default function TalalSite() {
             <div className="project-card-stack">Real-Time Tracking · 3 Markets</div>
             <span className="project-card-arrow">→</span>
           </a>
-        </div>
-      </section>
-
-      {/* ADVISORY */}
-      <section className="advisory-section">
-        <div className="section-header">
-          <span className="section-number">03</span>
-          <span className="section-title">Advisory</span>
-          <div className="section-line" />
-        </div>
-
-        <div className="advisory-grid">
-          <div>
-            <h2 className="advisory-headline">
-              Private counsel for leaders navigating <em>government</em> in Saudi Arabia.
-            </h2>
-            <p className="advisory-body">
-              I advise companies, investors, and institutions making consequential decisions in Saudi Arabia. Selective engagements across regulatory strategy, market entry, government relations, and policy risk.
-            </p>
-            <button
-              className="advisory-cta"
-              onClick={() => { navigate("/advisory"); window.scrollTo(0, 0); }}
-            >
-              Learn More →
-            </button>
-          </div>
-
-          <div>
-            <div className="advisory-areas-label">Areas of Focus</div>
-            <div>
-              {[
-                { num: "01", title: "Market Entry & Regulatory Strategy" },
-                { num: "02", title: "Digital & AI Policy" },
-                { num: "03", title: "Government Relations & Stakeholder Strategy" },
-                { num: "04", title: "Strategic Partnerships" },
-                { num: "05", title: "FDI & Investment Framework Navigation" },
-                { num: "06", title: "Policy Risk Assessment" },
-              ].map((area) => (
-                <div className="advisory-area-item" key={area.num}>
-                  <span className="advisory-area-num">{area.num}</span>
-                  <span className="advisory-area-title">{area.title}</span>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 

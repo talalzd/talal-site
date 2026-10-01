@@ -88,4 +88,6 @@ When Talal says "next stage", check which stages are already done on the `redesi
 ## Open items to confirm with Talal before they go live
 
 - Whether Nokia's outside-activities policy allows advisory engagements and board seats.
+- The "I Served At" logo strip (now including Nokia) is not in the mockups. Keep it, or let Track record carry the institutions? Undecided. Do not remove it until Talal decides.
+- The downloadable CV (`public/Talal_AlZayed_CV.pdf`) still lists HP as current. Talal has not updated it yet. Swap in the new PDF when he sends it.
 - New articles. The last one is from May 2026 (HUMAIN One). The design mockups show the March two-coast piece as the lead only because it was the example used; the lead should always be the newest article.
