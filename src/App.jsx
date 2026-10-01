@@ -935,8 +935,9 @@ export default function TalalSite() {
               side of the same table, first at HP and now at Nokia.
             </p>
             <p className="hero-what">
-              I write about how Saudi policy gets made and where it is heading,
-              speak about it, and advise the people who have to operate inside it.
+              {SHOW_ADVISORY
+                ? "I write about how Saudi policy gets made and where it is heading, speak about it, and advise the people who have to operate inside it."
+                : "I write about how Saudi policy gets made, where it is heading, and what it means for the people who have to operate inside it."}
             </p>
             <div className="hero-ctas">
               <button className="btn fill" onClick={() => scrollTo("perspectives")}>
@@ -1170,10 +1171,9 @@ export default function TalalSite() {
           <div>
             <h2 className="contact-h">Whatever brought you here, write to me.</h2>
             <p className="contact-p">
-              A speaking invitation, an advisory question, a board conversation,
-              or something you are weighing in the Kingdom. I read everything and
-              I reply. If I am not the right person, I will say so and point you
-              to someone who is.
+              {SHOW_ADVISORY
+                ? "A speaking invitation, an advisory question, a board conversation, or something you are weighing in the Kingdom. I read everything and I reply. If I am not the right person, I will say so and point you to someone who is."
+                : "A speaking invitation, an introduction, or something you are weighing in the Kingdom. I read everything and I reply."}
             </p>
             <p className="contact-mail">
               <a href="mailto:talal.h.zd@gmail.com">talal.h.zd@gmail.com</a>
