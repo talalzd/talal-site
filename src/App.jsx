@@ -551,7 +551,7 @@ export default function TalalSite() {
           display: flex;
           justify-content: center;
           align-items: center;
-          gap: 40px;
+          gap: 28px;
           flex-wrap: wrap;
         }
 
@@ -571,6 +571,10 @@ export default function TalalSite() {
           height: 44px;
         }
 
+        .trust-logo-img.wide {
+          height: 20px;
+        }
+
         .trust-divider {
           width: 1px;
           height: 28px;
@@ -583,6 +587,7 @@ export default function TalalSite() {
           .trust-strip { padding: 40px 20px; }
           .trust-logo-img { height: 28px; }
           .trust-logo-img.tall { height: 34px; }
+          .trust-logo-img.wide { height: 16px; }
         }
 
         .section-header {
@@ -1554,6 +1559,8 @@ export default function TalalSite() {
       <div className="trust-strip">
         <div className="trust-label">I Served At</div>
         <div className="trust-logos">
+          <img src="/nokia-logo.png" alt="Nokia" className="trust-logo-img wide" />
+          <span className="trust-divider" />
           <img src="/hp-logo.svg" alt="HP Inc." className="trust-logo-img" />
           <span className="trust-divider" />
           <img src="/rcu-logo.png" alt="Royal Commission for AlUla" className="trust-logo-img" />
