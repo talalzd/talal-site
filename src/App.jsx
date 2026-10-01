@@ -26,6 +26,14 @@ const formatTag = (t) => {
   return out.charAt(0).toUpperCase() + out.slice(1);
 };
 
+const formatLongDate = (d) =>
+  new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+
+// Lowercase the first letter unless the first word is an acronym (AI, FDI).
+const midSentence = (t) => (/^[A-Z]{2}/.test(t) ? t : t.charAt(0).toLowerCase() + t.slice(1));
+
+const headingId = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
 const focusAreas = [
   { q: "Market access and licensing", a: "Which activities can be licensed, what the ownership rules allow, and who actually signs. The approving authority is often not the ministry you have been talking to." },
   { q: "Local content and procurement", a: "Getting onto the mandatory procurement list, and what the government expects in return: hiring, local content, technology transfer and headquarters commitments." },
@@ -588,6 +596,88 @@ export default function TalalSite() {
           .scope-grid { grid-template-columns: 1fr; }
         }
 
+        .art-grid {
+          display: grid;
+          grid-template-columns: minmax(0, 720px) 300px;
+          gap: 100px;
+          align-items: start;
+          padding-top: 44px;
+          padding-bottom: 72px;
+        }
+        .art-kicker { font-size: 13px; color: var(--ink-3); text-decoration: none; }
+        .art-kicker:hover { color: var(--sig); }
+        .art-title { margin-top: 12px; font-size: 38px; line-height: 1.16; font-weight: 600; letter-spacing: -0.024em; }
+        .art-sum { margin-top: 18px; font-size: 19px; line-height: 1.55; color: var(--ink-2); }
+        .art-by {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px 24px;
+          margin: 26px 0 34px;
+          padding: 12px 0;
+          border-top: 1px solid var(--ink);
+          border-bottom: 1px solid var(--rule);
+          font-size: 13.5px;
+          color: var(--ink-2);
+        }
+        .art-by b { font-weight: 600; color: var(--ink); }
+        .art-body p { margin: 0 0 20px; font-size: 18px; line-height: 1.72; color: #16181B; }
+        .art-body p.art-intro { font-size: 20px; line-height: 1.6; color: var(--ink); }
+        .art-body h2 { margin: 40px 0 14px; font-size: 22px; font-weight: 700; letter-spacing: -0.012em; scroll-margin-top: 80px; }
+        .art-body figure { margin: 8px 0 28px; }
+        .art-body figure img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); }
+        .art-body figcaption { margin-top: 10px; line-height: 1.5; }
+        .art-body table { width: 100%; border-collapse: collapse; margin: 4px 0 28px; font-size: 15px; line-height: 1.5; }
+        .art-body th {
+          text-align: left;
+          font-family: var(--font-narrow);
+          font-weight: 600;
+          font-size: 13px;
+          color: var(--ink-2);
+          padding: 0 16px 8px 0;
+          border-bottom: 1px solid var(--ink);
+        }
+        .art-body td { padding: 11px 16px 11px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+        .art-body th:last-child, .art-body td:last-child { padding-right: 0; text-align: right; }
+        .art-body td:last-child { font-weight: 600; white-space: nowrap; }
+        .art-callout { margin: 6px 0 28px; padding: 18px 20px; border: 1px solid var(--ink); background: var(--sunk); font-size: 16px; line-height: 1.6; }
+        .art-end { margin-top: 44px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+        .art-end-box { padding: 18px 20px; border: 1px solid var(--ink); }
+        .art-end .sub-form, .art-end .sub-done { margin-top: 0; display: block; }
+        .art-end .sub-form .btn { margin-top: 10px; }
+        .art-end-h { font-size: 13px; font-weight: 700; }
+        .art-end-p { margin: 8px 0 12px; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+        .art-mail { font-weight: 600; color: var(--sig); }
+        .art-mail:hover { color: var(--ink); }
+
+        .art-side { padding-top: 36px; display: flex; flex-direction: column; gap: 34px; }
+        .art-side-body { padding: 14px; font-size: 14px; line-height: 1.55; color: var(--ink-2); }
+        .art-side-link { display: inline-block; margin-top: 12px; font-weight: 600; color: var(--sig); }
+        .art-side-link:hover { color: var(--ink); }
+        .art-side-h { font-size: 13px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid var(--ink); }
+        .art-toc a { display: block; padding: 7px 0; font-size: 14px; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule-soft); }
+        .art-toc a:hover { color: var(--sig); }
+        .art-more a { display: block; padding: 10px 0; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule-soft); }
+        .art-more-t { display: block; font-size: 14.5px; font-weight: 600; line-height: 1.35; margin-top: 3px; }
+        .art-more a:hover .art-more-t { color: var(--sig); }
+
+        @media (max-width: 1200px) {
+          .art-grid { gap: 56px; grid-template-columns: minmax(0, 1fr) 280px; }
+        }
+        @media (max-width: 1000px) {
+          .art-grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+          .art-side { padding-top: 48px; }
+          .art-toc { display: none; }
+        }
+        @media (max-width: 768px) {
+          .art-grid { padding-top: 28px; padding-bottom: 48px; }
+          .art-title { font-size: 28px; line-height: 1.18; letter-spacing: -0.02em; }
+          .art-sum { font-size: 17px; }
+          .art-body p { font-size: 17px; }
+          .art-body p.art-intro { font-size: 18px; }
+          .art-end { grid-template-columns: 1fr; }
+          .art-end .sub-form .btn { width: 100%; justify-content: center; }
+        }
+
         .trust-strip {
           padding: 60px 40px;
           border-top: 1px solid var(--rule-soft);
@@ -962,201 +1052,6 @@ export default function TalalSite() {
           color: var(--sig);
         }
 
-        .article-view {
-          min-height: 100vh;
-          padding: 120px 40px 80px;
-          max-width: 780px;
-          margin: 0 auto;
-        }
-
-        .article-back {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 11px;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          color: var(--sig);
-          cursor: pointer;
-          background: none;
-          border: none;
-          padding: 0;
-          margin-bottom: 48px;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          transition: opacity 0.3s;
-        }
-        .article-back:hover { opacity: 0.7; }
-
-        .article-tag {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 10px;
-          text-transform: uppercase;
-          letter-spacing: 3px;
-          color: var(--sig);
-          margin-bottom: 20px;
-        }
-
-        .article-date {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 10px;
-          color: var(--ink-3);
-          letter-spacing: 1px;
-          margin-bottom: 24px;
-        }
-
-        .article-title {
-          font-family: 'Archivo', sans-serif;
-          font-size: clamp(32px, 5vw, 48px);
-          line-height: 1.15;
-          color: var(--ink);
-          margin-bottom: 48px;
-        }
-
-        .article-body-intro {
-          font-family: 'Archivo', sans-serif;
-          font-size: 22px;
-          line-height: 1.6;
-          color: var(--ink);
-          margin-bottom: 36px;
-          padding-bottom: 36px;
-          border-bottom: 1px solid var(--rule-soft);
-        }
-
-        .article-body-text {
-          font-size: 17px;
-          line-height: 1.8;
-          color: var(--ink);
-          margin-bottom: 24px;
-        }
-
-        .article-body-heading {
-          font-family: 'Archivo', sans-serif;
-          font-size: 26px;
-          color: var(--ink);
-          margin-top: 48px;
-          margin-bottom: 20px;
-        }
-
-        .article-author {
-          margin-top: 64px;
-          padding-top: 32px;
-          border-top: 1px solid var(--rule-soft);
-          display: flex;
-          align-items: center;
-          gap: 16px;
-        }
-
-        .article-author-info {
-          font-size: 14px;
-          color: var(--ink-3);
-        }
-
-        .article-author-name {
-          color: var(--ink);
-          font-weight: 500;
-          margin-bottom: 2px;
-        }
-
-        .article-discuss {
-          margin-top: 48px;
-          padding: 28px 32px;
-          border: 1px solid var(--rule);
-          font-family: 'Archivo', sans-serif;
-          font-size: 20px;
-          color: var(--ink-2);
-          text-align: center;
-        }
-
-        .article-discuss a {
-          color: var(--sig);
-          text-decoration: none;
-          transition: opacity 0.3s;
-        }
-
-        .article-discuss a:hover {
-          opacity: 0.7;
-        }
-
-        @media (max-width: 768px) {
-          .article-view { padding: 100px 20px 60px; }
-        }
-
-        .article-image-block {
-          margin: 36px 0;
-        }
-
-        .article-image-block img {
-          width: 100%;
-          border-radius: 4px;
-          border: 1px solid var(--rule-soft);
-        }
-
-        .article-image-caption {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 11px;
-          color: var(--ink-3);
-          margin-top: 12px;
-          line-height: 1.6;
-        }
-
-        .article-stats-row {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 16px;
-          margin: 36px 0;
-        }
-
-        .article-stat-card {
-          background: var(--sunk);
-          border-radius: 6px;
-          padding: 20px;
-          text-align: center;
-        }
-
-        .article-stat-number {
-          font-family: 'Archivo', sans-serif;
-          font-size: 28px;
-          color: var(--sig);
-          margin-bottom: 6px;
-        }
-
-        .article-stat-number.highlight-green {
-          color: var(--sig);
-        }
-
-        .article-stat-number.highlight-accent {
-          color: var(--sig);
-        }
-
-        .article-stat-label {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 10px;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-          color: var(--ink-3);
-        }
-
-        .article-callout {
-          border-left: 3px solid var(--sig);
-          padding: 20px 24px;
-          margin: 36px 0;
-          background: var(--sunk);
-          border-radius: 0 4px 4px 0;
-        }
-
-        .article-callout p {
-          font-size: 15px;
-          line-height: 1.7;
-          color: var(--ink);
-          margin: 0;
-        }
-
-        @media (max-width: 768px) {
-          .article-stats-row {
-            grid-template-columns: 1fr;
-            gap: 12px;
-          }
-        }
 
 
 
@@ -1261,78 +1156,131 @@ export default function TalalSite() {
         <Advisory />
       ) : activeArticle ? (
         <>
-          <div className="article-view">
-            <button
-              className="article-back"
-              onClick={() => {
-                navigate("/");
-                setTimeout(() => scrollTo("perspectives"), 150);
-              }}
-            >
-              ← Back to Perspectives
-            </button>
-            <div className="article-tag">{activeArticle.tag}</div>
-            <div className="article-date">{activeArticle.date} · {activeArticle.readTime}</div>
-            <h1 className="article-title">{activeArticle.title}</h1>
-            {activeArticle.content.map((block, i) => {
-              if (block.type === "intro")
-                return <p key={i} className="article-body-intro">{block.text}</p>;
-              if (block.type === "heading")
-                return <h2 key={i} className="article-body-heading">{block.text}</h2>;
-              if (block.type === "image")
-                return (
-                  <div key={i} className="article-image-block">
-                    <img src={block.src} alt={block.alt || ""} />
-                    {block.caption && <div className="article-image-caption">{block.caption}</div>}
-                  </div>
-                );
-              if (block.type === "stats")
-                return (
-                  <div key={i} className="article-stats-row">
-                    {block.items.map((stat, j) => (
-                      <div key={j} className="article-stat-card">
-                        <div className={`article-stat-number ${stat.highlight || ""}`}>{stat.value}</div>
-                        <div className="article-stat-label">{stat.label}</div>
-                      </div>
-                    ))}
-                  </div>
-                );
-              if (block.type === "callout")
-                return (
-                  <div key={i} className="article-callout">
-                    <p>{block.text}</p>
-                  </div>
-                );
-              return <p key={i} className="article-body-text">{block.text}</p>;
-            })}
-            <div className="article-author">
-              <img
-                src="/talal.jpg"
-                alt="Talal Al Zayed, Public Policy and Government Affairs Executive"
-                style={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: 4,
-                  objectFit: "cover",
-                  objectPosition: "center 15%",
-                  filter: "grayscale(30%)",
-                }}
-              />
-              <div className="article-author-info">
-                <div className="article-author-name">Talal Al Zayed</div>
-                Head of Policy and Government Affairs, Nokia, Saudi Arabia
-              </div>
-            </div>
-            <div className="article-discuss">
-              Have a take on this?{" "}
+          <div className="wrap art-grid">
+            <article>
               <a
-                href="https://www.linkedin.com/in/talal-alzayed/"
-                target="_blank"
-                rel="noopener"
+                className="art-kicker"
+                href="/#analysis"
+                onClick={(e) => { e.preventDefault(); scrollTo("perspectives"); }}
               >
-                Find me on LinkedIn →
+                Analysis, {midSentence(formatTag(activeArticle.tag))}
               </a>
-            </div>
+              <h1 className="art-title">{activeArticle.title}</h1>
+              {activeArticle.excerpt && <p className="art-sum">{activeArticle.excerpt}</p>}
+              <div className="art-by">
+                <b>Talal Al Zayed</b>
+                <span>{formatLongDate(activeArticle.date)}</span>
+                <span>{activeArticle.readTime} read</span>
+              </div>
+
+              <div className="art-body">
+                {activeArticle.content.map((block, i) => {
+                  if (block.type === "intro")
+                    return <p key={i} className="art-intro">{block.text}</p>;
+                  if (block.type === "heading")
+                    return <h2 key={i} id={headingId(block.text)}>{block.text}</h2>;
+                  if (block.type === "image")
+                    return (
+                      <figure key={i}>
+                        <img src={block.src} alt={block.alt || ""} />
+                        {block.caption && <figcaption className="note">{block.caption}</figcaption>}
+                      </figure>
+                    );
+                  if (block.type === "stats")
+                    return (
+                      <table key={i}>
+                        <thead>
+                          <tr><th>Measure</th><th>Figure</th></tr>
+                        </thead>
+                        <tbody>
+                          {block.items.map((stat, j) => (
+                            <tr key={j}><td>{stat.label}</td><td>{stat.value}</td></tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    );
+                  if (block.type === "callout")
+                    return <div key={i} className="art-callout">{block.text}</div>;
+                  return <p key={i}>{block.text}</p>;
+                })}
+              </div>
+
+              <div className="art-end">
+                {emailSubmitted ? (
+                  <div className="sub-done">Thanks. New pieces will come to your inbox.</div>
+                ) : (
+                  <form
+                    className="sub-form"
+                    onSubmit={(e) => { e.preventDefault(); handleEmailSubmit(); }}
+                  >
+                    <label className="lbl" htmlFor="asub">Get the next piece by email</label>
+                    <input
+                      className="inp"
+                      id="asub"
+                      type="email"
+                      required
+                      placeholder="you@company.com"
+                      value={emailInput}
+                      onChange={(e) => setEmailInput(e.target.value)}
+                    />
+                    <button className="btn fill" type="submit">Subscribe</button>
+                  </form>
+                )}
+                <div className="art-end-box">
+                  <div className="art-end-h">Working on something this affects?</div>
+                  <p className="art-end-p">Write to me. I read everything and I reply.</p>
+                  <a className="art-mail" href="mailto:talal.h.zd@gmail.com">talal.h.zd@gmail.com</a>
+                </div>
+              </div>
+            </article>
+
+            <aside className="art-side">
+              <div className="panel">
+                <div className="ptop"><span className="ptop-title">About the author</span></div>
+                <div className="art-side-body">
+                  Head of Policy and Government Affairs at Nokia, based in Riyadh.
+                  Previously HP, the Royal Court, the G20 team at the Saudi Central
+                  Bank, Monshaat and the Royal Commission for AlUla.
+                  <div>
+                    <a
+                      className="art-side-link"
+                      href="/#record"
+                      onClick={(e) => { e.preventDefault(); scrollTo("record"); }}
+                    >
+                      Track record
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {activeArticle.content.some((b) => b.type === "heading") && (
+                <nav className="art-toc" aria-label="In this piece">
+                  <div className="art-side-h">In this piece</div>
+                  {activeArticle.content
+                    .filter((b) => b.type === "heading")
+                    .map((b) => (
+                      <a key={b.text} href={"#" + headingId(b.text)}>{b.text}</a>
+                    ))}
+                </nav>
+              )}
+
+              <div className="art-more">
+                <div className="art-side-h">More analysis</div>
+                {allPerspectives
+                  .filter((p) => p.slug !== activeArticle.slug)
+                  .slice(0, 3)
+                  .map((p) => (
+                    <a
+                      key={p.id}
+                      href={"/articles/" + p.slug}
+                      onClick={(e) => { e.preventDefault(); navigate("/articles/" + p.slug); window.scrollTo(0, 0); }}
+                    >
+                      <span className="yr">{formatDate(p.date)}</span>
+                      <span className="art-more-t">{p.title}</span>
+                    </a>
+                  ))}
+              </div>
+            </aside>
           </div>
         </>
       ) : (
