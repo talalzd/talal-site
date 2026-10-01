@@ -12,6 +12,15 @@ const allPerspectives = [...articleData].sort((a, b) => {
   return dateB - dateA;
 });
 
+const statusRows = [
+  { k: "Speaking and moderation", v: "Open", tone: "sig" },
+  { k: "Introductions", v: "Always", tone: "sig" },
+  { k: "Advisory engagements", v: "Limited", tone: "flag" },
+  { k: "Board and advisory seats", v: "Selective" },
+  { k: "Based", v: "Riyadh" },
+  { k: "Working languages", v: "Arabic, English" },
+];
+
 const career = [
   {
     role: "Head of Policy and Government Affairs",
@@ -284,131 +293,109 @@ export default function TalalSite() {
           .site-footer-in { flex-direction: column; padding: 16px 20px 36px; }
         }
 
-        .hero-section {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          padding: 120px 40px 80px;
-          position: relative;
-          overflow: hidden;
-        }
 
 
 
-        .hero-tag {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 11px;
-          text-transform: uppercase;
-          letter-spacing: 4px;
-          color: var(--sig);
-          margin-bottom: 32px;
-          opacity: 0;
-          transform: translateY(20px);
-          animation: fadeUp 0.8s ease forwards;
-          animation-delay: 0.3s;
-        }
 
-        .hero-title {
-          font-family: 'Archivo', sans-serif;
-          font-size: clamp(42px, 7vw, 90px);
-          line-height: 1.05;
+
+
+
+
+
+
+
+
+
+        .wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+        .btn {
+          display: inline-flex;
+          align-items: center;
+          min-height: 44px;
+          padding: 0 18px;
+          border: 1px solid var(--ink);
+          background: var(--bg);
           color: var(--ink);
-          max-width: 900px;
-          margin-bottom: 36px;
-          opacity: 0;
-          transform: translateY(30px);
-          animation: fadeUp 0.8s ease forwards;
-          animation-delay: 0.5s;
-        }
-
-        .hero-title em {
-          font-style: italic;
-          color: var(--sig);
-        }
-
-        .hero-sub {
-          font-size: 18px;
-          line-height: 1.7;
-          color: var(--ink);
-          max-width: 620px;
-          margin-bottom: 48px;
-          opacity: 0;
-          transform: translateY(20px);
-          animation: fadeUp 0.8s ease forwards;
-          animation-delay: 0.7s;
-        }
-
-        .hero-cta {
-          display: flex;
-          gap: 16px;
-          flex-wrap: wrap;
-          margin-bottom: 48px;
-          opacity: 0;
-          transform: translateY(20px);
-          animation: fadeUp 0.8s ease forwards;
-          animation-delay: 0.85s;
-        }
-
-        .hero-cta-btn {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 12px;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          padding: 16px 32px;
-          cursor: pointer;
-          transition: all 0.3s ease;
+          font-family: var(--font);
+          font-size: 14px;
+          font-weight: 600;
           text-decoration: none;
-          display: inline-block;
+          cursor: pointer;
         }
+        .btn:hover { background: var(--ink); color: var(--bg); }
+        .btn.fill { background: var(--sig); border-color: var(--sig); color: #FFFFFF; }
+        .btn.fill:hover { background: var(--ink); border-color: var(--ink); }
 
-        .hero-cta-btn.primary {
-          background: var(--sig);
+        .panel { border: 1px solid var(--ink); background: var(--sunk); }
+        .ptop {
+          background: var(--ink);
           color: #FFFFFF;
-          border: 1px solid var(--sig);
-        }
-        .hero-cta-btn.primary:hover {
-          background: transparent;
-          color: var(--sig);
-        }
-
-        .hero-cta-btn.secondary {
-          background: transparent;
-          color: var(--sig);
-          border: 1px solid var(--rule);
-        }
-        .hero-cta-btn.secondary:hover {
-          background: var(--sig);
-          color: #FFFFFF;
-          border-color: var(--sig);
-        }
-
-        .hero-stats {
+          padding: 10px 14px;
           display: flex;
-          gap: 48px;
-          flex-wrap: wrap;
-          opacity: 0;
-          transform: translateY(20px);
-          animation: fadeUp 0.8s ease forwards;
-          animation-delay: 0.9s;
+          justify-content: space-between;
+          align-items: baseline;
+          gap: 12px;
         }
-
-        .stat-item {
+        .ptop-title { font-size: 13.5px; font-weight: 600; }
+        .ptop-note { font-size: 13px; color: #B5BAC0; }
+        .prow {
           display: flex;
-          flex-direction: column;
-          gap: 4px;
+          justify-content: space-between;
+          gap: 14px;
+          padding: 10px 14px;
+          border-bottom: 1px solid var(--rule);
+          font-size: 13.5px;
         }
-        .stat-number {
-          font-family: 'Archivo', sans-serif;
-          font-size: 36px;
-          color: var(--sig);
+        .prow:last-child { border-bottom: 0; }
+        .pk { color: var(--ink-2); }
+        .pv { font-weight: 600; text-align: right; white-space: nowrap; }
+        .sig { color: var(--sig); }
+        .flag { color: var(--flag); }
+
+        .hero { padding: 60px 0 52px; border-bottom: 1px solid var(--ink); }
+        .hero-grid {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) 356px;
+          gap: 64px;
+          align-items: start;
         }
-        .stat-label {
-          font-family: 'Archivo Narrow', 'Archivo', sans-serif;
-          font-size: 10px;
-          text-transform: uppercase;
-          letter-spacing: 2px;
+        .hero-role { display: none; font-size: 13px; color: var(--ink-3); margin-bottom: 12px; }
+        .hero-claim {
+          font-size: 40px;
+          line-height: 1.14;
+          font-weight: 600;
+          letter-spacing: -0.024em;
+          max-width: 19ch;
+        }
+        .hero-lede {
+          margin-top: 24px;
+          font-size: 17.5px;
+          line-height: 1.6;
           color: var(--ink-2);
+          max-width: 58ch;
+        }
+        .hero-what {
+          margin-top: 14px;
+          font-size: 17.5px;
+          line-height: 1.6;
+          color: var(--ink);
+          font-weight: 500;
+          max-width: 58ch;
+        }
+        .hero-ctas { display: flex; gap: 10px; margin-top: 30px; }
+
+        @media (max-width: 900px) {
+          .hero-grid { grid-template-columns: 1fr; gap: 28px; }
+        }
+        @media (max-width: 768px) {
+          .wrap { padding: 0 20px; }
+          .hero { padding: 32px 0 36px; }
+          .hero-role { display: block; }
+          .hero-claim { font-size: 29px; line-height: 1.16; letter-spacing: -0.022em; max-width: none; }
+          .hero-lede { margin-top: 18px; font-size: 16px; }
+          .hero-what { display: none; }
+          .hero-ctas { flex-direction: column; margin-top: 24px; }
+          .hero-ctas .btn { justify-content: center; }
         }
 
         .trust-strip {
@@ -477,9 +464,6 @@ export default function TalalSite() {
           margin-bottom: 8px;
         }
 
-        @keyframes fadeUp {
-          to { opacity: 1; transform: translateY(0); }
-        }
 
         .section-header {
           display: flex;
@@ -1358,9 +1342,7 @@ export default function TalalSite() {
 
 
         @media (max-width: 768px) {
-          .hero-section { padding: 100px 20px 60px; }
           .perspectives-section, .about-section, .connect-section, .projects-section, .advisory-section { padding: 80px 20px; }
-          .hero-stats { gap: 32px; }
         }
       `}</style>
 
@@ -1502,52 +1484,46 @@ export default function TalalSite() {
       {/* HERO */}
       <section
         ref={(el) => (sectionRefs.current.home = el)}
-        className="hero-section"
+        className="hero"
       >
-
-        <div className="hero-tag">Policy × Technology × Builder</div>
-
-        <h1 className="hero-title">
-          I don't just advise on <em>policy</em> — I build the systems that
-          make it a <em>competitive weapon.</em>
-        </h1>
-
-        <p className="hero-sub">
-          I have spent over a decade on both sides of the table. Government side: contributing to Vision 2030 economic policy, authoring a G20 flagship document, building a policy department from zero for a $15B mega-program. Industry side: at HP, I protected $200M+ in revenue by navigating the regulators I used to sit beside. I cover Saudi Arabia, UAE, and Egypt.
-        </p>
-
-        <div className="hero-cta">
-          <button
-            className="hero-cta-btn primary"
-            onClick={() => scrollTo("perspectives")}
-          >
-            Read My Perspectives
-          </button>
-          <button
-            className="hero-cta-btn secondary"
-            onClick={() => scrollTo("connect")}
-          >
-            Let's Connect
-          </button>
-        </div>
-
-        <div className="hero-stats">
-          <div className="stat-item">
-            <span className="stat-number">10+</span>
-            <span className="stat-label">Years in Policy</span>
+        <div className="wrap hero-grid">
+          <div>
+            <p className="hero-role">Head of Policy and Government Affairs, Nokia. Riyadh.</p>
+            <h1 className="hero-claim">
+              I have written Saudi regulation from inside government, and
+              negotiated against it from industry.
+            </h1>
+            <p className="hero-lede">
+              Nearly nine years at the Royal Court, the central bank, the SME
+              authority and a sovereign giga-project. Since 2024 on the industry
+              side of the same table, first at HP and now at Nokia.
+            </p>
+            <p className="hero-what">
+              I write about how Saudi policy gets made and where it is heading,
+              speak about it, and advise the people who have to operate inside it.
+            </p>
+            <div className="hero-ctas">
+              <button className="btn fill" onClick={() => scrollTo("perspectives")}>
+                Read the analysis
+              </button>
+              <button className="btn" onClick={goAdvisory}>
+                Ways to work together
+              </button>
+            </div>
           </div>
-          <div className="stat-item">
-            <span className="stat-number">$200M+</span>
-            <span className="stat-label">Revenue Protected</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-number">3</span>
-            <span className="stat-label">Markets Covered</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-number">G20</span>
-            <span className="stat-label">Policy Author</span>
-          </div>
+
+          <aside className="panel" aria-label="Current status">
+            <div className="ptop">
+              <span className="ptop-title">Current status</span>
+              <span className="ptop-note">Updated Oct 2026</span>
+            </div>
+            {statusRows.map((row) => (
+              <div className="prow" key={row.k}>
+                <span className="pk">{row.k}</span>
+                <span className={`pv ${row.tone || ""}`}>{row.v}</span>
+              </div>
+            ))}
+          </aside>
         </div>
       </section>
 
