@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import articleData from "./articles.js";
-import ArticlePublisher from "./ArticlePublisher.jsx";
 import Advisory from "./Advisory.jsx";
 
 const SECTIONS = ["home", "perspectives", "projects", "about", "connect"];
@@ -15,8 +14,12 @@ const allPerspectives = [...articleData].sort((a, b) => {
 
 const career = [
   {
+    role: "Head of Policy and Government Affairs",
+    org: "Nokia",
+  },
+  {
     role: "Director, Public Policy & Government Affairs",
-    org: "HP Inc.",
+    org: "HP Inc., 2024 to 2026",
     scope: "Saudi Arabia & UAE",
     highlight: "Reversed a restrictive import rule protecting $200M+ in annual revenue. Established the nation's first AI Center of Excellence.",
   },
@@ -65,7 +68,6 @@ export default function TalalSite() {
   const activeArticle = articleSlug
     ? allPerspectives.find((a) => a.slug === articleSlug)
     : null;
-  const isPublisher = location.pathname === "/publish";
   const isAdvisory = location.pathname === "/advisory";
 
   // Update page title for SEO
@@ -1442,10 +1444,7 @@ export default function TalalSite() {
         </div>
       )}
 
-      {/* PUBLISHER TOOL */}
-      {isPublisher ? (
-        <ArticlePublisher />
-      ) : isAdvisory ? (
+      {isAdvisory ? (
         <Advisory />
       ) : activeArticle ? (
         <>
@@ -1508,7 +1507,7 @@ export default function TalalSite() {
               />
               <div className="article-author-info">
                 <div className="article-author-name">Talal Al Zayed</div>
-                Director, Public Policy & Government Affairs
+                Head of Policy and Government Affairs, Nokia
               </div>
             </div>
             <div className="article-discuss">
@@ -1806,7 +1805,7 @@ export default function TalalSite() {
           <div className="about-photo-wrapper">
             <img
               src="/talal.jpg"
-              alt="Talal Al Zayed, Director of Public Policy and Government Affairs, Riyadh Saudi Arabia"
+              alt="Talal Al Zayed, Head of Policy and Government Affairs at Nokia, Riyadh Saudi Arabia"
               className="about-photo"
             />
           </div>
@@ -1826,10 +1825,12 @@ export default function TalalSite() {
               for the <strong>Royal Commission for Al-Ula</strong> from scratch.
             </p>
             <p style={{ marginBottom: 24 }}>
-              Today at <strong>HP Inc.</strong>, I turn regulatory complexity
-              into commercial advantage — negotiating with standards bodies,
-              securing investment incentives, and building anti-counterfeit
-              strategies across Saudi Arabia and the UAE.
+              Today I am Head of Policy and Government Affairs at{" "}
+              <strong>Nokia</strong>. Before that, at <strong>HP Inc.</strong>{" "}
+              from 2024 to 2026, I turned regulatory complexity into commercial
+              advantage: negotiating with standards bodies, securing investment
+              incentives, and building anti-counterfeit strategies across Saudi
+              Arabia and the UAE.
             </p>
             <p>
               But here's what makes me different:{" "}
@@ -1862,7 +1863,7 @@ export default function TalalSite() {
                 <div key={i} className="career-item">
                   <div className="career-role">{c.role}</div>
                   <div className="career-org">{c.org}</div>
-                  <div className="career-highlight">{c.highlight}</div>
+                  {c.highlight && <div className="career-highlight">{c.highlight}</div>}
                 </div>
               ))}
             </div>

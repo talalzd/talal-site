@@ -1,6 +1,6 @@
 # talalalzayed.com
 
-Personal site of Talal Al Zayed. Public policy and government affairs at Nokia (previously HP), based in Riyadh. Nearly nine years inside Saudi government (Royal Court Vision 2030 team, Monshaat, SAMA G20 Finance Track, Royal Commission for AlUla) before moving to industry in 2024.
+Personal site of Talal Al Zayed. Head of Policy and Government Affairs at Nokia (previously HP, 2024 to 2026), based in Riyadh. Nearly nine years inside Saudi government (Royal Court Vision 2030 team, Monshaat, SAMA G20 Finance Track, Royal Commission for AlUla) before moving to industry in 2024.
 
 Talal is not a developer. Explain what you changed in plain words, not code. Do not paste diffs into the chat unless he asks.
 
@@ -76,7 +76,7 @@ When Talal says "next stage", check which stages are already done on the `redesi
 
 ## Open items to confirm with Talal before they go live
 
-- His exact Nokia title, scope and start date. The JSON-LD in `index.html` still says HP.
+- His Nokia scope and start date.
 - Past speaking appearances for the Speaking section.
 - Whether Nokia's outside-activities policy allows advisory engagements and board seats.
 - New articles. The last one is from May 2026 (HUMAIN One). The design mockups show the March two-coast piece as the lead only because it was the example used; the lead should always be the newest article.
