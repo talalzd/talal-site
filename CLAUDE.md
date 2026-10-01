@@ -1,0 +1,71 @@
+# talalalzayed.com
+
+Personal site of Talal Al Zayed. Public policy and government affairs at Nokia (previously HP), based in Riyadh. Nearly nine years inside Saudi government (Royal Court Vision 2030 team, Monshaat, SAMA G20 Finance Track, Royal Commission for AlUla) before moving to industry in 2024.
+
+Talal is not a developer. Explain what you changed in plain words, not code. Do not paste diffs into the chat unless he asks.
+
+## What the site is for
+
+- Analysis on Saudi and regional regulation. This is the engine of the site.
+- Speaking and moderation invitations.
+- New professional connections and introductions.
+- Limited advisory work, Saudi-focused, for companies, investors and institutions. Advisory is one mode among four. The site must never read as consulting-only.
+
+Primary reader: someone investing in or operating in Saudi Arabia (fund partner, corp dev, general counsel), plus conference organizers and senior recruiters.
+
+## Stack
+
+- Vite + React single-page app with React Router. Deployed on Vercel. Every push to `main` deploys to production.
+- Repo: github.com/talalzd/talal-site
+- `src/App.jsx`: homepage, nav, article view, 404.
+- `src/Advisory.jsx`: /advisory page.
+- `src/articles.js`: single source of truth for all articles. A Vite plugin generates `sitemap.xml` and `article-meta.json` from it at build time. Middleware serves per-article OG tags via `/api/og`.
+- `src/ArticlePublisher.jsx`: the tool at /publish that turns pasted text into an articles.js entry.
+- `index.html`: Google Analytics (G-CJKEP1MMF2), Schema.org JSON-LD ProfilePage, OG and Twitter tags, canonical URL. Preserve all of these in every change.
+
+## How we work
+
+1. One branch per change. Never commit straight to `main`.
+2. Run `npm run build` before every commit. It must pass.
+3. Push the branch. Vercel builds a preview URL. Give Talal that link and a short plain summary.
+4. Merge to `main` only after Talal says it looks right.
+5. Small, targeted edits. Do not rewrite a whole file when a few lines change.
+6. Editing `src/articles.js` directly is fine now, as long as the entry follows the existing schema (id, slug, tag, title, excerpt, date, readTime, content blocks of type intro, text, heading, image, stats, callout) and the build passes. The /publish tool still works for pasting drafts.
+
+## Planned redesign (approved direction, port in stages)
+
+The live site is dark with gold accents (Instrument Serif, DM Sans, JetBrains Mono). It is being replaced. Reference pages are in `design/`: `home-desktop.html`, `home-mobile.html`, `article.html`. Open them in a browser. They are the target.
+
+Design system:
+- Light and cold. Background #FFFFFF, sunk panels #F1F2F3, ink #0C0D0F, secondary text #4A4F55, tertiary #666C73, rules #D8DBDE and #EAECEE.
+- One accent, signal blue #123FBA. One flag red #A33417, used only for "Limited".
+- Type: Archivo for everything, Archivo Narrow for table headers and dates. No serif anywhere.
+- Dense. Real tables for track record, speaking topics and ways to work together. Small type (14 to 15px in tables, 15px base).
+- The one bold element is the "Current status" panel in the hero.
+
+Structure: header (Analysis, Track record, Speaking, Work with me, Contact), reference line, hero with claim and status panel, What I work on, Analysis (lead piece, index, email signup), Track record, Speaking, Work with me (four modes plus advisory scope), Contact with credentials panel, footer with "Views here are my own, not my employer's."
+
+Port order: design tokens and fonts first, then one section per branch, so the live site keeps working the whole way through.
+
+## Decisions already made. Do not reopen without asking.
+
+- No "Tools" or "What I Build" section. Remove links to the risk score, entry playbook and policy monitor.
+- No Arabic for now. It may come back later.
+- Advisory is Saudi-only, audience is not limited to tech companies. Six scope areas: market entry and regulatory strategy, government relations, strategic partnerships, investment frameworks, digital and AI policy, policy risk monitoring.
+- No WhatsApp button and nothing that signals always-on availability.
+- Status panel values: Speaking and moderation Open, Introductions Always, Advisory engagements Limited, Board and advisory seats Selective.
+
+## Writing rules
+
+- Short, direct sentences. Authoritative but human.
+- No em dashes. No AI-sounding phrasing.
+- US spelling.
+- Sentence case for headings and labels. No ALL CAPS labels, no arrows on buttons, no middle-dot separators, no numbered 01/02/03 section markers.
+- Never invent facts, numbers, titles or appearances. Use a bracketed placeholder like [Event, city, year] and tell Talal.
+
+## Open items to confirm with Talal before they go live
+
+- His exact Nokia title, scope and start date. The JSON-LD in `index.html` still says HP.
+- Past speaking appearances for the Speaking section.
+- Whether Nokia's outside-activities policy allows advisory engagements and board seats.
+- New articles. The last one is from May 2026 (HUMAIN One). The design mockups show the March two-coast piece as the lead only because it was the example used; the lead should always be the newest article.
