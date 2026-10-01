@@ -15,11 +15,12 @@ const allPerspectives = [...articleData].sort((a, b) => {
 const career = [
   {
     role: "Head of Policy and Government Affairs",
-    org: "Nokia",
+    org: "Nokia, Saudi Arabia, August 2026 to present",
+    scope: "Saudi Arabia",
   },
   {
     role: "Director, Public Policy & Government Affairs",
-    org: "HP Inc., 2024 to 2026",
+    org: "HP Inc., May 2024 to July 2026",
     scope: "Saudi Arabia & UAE",
     highlight: "Reversed a restrictive import rule protecting $200M+ in annual revenue. Established the nation's first AI Center of Excellence.",
   },
@@ -1507,7 +1508,7 @@ export default function TalalSite() {
               />
               <div className="article-author-info">
                 <div className="article-author-name">Talal Al Zayed</div>
-                Head of Policy and Government Affairs, Nokia
+                Head of Policy and Government Affairs, Nokia, Saudi Arabia
               </div>
             </div>
             <div className="article-discuss">
@@ -1825,9 +1826,10 @@ export default function TalalSite() {
               for the <strong>Royal Commission for Al-Ula</strong> from scratch.
             </p>
             <p style={{ marginBottom: 24 }}>
-              Today I am Head of Policy and Government Affairs at{" "}
-              <strong>Nokia</strong>. Before that, at <strong>HP Inc.</strong>{" "}
-              from 2024 to 2026, I turned regulatory complexity into commercial
+              Since August 2026 I have been Head of Policy and Government
+              Affairs at <strong>Nokia</strong>, covering Saudi Arabia. Before
+              that, at <strong>HP Inc.</strong> from May 2024 to July 2026, I
+              turned regulatory complexity into commercial
               advantage: negotiating with standards bodies, securing investment
               incentives, and building anti-counterfeit strategies across Saudi
               Arabia and the UAE.

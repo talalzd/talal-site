@@ -1,6 +1,6 @@
 # talalalzayed.com
 
-Personal site of Talal Al Zayed. Head of Policy and Government Affairs at Nokia (previously HP, 2024 to 2026), based in Riyadh. Nearly nine years inside Saudi government (Royal Court Vision 2030 team, Monshaat, SAMA G20 Finance Track, Royal Commission for AlUla) before moving to industry in 2024.
+Personal site of Talal Al Zayed. Head of Policy and Government Affairs at Nokia, covering Saudi Arabia, since August 2026 (previously HP, May 2024 to July 2026), based in Riyadh. Nearly nine years inside Saudi government (Royal Court Vision 2030 team, Monshaat, SAMA G20 Finance Track, Royal Commission for AlUla) before moving to industry in 2024.
 
 Talal is not a developer. Explain what you changed in plain words, not code. Do not paste diffs into the chat unless he asks.
 
@@ -50,7 +50,9 @@ Port plan. All stages happen on one branch called `redesign`. Each session does 
 1. Foundation: Archivo fonts, color tokens, header, reference line, footer. Remove the old grain, glow and gold styles.
 2. Hero and the Current status panel.
 3. What I work on, and Analysis (lead piece is always the newest article, then the index, then email signup).
-4. Track record and Speaking.
+4. Track record and Speaking. Use these confirmed dates for the two industry roles:
+   - Nokia: Head of Policy and Government Affairs, Saudi Arabia only, August 2026 to present. No achievements listed yet. Do not invent any.
+   - HP Inc.: Director, Public Policy & Government Affairs, Saudi Arabia and UAE, May 2024 to July 2026.
 5. Work with me, including advisory scope. Restyle the /advisory page to match, since people may have it bookmarked.
 6. Article page, matching `design/article.html`.
 7. Phone check of every page, then SEO: JSON-LD `worksFor`, page titles and meta descriptions, and a new light OG image.
@@ -76,7 +78,6 @@ When Talal says "next stage", check which stages are already done on the `redesi
 
 ## Open items to confirm with Talal before they go live
 
-- His Nokia scope and start date.
 - Past speaking appearances for the Speaking section.
 - Whether Nokia's outside-activities policy allows advisory engagements and board seats.
 - New articles. The last one is from May 2026 (HUMAIN One). The design mockups show the March two-coast piece as the lead only because it was the example used; the lead should always be the newest article.
