@@ -7,10 +7,11 @@ var BOT_AGENTS = [
   "whatsapp",
   "telegrambot",
   "slackbot",
-  "discordbot",
-  "googlebot",
-  "bingbot"
+  "discordbot"
 ];
+// Google and Bing are deliberately not in this list. They must get the full
+// static article page built by vite-plugin-articles.js, not the empty
+// tags-only page below, or the articles never get indexed.
 
 export var config = {
   matcher: ["/articles/:slug*", "/advisory"]

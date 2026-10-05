@@ -76,7 +76,8 @@ When Talal says "next stage", check which stages are already done on the `redesi
 - Advisory is Saudi-only, audience is not limited to tech companies. Six scope areas: market entry and regulatory strategy, government relations, strategic partnerships, investment frameworks, digital and AI policy, policy risk monitoring.
 - No WhatsApp button and nothing that signals always-on availability.
 - LinkedIn is https://www.linkedin.com/in/talal-alzayed/ (with the hyphen). The mockups in `design/` and the old CV show `talalalzayed`; that spelling is wrong. Never copy it from them.
-- Leave the domain setup as it is: the site is served at www.talalalzayed.com and the canonical tags say talalalzayed.com. Talal decided not to change this.
+- Domain: talalalzayed.com (no www) is the primary domain in Vercel. www.talalalzayed.com, talalzd.com and www.talalzd.com all 308-redirect straight to it. Talal changed this on October 5, 2026 because the old setup (served at www, canonicals saying no-www) had Google ignoring the site. Every canonical, og:url and sitemap URL must use https://talalalzayed.com. Keep them matching.
+- Search engines get a real HTML page per article. `vite-plugin-articles.js` writes `dist/articles/<slug>.html` at build time with the article's own title, description, canonical and full text, served at /articles/<slug> through `cleanUrls` in `vercel.json`. React replaces that text with the normal article view on load. Googlebot and Bingbot must stay out of the bot list in `middleware.js`, which sends an empty tags-only page.
 - Status panel values: Speaking and moderation Open, Introductions Always, Advisory engagements Limited, Board and advisory seats Selective. The last two are hidden for now (see open items).
 
 ## Writing rules
